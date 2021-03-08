@@ -1,0 +1,33 @@
+body {
+    padding-top: 70px;
+}
+
+/* ditch the ugle blue outline */
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    outline: 0;
+}
+
+/* hide close when burger shown */
+.navbar-toggler.collapsed .close-icon {
+    display: none;
+}
+
+.navbar-toggler:not(.collapsed) .navbar-toggler-icon {
+    display: inline;
+
+}
+
+#Search {
+  background-color: white;
+  color: black;
+  border: 2px solid grey;
+  border-radius: 3px;  // for no radius
+
+  }
+
+#Search:hover {
+  background-color: grey;
+  color: white;
+
+}
