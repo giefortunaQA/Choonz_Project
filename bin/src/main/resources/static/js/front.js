@@ -1,5 +1,7 @@
-// Start of JS file //
+$(function() {
+  $('#ChangeToggle').click(function() {
+    $('#navbar-hamburger').toggleClass('hidden');
+    $('#navbar-close').toggleClass('hidden');  
+  });
+});
 
-function myFunction() {
-alert("Hello! I am an alert box!!");
-}
