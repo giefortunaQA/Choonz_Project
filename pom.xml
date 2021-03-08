@@ -16,7 +16,7 @@
 	<description>Choonz - The Music Database</description>
 
 	<properties>
-		<java.version>14</java.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
