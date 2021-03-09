@@ -43,9 +43,9 @@ public class PlaylistService {
 
 	public PlaylistDTO update(Playlist playlist, long id) {
 		Playlist toUpdate = this.repo.findById(id).orElseThrow(PlaylistNotFoundException::new);
-		toUpdate.setName(toUpdate.getName());
-		toUpdate.setDescription(toUpdate.getDescription());
-		toUpdate.setArtwork(toUpdate.getArtwork());
+		toUpdate.setName(playlist.getName());
+		toUpdate.setDescription(playlist.getDescription());
+		toUpdate.setArtwork(playlist.getArtwork());
 		Playlist updated = this.repo.save(toUpdate);
 		return this.mapToDTO(updated);
 	}
