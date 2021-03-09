@@ -1,6 +1,5 @@
 package com.qa.choonz.rest.dto;
 
-
 import com.qa.choonz.persistence.domain.Album;
 import com.qa.choonz.persistence.domain.Playlist;
 
@@ -17,6 +16,5 @@ public class TrackDTO {
         super();
         // TODO Auto-generated constructor stub
     }
-    
- 
+
 }
