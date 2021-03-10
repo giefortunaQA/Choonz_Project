@@ -60,9 +60,13 @@ public class UserService {
 		return !this.repo.existsById(id);
 	}
 
-	// figuring out/playing with
 	public Long login(String username, String password) {
+		List<UserDTO> account = this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+		for (UserDTO thisUser: account) {
+			if (thisUser.getUsername().equals(username) && thisUser.getPassword().equals(password)) {
+				return thisUser.getId();
+			}
+		}
 		return null;
 	}
-
 }
