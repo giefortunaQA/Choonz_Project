@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,9 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Entity
 public class User {
 	
 	// variables
@@ -29,6 +33,8 @@ public class User {
 	@Size(max = 20)
 	private String password;
 	
+	// https://www.logicbig.com/tutorials/misc/jackson/json-managed-reference.html
+	@JsonManagedReference(value="ownedBy")
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Playlist> playlists;
 
