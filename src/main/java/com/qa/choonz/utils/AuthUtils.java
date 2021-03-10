@@ -1,8 +1,9 @@
 package com.qa.choonz.utils;
 
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+
 
 public class AuthUtils {
 
@@ -15,7 +16,7 @@ public class AuthUtils {
 	private static String genToken() {
 		int lLimit = 48; // 48 = 0
 		int uLimit = 122; // 122 = z
-		Random generated = new Random();
+		SecureRandom generated = new SecureRandom();
 		// credit: https://www.baeldung.com/java-random-string
 		return generated.ints(lLimit, uLimit + 1).filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
 				.limit(tokenSize).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
