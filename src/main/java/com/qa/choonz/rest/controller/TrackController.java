@@ -50,9 +50,29 @@ public class TrackController {
         return new ResponseEntity<TrackDTO>(this.service.update(track, id), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<TrackDTO> delete(@PathVariable long id) {
         return this.service.delete(id) ? new ResponseEntity<TrackDTO>(HttpStatus.NO_CONTENT)
                 : new ResponseEntity<TrackDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    
+    @GetMapping("/read/by-album/{id}")
+	public ResponseEntity<List<TrackDTO>> readTracksByAlbums(@PathVariable Long id){
+		return ResponseEntity.ok(this.service.findTracksInAlbums(id));
+	}
+    
+    @GetMapping("/read/by-playlist/{id}")
+	public ResponseEntity<List<TrackDTO>> readTracksByPlaylists(@PathVariable Long id){
+		return ResponseEntity.ok(this.service.findTracksInPLaylists(id));
+	}
+    
+    @GetMapping("/read/by-artist/{id}")
+	public ResponseEntity<List<TrackDTO>> readTracksByArtists(@PathVariable Long id){
+		return ResponseEntity.ok(this.service.findTracksInArtists(id));
+	}
+    
+    @GetMapping("/read/by-genre/{id}")
+	public ResponseEntity<List<TrackDTO>> readTracksByGenres(@PathVariable Long id){
+		return ResponseEntity.ok(this.service.findTracksInGenres(id));
+	}
 }

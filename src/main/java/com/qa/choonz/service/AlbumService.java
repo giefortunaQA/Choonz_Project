@@ -54,5 +54,15 @@ public class AlbumService {
 		this.repo.deleteById(id);
 		return !this.repo.existsById(id);
 	}
+	
+	public List<AlbumDTO> findAlbumsInArtist(long id){
+		return this.repo.findAlbumsInArtist(id).stream().map(this::mapToDTO).collect(Collectors.toList());
+		
+	}
+	
+	public List<AlbumDTO> findAlbumsInGenres(long id){
+		return this.repo.findAlbumsInGenres(id).stream().map(this::mapToDTO).collect(Collectors.toList());
+		
+	}
 
 }
