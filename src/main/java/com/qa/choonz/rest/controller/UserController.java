@@ -57,7 +57,7 @@ public class UserController {
 		return new ResponseEntity<>(this.service.update(user, id), HttpStatus.ACCEPTED);
 	}
 
-	@DeleteMapping("delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<UserDTO> delete(@PathVariable long id, @RequestHeader("token") String token) {
 		if (AuthUtils.getToken(token) != id) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
