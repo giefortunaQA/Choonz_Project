@@ -55,5 +55,15 @@ public class AlbumController {
 		return this.service.delete(id) ? new ResponseEntity<AlbumDTO>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<AlbumDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@GetMapping("/read/by-artist/{id}")
+	public ResponseEntity<List<AlbumDTO>> readAlbumsByArtists(@PathVariable Long id){
+		return ResponseEntity.ok(this.service.findAlbumsInArtist(id));
+	}
+	
+	@GetMapping("/read/by-genre/{id}")
+	public ResponseEntity<List<AlbumDTO>> readAlbumsByGenres(@PathVariable Long id){
+		return ResponseEntity.ok(this.service.findAlbumsInGenres(id));
+	}
 
 }

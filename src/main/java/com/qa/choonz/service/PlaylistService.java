@@ -54,5 +54,10 @@ public class PlaylistService {
 		this.repo.deleteById(id);
 		return !this.repo.existsById(id);
 	}
+	
+	public List<PlaylistDTO> findPlaylistsInGenres(long id){
+		return this.repo.findPlaylistsInGenres(id).stream().map(this::mapToDTO).collect(Collectors.toList());
+		
+	}
 
 }
