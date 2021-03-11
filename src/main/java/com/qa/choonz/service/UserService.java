@@ -46,6 +46,13 @@ public class UserService {
 		User user = this.repo.findById(id).orElseThrow(UserNotFoundException::new);
 		return this.mapToDTO(user);
 	}
+	
+	public UserDTO read(String username) {
+		User user = this.repo.findByUsername(username).orElseThrow(UserNotFoundException::new);
+		return this.mapToDTO(user);
+	}
+
+	
 
 	public UserDTO update(User user, long id) {
 		User toUpdate = this.repo.findById(id).orElseThrow(UserNotFoundException::new);
