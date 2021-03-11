@@ -1,6 +1,8 @@
 'use strict';
 // Global vars
 const pageTitle = document.querySelector("title");
+var currentUser;
+var token;
 
 // Paths
 const artistsPath = "artists";
@@ -75,6 +77,7 @@ const usernameUp=document.getElementById("usernameUp")
 const passwordUp=document.getElementById("passwordUp")
 const usernameIn=document.getElementById("usernameIn")
 const passwordIn=document.getElementById("passwordIn")
+
 
 // Variables for navigation
 const root = "file:///C:/Users/giean/Documents/Workspaces/STS%20-%20Workspace/Choonz-Starter-master/src/main/resources/static";
@@ -797,7 +800,7 @@ function signUp(){
     fetch("http://localhost:8082/users/create", {
         method: 'post',
         headers: {
-            "Content-type": "application/json"
+            "Content-type": "application/json",
         },
         body: JSON.stringify(formData)
     })
@@ -810,35 +813,46 @@ function signUp(){
 }
 
 function login(){
-    let formData = {
-        "username": usernameIn.value,
-        "password": passwordIn.value
-    }
     fetch("http://localhost:8082/users/login", {
         method: 'post',
         headers: {
-            "Content-type": "application/json"
-        },
-        body: JSON.stringify(formData)
+        "username": usernameIn.value,
+        "password": passwordIn.value
+        }
     })
-        .then(res => res.json())
         .then(data => {
-            console.log(`Request succeeded with JSON response ${data}`);
-            greet.innerHTML="Hi, "+data.username;
+            console.log(`Token returned: ${data}`);
+            token="";
+            for (let i in data){
+                token+=i;
+            }
+            console.log(token);
+            console.log(greet);
+                currentUser=usernameIn.value;
+                token=data.value;
+                signInForm.innerHTML="Successfully Logged in";
+                greetUser();
         })
         .catch((err) => console.log(err))
+}
+
+function greetUser(){
+    for (let greeting of greet){
+        console.log(greeting);
+        greeting.innerHTML="Hi, "+currentUser};
 }
 
 function logout(){
     
 }
+
 function userIconActions(){
-    for (let greeting of greet){}
+    for (let greeting of greet){
     if (greeting.innerHTML=""){
         confirmLogout();
     } else{
         window.location.replace(`${root}/user.html`)
-    }}
+    }}}
 
 
 //#################################################################################################################
@@ -908,6 +922,7 @@ const readPage = (path) => {
                             }
                         }
                     }
+                    greetUser(currentUser);
                     console.log(`${path} page loaded.`);
                 }).catch((err) => console.log(err))
         })

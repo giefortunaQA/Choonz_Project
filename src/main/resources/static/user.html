@@ -38,9 +38,9 @@
             </li>
           </ul>
           <div id="userDisplay" class="pull-right">
-            <a href="user.html">
-              <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span id="greet"></span>
-            </a>
+            <button type="button" onclick="userIconActions()" class="btn">
+              <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
+            </button>
               
           </div>
         </div>
@@ -82,7 +82,7 @@
                   <input type="text" placeholder="Enter username" class="form-control" id="usernameIn">
                   <input type="password" placeholder="Enter password" class="form-control" id="passwordIn">
                   <br>
-                  <button type="button" onclick="signIn()" class="center btn btn-outline-success">Sign In</button>
+                  <button type="button" onclick="login()" class="center btn btn-outline-success">Sign In</button>
                 </div>
                 <div class="card-footer">
                     <p class="center">
