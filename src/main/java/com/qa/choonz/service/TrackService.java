@@ -56,5 +56,24 @@ public class TrackService {
         this.repo.deleteById(id);
         return !this.repo.existsById(id);
     }
+    public List<TrackDTO> findTracksInAlbums(long id){
+		return this.repo.findTracksInAlbums(id).stream().map(this::mapToDTO).collect(Collectors.toList());
+		
+	}
+    
+    public List<TrackDTO> findTracksInPLaylists(long id){
+		return this.repo.findTracksInPlaylists(id).stream().map(this::mapToDTO).collect(Collectors.toList());
+		
+	}
+    
+    public List<TrackDTO> findTracksInArtists(long id){
+		return this.repo.findTracksInArtists(id).stream().map(this::mapToDTO).collect(Collectors.toList());
+		
+	}
+    
+    public List<TrackDTO> findTracksInGenres(long id){
+		return this.repo.findTracksInGenres(id).stream().map(this::mapToDTO).collect(Collectors.toList());
+		
+	}
 
 }

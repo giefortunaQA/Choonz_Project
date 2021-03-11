@@ -43,7 +43,7 @@ public class Playlist {
 	// https://www.logicbig.com/tutorials/misc/jackson/json-managed-reference.html
 	@JsonBackReference(value="ownedBy")
 	@ManyToOne
-	@NotNull
+	
     private User user;
 
 	public Playlist() {
