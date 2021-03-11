@@ -269,6 +269,104 @@ function confirmDeleteArtist(id) {
 }
 //#################################################################################################################
 //#################################################################################################################
+// METHODS FOR GENRE 
+function createGenreCard(display, genre) {
+    let genreCard = createCardDiv(genresPath, genre);
+    let genreTitle = createCardTitle(genre.name);
+    genreCard.appendChild(genreTitle);
+    genreCard.setAttribute("onclick", `goTo(genresPath,${genre.id})`);
+    display.appendChild(genreCard);
+}
+
+
+function createGenre() {
+    let formData = {
+        "name": genreName.value,
+        "description": genreDesc.value
+    }
+    fetch("http://localhost:8082/genres/create", {
+        method: 'post',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            hide(createGenreForm);
+            show(createdGenreMsg);
+            setTimeout(hide(createdGenreMsg), 3000);
+            location.reload();
+        })
+        .catch((err) => console.log(err))
+}
+
+function readGenreById(id) {
+    fetch(`http://localhost:8082/genres/read/${id}`)
+        .then((res) => {
+            if (res.ok != true) {
+                console.log("Status is not OK!");
+            }
+            res.json()
+                .then((data) => {
+                    let title = document.createElement("h1");
+                    title.innerHTML = data.name;
+                    let desc = document.createElement("h4");
+                    desc.innerHTML = data.description;
+                    genreNameDisplay.appendChild(title);
+                    genreDescDisplay.appendChild(desc);
+                    updateGenreBtn.setAttribute("onclick", `updateGenre(${data.id})`);
+                    deleteEachGenre.setAttribute("onclick", `confirmDeleteGenre(${data.id})`);
+                    pageTitle.innerHTML=data.name;
+                }).catch((err) => console.log(err))
+        })
+}
+function readGenrePageLoad() {
+    readGenreById(params.get('id'));
+}
+
+function updateGenre(id) {
+    let formData = {
+        "name": genreNameUpdate.value,
+        "description": genreDescUpdate.value
+    }
+    fetch(`http://localhost:8082/genres/update/${id}`, {
+        method: 'put',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            location.reload();
+        })
+        .catch((err) => console.log(err))
+}
+
+function deleteGenre(id) {
+    fetch(`http://localhost:8082/genres/delete/${id}`, {
+        method: 'delete',
+    })
+        .then(res => JSON.stringify(res))
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            window.location.replace(`${root}/readGenre.html#deleted`);
+        })
+        .catch((err) => console.log(err))
+}
+
+function confirmDeleteGenre(id) {
+    if (confirm("Are you sure?")) {
+        deleteGenre(id);
+        genreNameDisplay.innerHTML = "Genre deleted.";
+        genreDescDisplay.innerHTML="";
+    }
+}
+//#################################################################################################################
+//#################################################################################################################
 // METHODS FOR ALL ENTITIES
 function goTo(path, id) {
     if (path == tracksPath) {
