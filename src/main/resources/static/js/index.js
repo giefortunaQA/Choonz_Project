@@ -607,7 +607,141 @@ function confirmDeletePlaylist(id) {
         playlistNameDisplay.innerHTML = "Playlist deleted.";
     }
 }
+//#################################################################################################################
+//#################################################################################################################
+// METHODS FOR TRACKS
+function createTrackCard(display, track) {
+    let trackCard = createCardDiv(tracksPath,track);
+    let trackTitle = createCardTitle(track.name);
+    let trackDur=createCardSubtitle(`Duration: ${track.duration}s`)
+    let trackAlbum=createCardLink(`${root}/readAlbum.html?id=${track.album.id}`,track.album.name);
+    trackCard.appendChild(trackTitle);
+    trackCard.appendChild(trackDur);
+    trackCard.appendChild(trackAlbum);
+    trackCard.setAttribute("onclick", `goTo(tracksPath,${track.id})`);
+    display.appendChild(trackCard);
+}
 
+
+function createTrack() {
+    let formData = {
+        "name": trackName.value,
+        "duration": trackDuration.value,
+        "lyrics": trackLyrics.value,
+        "album":{
+            "id": trackAlbum.value
+        },
+        playlist:{
+            "id":trackPlaylist.value
+        }
+    }
+    fetch("http://localhost:8082/tracks/create", {
+        method: 'post',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            hide(createTrackForm);
+            location.reload();
+        })
+        .catch((err) => console.log(err))
+}
+
+function readTrackById(id) {
+    fetch(`http://localhost:8082/tracks/read/${id}`)
+        .then((res) => {
+            if (res.ok != true) {
+                console.log("Status is not OK!");
+            }
+            res.json()
+                .then((data) => {
+                    let title = document.createElement("h1");
+                    title.innerHTML = data.name;
+                    title.setAttribute("class","album-title")
+                    title.style.padding="20px";
+                    let dur=document.createElement("h6");
+                    dur.innerHTML="Duration: "+data.duration;
+                    let album=document.createElement("a");
+                    album.innerHTML=data.album.name;
+                    album.setAttribute("href",`${root}/readAlbum.html?id=${data.album.id}`);
+                    album.setAttribute("class","sub-link")
+                    if (data.playlist!=null){
+                        let playlist=document.createElement("a");
+                        playlist.innerHTML="&nbsp;&nbsp;&nbsp;"+data.playlist.name;
+                        playlist.setAttribute("class","sub-link")
+                        playlist.setAttribute("href",`${root}/readPlaylist.html?id=${data.playlist.id}`);
+                        trackNameDisplay.appendChild(playlist);
+                    }
+                    trackNameDisplay.appendChild(title);
+                    trackNameDisplay.appendChild(dur);
+                    trackNameDisplay.appendChild(album);
+                    trackNameDisplay.appendChild(document.createElement("hr"));
+                    let lyrics=document.createElement("p");
+                    let text=document.createElement("i");
+                    text.innerHTML=data.lyrics;
+                    lyrics.appendChild(text);
+                    trackLyricsDisplay.appendChild(lyrics);
+                    updateTrackBtn.setAttribute("onclick", `updateTrack(${data.id})`);
+                    deleteEachTrack.setAttribute("onclick", `confirmDeleteTrack(${data.id})`)
+                    pageTitle.innerHTML=data.name;
+                }).catch((err) => console.log(err))
+        })
+}
+
+function readTrackPageLoad() {
+    readTrackById(params.get('id'));
+}
+
+function updateTrack(id) {
+    let formData = {
+        "name": trackNameUpdate.value,
+        "duration": trackDurationUpdate.value,
+        "lyrics": trackLyricsUpdate.value,
+        "album":{
+            "id": trackAlbumUpdate.value
+        },
+        playlist:{
+            "id":trackPlaylistUpdate.value
+        }
+    }
+    fetch(`http://localhost:8082/tracks/update/${id}`, {
+        method: 'put',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            location.reload();
+        })
+        .catch((err) => console.log(err))
+}
+
+function deleteTrack(id) {
+    fetch(`http://localhost:8082/tracks/delete/${id}`, {
+        method: 'delete',
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            location.reload();
+            window.location.replace(`${root}/readTrack.html#deleted`);
+        })
+        .catch((err) => console.log(err))
+}
+
+function confirmDeleteTrack(id) {
+    if (confirm("Are you sure?")) {
+        deleteTrack(id);
+        eachTrackDiv.innerHTML = "Track deleted.";
+    }
+}
 //#################################################################################################################
 //#################################################################################################################
 // METHODS FOR ALL ENTITIES

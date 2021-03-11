@@ -2,49 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="/css/style.css" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracks</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>Choonz Tracks</title>
+
+    <link href="css/style.css" rel="stylesheet">
 </head>
-
-<body>
-<!-- Navbar -->
-
-<nav class="navbar fixed-top navbar-expand-lg bg-light navbar-light">
-    <a class="navbar-brand" href="./">
-        <img class="logo" src="../img/Choonz.jpg" width="auto" ml-auto height="50"></a>
-    <button class="navbar-toggler collapsed border-0" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
-        <span class="navbar-toggler-icon"></span>
-        <div class="close-icon py-1">✖</div>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsingNavbar">
-        <ul class="nav navbar-nav">
+<body onload="readPage(tracksPath)">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">
+            <img src="../img/Choonz.png" alt="" width=150px>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/tracks">Featured Tracks</a>
+              <a class="nav-link active " href="tracks.html">Tracks</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/artists">Artists</a>
+              <a class="nav-link" href="artists.html">Artists</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/playlists">Top Playlists</a>
+                <a class="nav-link" href="albums.html">Albums</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="playlists.html">Playlists</a>
+              </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="genres.html">Genres</a>
             </li>
-        </ul>
-    </div>
-</nav>
-<!-- /Navbar -->
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search tracks" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
 
-<!-- /main -->
+      <div class="myContainer">
+        <button type="button" class="btn" onclick="show(createTrackForm)">
+          <img src="../img/plus-circle.svg" alt="Add Playlist">
+          <span> Create a track</span>
+          <span class="msg" id="createdAlbumMsg" style="display:none"> Track
+            created</span>
+        </button>
+        <div id="createTrackForm" style="display:none">
+          <input type="text" placeholder="Enter track name" id="trackName">
+          <textarea name="lyrics" id="trackLyrics" cols="30" rows="10" placeholder="Enter lyrics"></textarea>
+          <input type="text" placeholder="Enter duration (in s)" id="trackDuration">
+          <input type="text" placeholder="Enter album id" id="trackAlbum">
+          <input type="text" placeholder="Enter playlist id" id="trackPlaylist">
+          <span><button type="button" class="btn btn-success" onclick="createTrack()">Submit</button></span>
+          <span><button type="button" class="btn btn-secondary" onclick="hide(createTrackForm)">Cancel</button></span>
+        </div>
+    
+      </div>
+      <div class="myContainer">
+        <div class="row" id="tracksContainer">
 
-<h1> Put some stuff here</h1>
-
-
-
-
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    </body>
+        </div>
+      </div>
+      <script src="js/index.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+      crossorigin="anonymous"></script>
+</body>
 </html>
