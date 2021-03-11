@@ -47,6 +47,11 @@ public class UserController {
 	public ResponseEntity<UserDTO> read(@PathVariable long id) {
 		return new ResponseEntity<>(this.service.read(id), HttpStatus.OK);
 	}
+	
+	@GetMapping("/read-by-username/{username}")
+	public ResponseEntity<UserDTO> read(@PathVariable String username){
+		return new ResponseEntity<>(this.service.read(username), HttpStatus.OK); 
+	}
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<UserDTO> update(@RequestBody User user, @PathVariable long id,
