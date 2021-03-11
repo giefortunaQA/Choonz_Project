@@ -1,75 +1,70 @@
 package com.qa.choonz.rest.dto;
 
-import java.util.List;
-import java.util.Objects;
-
-import com.qa.choonz.persistence.domain.Album;
-
 public class ArtistDTO {
 
-    private long id;
-    private String name;
-    private List<Album> albums;
+	private long id;
+	private String name;
 
-    public ArtistDTO() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	public ArtistDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-    public ArtistDTO(long id, String name, List<Album> albums) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.albums = albums;
-    }
+	public ArtistDTO(long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
 
-    public long getId() {
-        return id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public List<Album> getAlbums() {
-        return albums;
-    }
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ArtistDTO [id=").append(id).append(", name=").append(name).append("]");
+		return builder.toString();
+	}
 
-    public void setAlbums(List<Album> albums) {
-        this.albums = albums;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("ArtistDTO [id=").append(id).append(", name=").append(name).append(", albums=").append(albums)
-                .append("]");
-        return builder.toString();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(albums, id, name);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof ArtistDTO)) {
-            return false;
-        }
-        ArtistDTO other = (ArtistDTO) obj;
-        return Objects.equals(albums, other.albums) && id == other.id && Objects.equals(name, other.name);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ArtistDTO other = (ArtistDTO) obj;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 
 }
