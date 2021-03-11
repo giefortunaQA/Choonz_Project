@@ -367,6 +367,139 @@ function confirmDeleteGenre(id) {
 }
 //#################################################################################################################
 //#################################################################################################################
+// METHODS FOR ALBUM 
+function createAlbumCard(display, album) {
+    let albumCard = createCardDiv(albumsPath,album);
+    let albumTitle = createCardTitle(album.name);
+    let albumCover=createCardImg(album.cover);
+    let albumArtist=createCardLink(`${root}/readArtist.html?id=${album.artist.id}`,album.artist.name);
+    let albumGenre=createCardLink(`${root}/readGenre.html?id=${album.genre.id}`,album.genre.name);
+    let albumLinks=document.createElement("div");
+    albumLinks.appendChild(albumArtist);
+    albumLinks.appendChild(albumGenre);
+    albumCard.appendChild(albumCover);
+    albumCard.appendChild(albumTitle);
+    albumCard.appendChild(albumLinks);
+    albumCard.setAttribute("onclick", `goTo(albumsPath,${album.id})`);
+    display.appendChild(albumCard);
+     console.log(album);
+     console.log(albumCard);
+}
+
+
+function createAlbum() {
+    let formData = {
+        "name": albumName.value,
+        "cover": albumCover.value,
+        "artist":{
+            "id":album_artistId.value
+        },
+        "genre":{
+            "id":album_genreId.value
+        }
+    }
+    fetch("http://localhost:8082/albums/create", {
+        method: 'post',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            hide(createAlbumForm);
+            location.reload();
+        })
+        .catch((err) => console.log(err))
+}
+
+function readAlbumById(id) {
+    fetch(`http://localhost:8082/albums/read/${id}`)
+        .then((res) => {
+            if (res.ok != true) {
+                console.log("Status is not OK!");
+            }
+            res.json()
+                .then((data) => {
+                    let titleDiv=document.createElement("div");
+                    let title = document.createElement("h1");
+                    title.innerHTML = data.name;
+                    title.setAttribute("class","album-title")
+                    titleDiv.style.backgroundImage=`url(${data.cover})`;
+                    // titleDiv.style.backgroundRepeat="no-repeat";
+                    titleDiv.style.padding="20px";
+                    titleDiv.appendChild(title);
+
+                    let artistLink = document.createElement("a");
+                    artistLink.innerHTML = data.artist.name;
+                    let genreLink = document.createElement("a");
+                    genreLink.innerHTML = data.genre.name;
+                    artistLink.setAttribute("href",`${root}/readArtist.html?id=${data.artist.id}`);
+                    artistLink.setAttribute("class","sub-link")
+                    genreLink.setAttribute("href",`${root}/readGenre.html?id=${data.genre.id}`);
+                    genreLink.setAttribute("class","sub-link")
+                    titleDiv.appendChild(artistLink);
+                    titleDiv.appendChild(document.createElement("br"));
+                    titleDiv.appendChild(genreLink);
+                    albumNameDisplay.appendChild(titleDiv);
+                    updateAlbumBtn.setAttribute("onclick", `updateAlbum(${data.id})`);
+                    deleteEachAlbum.setAttribute("onclick", `confirmDeleteAlbum(${data.id})`);
+                    pageTitle.innerHTML=data.name;
+                }).catch((err) => console.log(err))
+        })
+}
+function readAlbumPageLoad() {
+    readAlbumById(params.get('id'));
+}
+
+function updateAlbum(id) {
+    let formData = {
+        "name": albumNameUpdate.value,
+        "cover": albumCoverUpdate.value,
+        "artist":{
+            "id":albumArtistUpdate.value
+        },
+        "genre":{
+            "id":albumGenreUpdate.value
+        }
+    }
+    fetch(`http://localhost:8082/albums/update/${id}`, {
+        method: 'put',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            location.reload();
+        })
+        .catch((err) => console.log(err))
+}
+
+function deleteAlbum(id) {
+    fetch(`http://localhost:8082/albums/delete/${id}`, {
+        method: 'delete',
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            window.location.replace(`${root}/readGenre.html#deleted`);
+        })
+        .catch((err) => console.log(err))
+}
+
+function confirmDeleteAlbum(id) {
+    if (confirm("Are you sure?")) {
+        deleteAlbum(id);
+        albumNameDisplay.innerHTML = "Album deleted.";
+    }
+}
+
+//#################################################################################################################
+//#################################################################################################################
 // METHODS FOR ALL ENTITIES
 function goTo(path, id) {
     if (path == tracksPath) {
