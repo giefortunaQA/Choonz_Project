@@ -497,6 +497,116 @@ function confirmDeleteAlbum(id) {
         albumNameDisplay.innerHTML = "Album deleted.";
     }
 }
+//#################################################################################################################
+//#################################################################################################################
+// METHODS FOR PLAYLISTS 
+function createPlaylistCard(display, playlist) {
+    let playlistCard = createCardDiv(playlistsPath,playlist);
+    let playlistTitle = createCardTitle(playlist.name);
+    let playlistArtwork=createCardImg(playlist.artwork);
+    let playlistDesc=createCardText(playlist.description);
+    playlistCard.appendChild(playlistArtwork);
+    playlistCard.appendChild(playlistTitle);
+    playlistCard.appendChild(playlistDesc);
+    playlistCard.setAttribute("onclick", `goTo(playlistsPath,${playlist.id})`);
+    display.appendChild(playlistCard);
+}
+
+
+function createPlaylist() {
+    let formData = {
+        "name": playlistName.value,
+        "artwork": playlistArtwork.value,
+        "description": playlistDesc.value,
+        "user":{
+            "id":playlistUser.value
+        }
+    }
+    fetch("http://localhost:8082/playlists/create", {
+        method: 'post',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            hide(createPlaylistForm);
+            location.reload();
+        })
+        .catch((err) => console.log(err))
+}
+
+function readPlaylistById(id) {
+    fetch(`http://localhost:8082/playlists/read/${id}`)
+        .then((res) => {
+            if (res.ok != true) {
+                console.log("Status is not OK!");
+            }
+            res.json()
+                .then((data) => {
+                    let titleDiv=document.createElement("div");
+                    let title = document.createElement("h1");
+                    title.innerHTML = data.name;
+                    title.setAttribute("class","album-title")
+                    titleDiv.style.backgroundImage=`url(${data.artwork})`;
+                    titleDiv.style.padding="20px";
+                    titleDiv.appendChild(title);
+                    playlistNameDisplay.appendChild(titleDiv);
+                    updatePlaylistBtn.setAttribute("onclick", `updatePlaylist(${data.id})`);
+                    deleteEachPlaylist.setAttribute("onclick", `confirmDeletePlaylist(${data.id})`)
+                    pageTitle.innerHTML=data.name;
+                }).catch((err) => console.log(err))
+        })
+}
+
+function readPlaylistPageLoad() {
+    readPlaylistById(params.get('id'));
+}
+
+function updatePlaylist(id) {
+    let formData = {
+        "name": playlistNameUpdate.value,
+        "artwork": playlistArtworkUpdate.value,
+       "description": playlistDescUpdate.value,
+       "user":{
+        "id":playlistUserUpdate.value
+    }
+    }
+    fetch(`http://localhost:8082/playlists/update/${id}`, {
+        method: 'put',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            location.reload();
+        })
+        .catch((err) => console.log(err))
+}
+
+function deletePlaylist(id) {
+    fetch(`http://localhost:8082/playlists/delete/${id}`, {
+        method: 'delete',
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            window.location.replace(`${root}/readPlaylist.html#deleted`);
+        })
+        .catch((err) => console.log(err))
+}
+
+function confirmDeletePlaylist(id) {
+    if (confirm("Are you sure?")) {
+        deletePlaylist(id);
+        playlistNameDisplay.innerHTML = "Playlist deleted.";
+    }
+}
 
 //#################################################################################################################
 //#################################################################################################################
