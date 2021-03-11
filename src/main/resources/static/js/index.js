@@ -8,6 +8,7 @@ const tracksPath = "tracks";
 const albumsPath = "albums";
 const genresPath = "genres";
 const playlistsPath = "playlists";
+const usersPath = "user"
 
 // Containers (output)
 const tracksContainer = document.getElementById("tracksContainer")
@@ -27,12 +28,15 @@ const trackNameDisplay = document.getElementById("trackNameDisplay")
 const trackLyricsDisplay = document.getElementById("trackLyricsDisplay")
 const eachTrackDiv = document.getElementById("eachTrackDiv");
 const tracksByArtistTitle = document.getElementById("tracksByArtistTitle")
-const artistChild=document.querySelectorAll(".artist-child")
+const artistChild = document.querySelectorAll(".artist-child")
+const greet=document.querySelectorAll(".greet")
 
 // Form Divs
 const createArtistForm = document.getElementById("createArtistForm")
 const createGenreForm = document.getElementById("createGenreForm")
 const updateArtistForm = document.getElementById("updateArtistForm")
+const signInForm = document.getElementById("signInForm")
+const signUpForm = document.getElementById("signUpForm")
 
 // Buttons
 let updateEachArtist = document.getElementById("updateEachArtist")
@@ -67,10 +71,13 @@ const trackLyricsUpdate = document.getElementById("trackLyricsUpdate")
 const trackDurationUpdate = document.getElementById("trackDurationUpdate")
 const trackAlbumUpdate = document.getElementById("trackAlbumUpdate")
 const trackPlaylistUpdate = document.getElementById("trackPlaylistUpdate")
-
+const usernameUp=document.getElementById("usernameUp")
+const passwordUp=document.getElementById("passwordUp")
+const usernameIn=document.getElementById("usernameIn")
+const passwordIn=document.getElementById("passwordIn")
 
 // Variables for navigation
-const root = "file:///C:/Users/giean/Documents/Workspaces/VS%20-%20Workspace/Choonz/static";
+const root = "file:///C:/Users/giean/Documents/Workspaces/STS%20-%20Workspace/Choonz-Starter-master/src/main/resources/static";
 const params = new URLSearchParams(window.location.search);
 
 //#################################################################################################################
@@ -138,6 +145,16 @@ function show(target) {
 }
 function hide(target) {
     target.style.display = "none";
+}
+
+function userFormToggle(target) {
+    if (target == signUpForm) {
+        show(signUpForm);
+        hide(signInForm);
+    } else {
+        hide(signUpForm);
+        show(signInForm);
+    }
 }
 
 //#################################################################################################################
@@ -253,8 +270,8 @@ function deleteArtist(id) {
         .then(data => {
             console.log(`Request succeeded with JSON response ${data}`);
             window.location.replace(`${root}/readArtist.html#deleted`);
-               
-            })
+
+        })
         .catch((err) => console.log(err))
 }
 
@@ -262,7 +279,7 @@ function confirmDeleteArtist(id) {
     if (confirm("Are you sure?")) {
         deleteArtist(id);
         artistNameDisplay.innerHTML = "Artist deleted."
-        for (let child of artistChild){
+        for (let child of artistChild) {
             hide(child);
         }
     }
@@ -318,7 +335,7 @@ function readGenreById(id) {
                     genreDescDisplay.appendChild(desc);
                     updateGenreBtn.setAttribute("onclick", `updateGenre(${data.id})`);
                     deleteEachGenre.setAttribute("onclick", `confirmDeleteGenre(${data.id})`);
-                    pageTitle.innerHTML=data.name;
+                    pageTitle.innerHTML = data.name;
                 }).catch((err) => console.log(err))
         })
 }
@@ -362,19 +379,19 @@ function confirmDeleteGenre(id) {
     if (confirm("Are you sure?")) {
         deleteGenre(id);
         genreNameDisplay.innerHTML = "Genre deleted.";
-        genreDescDisplay.innerHTML="";
+        genreDescDisplay.innerHTML = "";
     }
 }
 //#################################################################################################################
 //#################################################################################################################
 // METHODS FOR ALBUM 
 function createAlbumCard(display, album) {
-    let albumCard = createCardDiv(albumsPath,album);
+    let albumCard = createCardDiv(albumsPath, album);
     let albumTitle = createCardTitle(album.name);
-    let albumCover=createCardImg(album.cover);
-    let albumArtist=createCardLink(`${root}/readArtist.html?id=${album.artist.id}`,album.artist.name);
-    let albumGenre=createCardLink(`${root}/readGenre.html?id=${album.genre.id}`,album.genre.name);
-    let albumLinks=document.createElement("div");
+    let albumCover = createCardImg(album.cover);
+    let albumArtist = createCardLink(`${root}/readArtist.html?id=${album.artist.id}`, album.artist.name);
+    let albumGenre = createCardLink(`${root}/readGenre.html?id=${album.genre.id}`, album.genre.name);
+    let albumLinks = document.createElement("div");
     albumLinks.appendChild(albumArtist);
     albumLinks.appendChild(albumGenre);
     albumCard.appendChild(albumCover);
@@ -382,8 +399,8 @@ function createAlbumCard(display, album) {
     albumCard.appendChild(albumLinks);
     albumCard.setAttribute("onclick", `goTo(albumsPath,${album.id})`);
     display.appendChild(albumCard);
-     console.log(album);
-     console.log(albumCard);
+    console.log(album);
+    console.log(albumCard);
 }
 
 
@@ -391,11 +408,11 @@ function createAlbum() {
     let formData = {
         "name": albumName.value,
         "cover": albumCover.value,
-        "artist":{
-            "id":album_artistId.value
+        "artist": {
+            "id": album_artistId.value
         },
-        "genre":{
-            "id":album_genreId.value
+        "genre": {
+            "id": album_genreId.value
         }
     }
     fetch("http://localhost:8082/albums/create", {
@@ -422,30 +439,30 @@ function readAlbumById(id) {
             }
             res.json()
                 .then((data) => {
-                    let titleDiv=document.createElement("div");
+                    let titleDiv = document.createElement("div");
                     let title = document.createElement("h1");
                     title.innerHTML = data.name;
-                    title.setAttribute("class","album-title")
-                    titleDiv.style.backgroundImage=`url(${data.cover})`;
+                    title.setAttribute("class", "album-title")
+                    titleDiv.style.backgroundImage = `url(${data.cover})`;
                     // titleDiv.style.backgroundRepeat="no-repeat";
-                    titleDiv.style.padding="20px";
+                    titleDiv.style.padding = "20px";
                     titleDiv.appendChild(title);
 
                     let artistLink = document.createElement("a");
                     artistLink.innerHTML = data.artist.name;
                     let genreLink = document.createElement("a");
                     genreLink.innerHTML = data.genre.name;
-                    artistLink.setAttribute("href",`${root}/readArtist.html?id=${data.artist.id}`);
-                    artistLink.setAttribute("class","sub-link")
-                    genreLink.setAttribute("href",`${root}/readGenre.html?id=${data.genre.id}`);
-                    genreLink.setAttribute("class","sub-link")
+                    artistLink.setAttribute("href", `${root}/readArtist.html?id=${data.artist.id}`);
+                    artistLink.setAttribute("class", "sub-link")
+                    genreLink.setAttribute("href", `${root}/readGenre.html?id=${data.genre.id}`);
+                    genreLink.setAttribute("class", "sub-link")
                     titleDiv.appendChild(artistLink);
                     titleDiv.appendChild(document.createElement("br"));
                     titleDiv.appendChild(genreLink);
                     albumNameDisplay.appendChild(titleDiv);
                     updateAlbumBtn.setAttribute("onclick", `updateAlbum(${data.id})`);
                     deleteEachAlbum.setAttribute("onclick", `confirmDeleteAlbum(${data.id})`);
-                    pageTitle.innerHTML=data.name;
+                    pageTitle.innerHTML = data.name;
                 }).catch((err) => console.log(err))
         })
 }
@@ -457,11 +474,11 @@ function updateAlbum(id) {
     let formData = {
         "name": albumNameUpdate.value,
         "cover": albumCoverUpdate.value,
-        "artist":{
-            "id":albumArtistUpdate.value
+        "artist": {
+            "id": albumArtistUpdate.value
         },
-        "genre":{
-            "id":albumGenreUpdate.value
+        "genre": {
+            "id": albumGenreUpdate.value
         }
     }
     fetch(`http://localhost:8082/albums/update/${id}`, {
@@ -501,10 +518,10 @@ function confirmDeleteAlbum(id) {
 //#################################################################################################################
 // METHODS FOR PLAYLISTS 
 function createPlaylistCard(display, playlist) {
-    let playlistCard = createCardDiv(playlistsPath,playlist);
+    let playlistCard = createCardDiv(playlistsPath, playlist);
     let playlistTitle = createCardTitle(playlist.name);
-    let playlistArtwork=createCardImg(playlist.artwork);
-    let playlistDesc=createCardText(playlist.description);
+    let playlistArtwork = createCardImg(playlist.artwork);
+    let playlistDesc = createCardText(playlist.description);
     playlistCard.appendChild(playlistArtwork);
     playlistCard.appendChild(playlistTitle);
     playlistCard.appendChild(playlistDesc);
@@ -518,8 +535,8 @@ function createPlaylist() {
         "name": playlistName.value,
         "artwork": playlistArtwork.value,
         "description": playlistDesc.value,
-        "user":{
-            "id":playlistUser.value
+        "user": {
+            "id": playlistUser.value
         }
     }
     fetch("http://localhost:8082/playlists/create", {
@@ -546,17 +563,17 @@ function readPlaylistById(id) {
             }
             res.json()
                 .then((data) => {
-                    let titleDiv=document.createElement("div");
+                    let titleDiv = document.createElement("div");
                     let title = document.createElement("h1");
                     title.innerHTML = data.name;
-                    title.setAttribute("class","album-title")
-                    titleDiv.style.backgroundImage=`url(${data.artwork})`;
-                    titleDiv.style.padding="20px";
+                    title.setAttribute("class", "album-title")
+                    titleDiv.style.backgroundImage = `url(${data.artwork})`;
+                    titleDiv.style.padding = "20px";
                     titleDiv.appendChild(title);
                     playlistNameDisplay.appendChild(titleDiv);
                     updatePlaylistBtn.setAttribute("onclick", `updatePlaylist(${data.id})`);
                     deleteEachPlaylist.setAttribute("onclick", `confirmDeletePlaylist(${data.id})`)
-                    pageTitle.innerHTML=data.name;
+                    pageTitle.innerHTML = data.name;
                 }).catch((err) => console.log(err))
         })
 }
@@ -569,10 +586,10 @@ function updatePlaylist(id) {
     let formData = {
         "name": playlistNameUpdate.value,
         "artwork": playlistArtworkUpdate.value,
-       "description": playlistDescUpdate.value,
-       "user":{
-        "id":playlistUserUpdate.value
-    }
+        "description": playlistDescUpdate.value,
+        "user": {
+            "id": playlistUserUpdate.value
+        }
     }
     fetch(`http://localhost:8082/playlists/update/${id}`, {
         method: 'put',
@@ -611,10 +628,10 @@ function confirmDeletePlaylist(id) {
 //#################################################################################################################
 // METHODS FOR TRACKS
 function createTrackCard(display, track) {
-    let trackCard = createCardDiv(tracksPath,track);
+    let trackCard = createCardDiv(tracksPath, track);
     let trackTitle = createCardTitle(track.name);
-    let trackDur=createCardSubtitle(`Duration: ${track.duration}s`)
-    let trackAlbum=createCardLink(`${root}/readAlbum.html?id=${track.album.id}`,track.album.name);
+    let trackDur = createCardSubtitle(`Duration: ${track.duration}s`)
+    let trackAlbum = createCardLink(`${root}/readAlbum.html?id=${track.album.id}`, track.album.name);
     trackCard.appendChild(trackTitle);
     trackCard.appendChild(trackDur);
     trackCard.appendChild(trackAlbum);
@@ -623,17 +640,19 @@ function createTrackCard(display, track) {
 }
 
 
+
 function createTrack() {
     let formData = {
         "name": trackName.value,
         "duration": trackDuration.value,
         "lyrics": trackLyrics.value,
-        "album":{
+        "album": {
             "id": trackAlbum.value
         },
-        playlist:{
-            "id":trackPlaylist.value
-        }
+    }
+
+    if (trackPlaylist != null) {
+        formData.playlist.id = trackPlaylist.value;
     }
     fetch("http://localhost:8082/tracks/create", {
         method: 'post',
@@ -661,33 +680,33 @@ function readTrackById(id) {
                 .then((data) => {
                     let title = document.createElement("h1");
                     title.innerHTML = data.name;
-                    title.setAttribute("class","album-title")
-                    title.style.padding="20px";
-                    let dur=document.createElement("h6");
-                    dur.innerHTML="Duration: "+data.duration;
-                    let album=document.createElement("a");
-                    album.innerHTML=data.album.name;
-                    album.setAttribute("href",`${root}/readAlbum.html?id=${data.album.id}`);
-                    album.setAttribute("class","sub-link")
-                    if (data.playlist!=null){
-                        let playlist=document.createElement("a");
-                        playlist.innerHTML="&nbsp;&nbsp;&nbsp;"+data.playlist.name;
-                        playlist.setAttribute("class","sub-link")
-                        playlist.setAttribute("href",`${root}/readPlaylist.html?id=${data.playlist.id}`);
+                    title.setAttribute("class", "album-title")
+                    title.style.padding = "20px";
+                    let dur = document.createElement("h6");
+                    dur.innerHTML = "Duration: " + data.duration;
+                    let album = document.createElement("a");
+                    album.innerHTML = data.album.name;
+                    album.setAttribute("href", `${root}/readAlbum.html?id=${data.album.id}`);
+                    album.setAttribute("class", "sub-link")
+                    if (data.playlist != null) {
+                        let playlist = document.createElement("a");
+                        playlist.innerHTML = "&nbsp;&nbsp;&nbsp;" + data.playlist.name;
+                        playlist.setAttribute("class", "sub-link")
+                        playlist.setAttribute("href", `${root}/readPlaylist.html?id=${data.playlist.id}`);
                         trackNameDisplay.appendChild(playlist);
                     }
                     trackNameDisplay.appendChild(title);
                     trackNameDisplay.appendChild(dur);
                     trackNameDisplay.appendChild(album);
                     trackNameDisplay.appendChild(document.createElement("hr"));
-                    let lyrics=document.createElement("p");
-                    let text=document.createElement("i");
-                    text.innerHTML=data.lyrics;
+                    let lyrics = document.createElement("p");
+                    let text = document.createElement("i");
+                    text.innerHTML = data.lyrics;
                     lyrics.appendChild(text);
                     trackLyricsDisplay.appendChild(lyrics);
                     updateTrackBtn.setAttribute("onclick", `updateTrack(${data.id})`);
                     deleteEachTrack.setAttribute("onclick", `confirmDeleteTrack(${data.id})`)
-                    pageTitle.innerHTML=data.name;
+                    pageTitle.innerHTML = data.name;
                 }).catch((err) => console.log(err))
         })
 }
@@ -701,11 +720,11 @@ function updateTrack(id) {
         "name": trackNameUpdate.value,
         "duration": trackDurationUpdate.value,
         "lyrics": trackLyricsUpdate.value,
-        "album":{
+        "album": {
             "id": trackAlbumUpdate.value
         },
-        playlist:{
-            "id":trackPlaylistUpdate.value
+        playlist: {
+            "id": trackPlaylistUpdate.value
         }
     }
     fetch(`http://localhost:8082/tracks/update/${id}`, {
@@ -742,6 +761,86 @@ function confirmDeleteTrack(id) {
         eachTrackDiv.innerHTML = "Track deleted.";
     }
 }
+
+//#################################################################################################################
+//#################################################################################################################
+// METHODS FOR USER
+function readUserPageLoad() {
+    if (params.get('action') == "signUp") {
+        userFormToggle(signUpForm);
+    } else if (params.get('action') == "signIn") {
+        userFormToggle(signInForm);
+    } else {
+        confirmUser();
+    }
+}
+
+function confirmUser() {
+    if (confirm("Do you have an account?\nClick ok if yes.")) {
+        userFormToggle(signInForm);
+    } else {
+        userFormToggle(signUpForm);
+    }
+}
+
+function confirmLogout(){
+    if (confirm("Are you sure you want to logout?")){
+        logout();
+    }
+}
+function signUp(){
+    let formData = {
+        "username": usernameUp.value,
+        "password": passwordUp.value
+    }
+
+    fetch("http://localhost:8082/users/create", {
+        method: 'post',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            signUpForm.innerHTML="User created."
+        })
+        .catch((err) => console.log(err))
+}
+
+function login(){
+    let formData = {
+        "username": usernameIn.value,
+        "password": passwordIn.value
+    }
+    fetch("http://localhost:8082/users/login", {
+        method: 'post',
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Request succeeded with JSON response ${data}`);
+            greet.innerHTML="Hi, "+data.username;
+        })
+        .catch((err) => console.log(err))
+}
+
+function logout(){
+    
+}
+function userIconActions(){
+    for (let greeting of greet){}
+    if (greeting.innerHTML=""){
+        confirmLogout();
+    } else{
+        window.location.replace(`${root}/user.html`)
+    }}
+
+
 //#################################################################################################################
 //#################################################################################################################
 // METHODS FOR ALL ENTITIES
@@ -757,7 +856,6 @@ function goTo(path, id) {
     } else if (path == playlistsPath) {
         window.location.replace(`${root}/readPlaylist.html?id=${id}`);
     }
-
 }
 
 const readPage = (path) => {
