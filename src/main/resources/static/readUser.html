@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>My account</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -13,7 +13,7 @@
 
 </head>
 
-<body onload="readPlaylistPageLoad()">
+<body onload="readUserPageLoad()">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.html">
             <img src="../img/Choonz.png" alt="" width=150px>
@@ -34,7 +34,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="albums.html">Albums</a>
                 </li>
-                <li class="nav-item active ">
+                <li class="nav-item">
                     <a class="nav-link" href="playlists.html">Playlists</a>
                 </li>
                 <li class="nav-item ">
@@ -44,56 +44,22 @@
             <div id="userDisplay" class="pull-right">
                 <button type="button" onclick="userIconActions()" class="btn">
                     <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
-                  </button> 
-                  
+                  </button>
               </div>
         </div>
     </nav>
 
-    <div class="myContainer">
-        <a href="playlists.html" class="btn btn-light">
-            <img src="../img/arrow-left.svg" alt="Go back to Playlists"><span> Go Back to Playlists
-            </span>
-        </a>
-        <div class="card">
-            <div id="options">
-                <ul class="list-group list-group-horizontal pull-right list-unstyled">
-                    <li>
-                        <button type="button" class="btn" id="updateEachPlaylist" onclick="show(updatePlaylistForm)">Update</button>
-
-                        <!-- UPDATE PLAYLIST -->
-                        <div id="updatePlaylistForm" style="display:none">
-                            <input type="text" placeholder="Enter playlist name" id="playlistNameUpdate">
-                            <input type="text" placeholder="Enter artwork url" id="playlistArtworkUpdate">
-                            <input type="text" placeholder="Enter description" id="playlistDescUpdate">
-                            <input type="text" placeholder="Enter user id" id="playlistUserUpdate">
-                            <span><button type="button" class="btn btn-success" id="updatePlaylistBtn">Update</button></span>
-                        </div>
-
-                    </li>
-                    <li>
-                        <button type="button" class="btn" id="deleteEachPlaylist">Delete</button>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="card-body">
-                <div class="card-title" id="playlistNameDisplay">
-                </div>
-               
-            </div>
+    <!-- MAIN CONTAINER -->
+   <div class="myContainer card">
+        <div id="userTitle">
+            
         </div>
-          <!-- SONGS IN PLAYLIST -->
-          <div class="card playlist-child">
-            <div class="card-body">
-                <div class=card-title>
-                    <h2 id="tracksInPlaylistTitle"></h2>
-                </div>
-                <div class="row" id="tracksInPlaylistDiv">
-                </div>
-            </div>
+        <div id="userPlaylists">
+
         </div>
-    </div>
+   </div>
+       
+   
 
 
 

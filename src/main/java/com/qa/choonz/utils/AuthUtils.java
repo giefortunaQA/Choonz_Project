@@ -2,13 +2,11 @@ package com.qa.choonz.utils;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
-import java.util.Map;
-
 
 public class AuthUtils {
 
 	// variables
-	private static Map<String, Long> userTokens;
+	private static HashMap<String, Long> userTokens = new HashMap<>();
 	private static int tokenSize = 10;
 
 	// methods
@@ -23,9 +21,9 @@ public class AuthUtils {
 				.toString();
 	}
 
-	public static void start() {
-		userTokens = new HashMap<>();
-	}
+//	public static void start() {
+//		userTokens = new HashMap<>();
+//	}
 
 	public static String createUserToken(Long userId) {
 		String newToken = genToken();

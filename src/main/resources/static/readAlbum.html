@@ -41,10 +41,12 @@
                     <a class="nav-link" href="genres.html">Genres</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search albums" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <div id="userDisplay" class="pull-right">
+                <button type="button" onclick="userIconActions()" class="btn">
+                    <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
+                  </button>
+                  
+              </div>
         </div>
     </nav>
 
@@ -59,7 +61,7 @@
                     <li>
                         <button type="button" class="btn" id="updateEachAlbum" onclick="show(updateAlbumForm)">Update</button>
 
-                        <!-- UPDATE GENRE -->
+                        <!-- UPDATE album -->
                         <div id="updateAlbumForm" style="display:none">
                             <input type="text" placeholder="Enter album name" id="albumNameUpdate">
                             <input type="text" placeholder="Enter cover url" id="albumCoverUpdate">
@@ -79,9 +81,17 @@
                 <div class="card-title" id="albumNameDisplay">
                 </div>
             </div>
-            
         </div>
-       
+        <!-- SONGS IN ALBUM -->
+        <div class="card album-child">
+            <div class="card-body">
+                <div class=card-title>
+                    <h2 id="tracksInAlbumTitle"></h2>
+                </div>
+                <div class="row" id="tracksInAlbumDiv">
+                </div>
+            </div>
+        </div>
     </div>
 
 
