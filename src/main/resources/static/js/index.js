@@ -94,8 +94,6 @@ const usernameIn = document.getElementById("usernameIn")
 const passwordIn = document.getElementById("passwordIn")
 
 
-
-
 //#################################################################################################################
 //#################################################################################################################
 function noRecordsMsg(path, container) {
@@ -939,15 +937,15 @@ function signUp() {
 }
 
 function login() {
-	fetch("http://localhost:8082/users/login", {
-		method: 'post',
-		headers: {
-			"username": usernameIn.value,
-			"password": passwordIn.value
-		}
-	})
-		.then(data => {
-			console.log(data);
+    fetch("http://localhost:8082/users/login", {
+        method: 'post',
+        headers: {
+            "username": usernameIn.value,
+            "password": passwordIn.value
+        }
+    }).then(data => data.text() )
+        .then(data => {
+            console.log(data);
 			window.localStorage.setItem("token", data);
 			console.log(window.localStorage.getItem("token"));
 			signInForm.innerHTML = "Successfully Logged in";
@@ -955,8 +953,8 @@ function login() {
 			window.localStorage.setItem("userStatus", 1);
 			console.log("user status:" + window.localStorage.getItem("userStatus"));
 			greetUser();
-		})
-		.catch((err) => console.log(err))
+        })
+        .catch((err) => console.log(err))
 }
 
 function greetUser() {
