@@ -14,43 +14,42 @@ import com.qa.choonz.rest.dto.ArtistDTO;
 @Service
 public class ArtistService {
 
-    private ArtistRepository repo;
-    private ModelMapper mapper;
+	private ArtistRepository repo;
+	private ModelMapper mapper;
 
-    public ArtistService(ArtistRepository repo, ModelMapper mapper) {
-        super();
-        this.repo = repo;
-        this.mapper = mapper;
-    }
+	public ArtistService(ArtistRepository repo, ModelMapper mapper) {
+		super();
+		this.repo = repo;
+		this.mapper = mapper;
+	}
 
-    private ArtistDTO mapToDTO(Artist artist) {
-        return this.mapper.map(artist, ArtistDTO.class);
-    }
+	private ArtistDTO mapToDTO(Artist artist) {
+		return this.mapper.map(artist, ArtistDTO.class);
+	}
 
-    public ArtistDTO create(Artist artist) {
-        Artist created = this.repo.save(artist);
-        return this.mapToDTO(created);
-    }
+	public ArtistDTO create(Artist artist) {
+		Artist created = this.repo.save(artist);
+		return this.mapToDTO(created);
+	}
 
-    public List<ArtistDTO> read() {
-        return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
-    }
+	public List<ArtistDTO> read() {
+		return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+	}
 
-    public ArtistDTO read(long id) {
-        Artist found = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
-        return this.mapToDTO(found);
-    }
+	public ArtistDTO read(long id) {
+		Artist found = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
+		return this.mapToDTO(found);
+	}
 
-    public ArtistDTO update(Artist artist, long id) {
-        Artist toUpdate = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
-        toUpdate.setName(artist.getName());
-        toUpdate.setAlbums(artist.getAlbums());
-        Artist updated = this.repo.save(toUpdate);
-        return this.mapToDTO(updated);
-    }
+	public ArtistDTO update(Artist artist, long id) {
+		Artist toUpdate = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
+		toUpdate.setName(artist.getName());
+		Artist updated = this.repo.save(toUpdate);
+		return this.mapToDTO(updated);
+	}
 
-    public boolean delete(long id) {
-        this.repo.deleteById(id);
-        return !this.repo.existsById(id);
-    }
+	public boolean delete(long id) {
+		this.repo.deleteById(id);
+		return !this.repo.existsById(id);
+	}
 }

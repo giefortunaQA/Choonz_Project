@@ -31,7 +31,8 @@ public class Track {
 
     // in seconds
     private int duration;
-
+    
+    @Size(max = 5000)
     private String lyrics;
 
     public Track() {
@@ -40,17 +41,17 @@ public class Track {
     }
 
     public Track(long id, @NotNull @Size(max = 100) String name, Album album, Playlist playlist, int duration,
-            String lyrics) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.album = album;
-        this.playlist = playlist;
-        this.duration = duration;
-        this.lyrics = lyrics;
-    }
+			@Size(max = 5000) String lyrics) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.album = album;
+		this.playlist = playlist;
+		this.duration = duration;
+		this.lyrics = lyrics;
+	}
 
-    public long getId() {
+	public long getId() {
         return id;
     }
 
