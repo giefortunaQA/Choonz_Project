@@ -47,10 +47,10 @@ public class UserController {
 	public ResponseEntity<UserDTO> read(@PathVariable long id) {
 		return new ResponseEntity<>(this.service.read(id), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/read-by-username/{username}")
-	public ResponseEntity<UserDTO> read(@PathVariable String username){
-		return new ResponseEntity<>(this.service.read(username), HttpStatus.OK); 
+	public ResponseEntity<UserDTO> read(@PathVariable String username) {
+		return new ResponseEntity<>(this.service.read(username), HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{id}")
@@ -72,12 +72,15 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestHeader("username") String username, @RequestHeader("password") String password) {
+	public ResponseEntity<String> login(@RequestHeader("username") String username,
+			@RequestHeader("password") String password) {
 		Long userId = this.service.login(username, password);
 		if (userId == null) {
 			return new ResponseEntity<>("INVALID", HttpStatus.BAD_REQUEST);
-		} String loggedIn = AuthUtils.createUserToken(userId);
-		return new ResponseEntity<>(loggedIn, HttpStatus.OK);
+		}
+		String loggedIn = AuthUtils.createUserToken(userId);
+		ResponseEntity<String> response = new ResponseEntity<>(loggedIn, HttpStatus.OK);
+		return response;
 	}
 
 	@PostMapping("/logout")

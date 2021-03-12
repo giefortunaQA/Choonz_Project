@@ -85,7 +85,7 @@ const passwordIn = document.getElementById("passwordIn")
 
 
 // Variables for navigation
-const root = "file:///C:/Users/giean/Documents/Workspaces/STS%20-%20Workspace/Choonz-Starter-master/src/main/resources/static";
+const root = "http://localhost:8082";
 const params = new URLSearchParams(window.location.search);
 
 //#################################################################################################################
@@ -874,11 +874,9 @@ function login() {
             "username": usernameIn.value,
             "password": passwordIn.value
         }
-    })
+    }).then(data => data.text() )
         .then(data => {
-            console.log(data.type);
-            window.localStorage.setItem("token", data);
-            console.log(window.localStorage.getItem("token"));
+            console.log(data);
             signInForm.innerHTML = "Successfully Logged in";
             window.localStorage.setItem("currentUser", usernameIn.value);
             greetUser();
