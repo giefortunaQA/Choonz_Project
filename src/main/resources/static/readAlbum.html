@@ -42,9 +42,9 @@
                 </li>
             </ul>
             <div id="userDisplay" class="pull-right">
-                <a href="user.html">
-                  <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span id="greet"></span>
-                </a>
+                <button type="button" onclick="userIconActions()" class="btn">
+                    <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
+                  </button>
                   
               </div>
         </div>
@@ -61,7 +61,7 @@
                     <li>
                         <button type="button" class="btn" id="updateEachAlbum" onclick="show(updateAlbumForm)">Update</button>
 
-                        <!-- UPDATE GENRE -->
+                        <!-- UPDATE album -->
                         <div id="updateAlbumForm" style="display:none">
                             <input type="text" placeholder="Enter album name" id="albumNameUpdate">
                             <input type="text" placeholder="Enter cover url" id="albumCoverUpdate">
@@ -81,9 +81,17 @@
                 <div class="card-title" id="albumNameDisplay">
                 </div>
             </div>
-            
         </div>
-       
+        <!-- SONGS IN ALBUM -->
+        <div class="card album-child">
+            <div class="card-body">
+                <div class=card-title>
+                    <h2 id="tracksInAlbumTitle"></h2>
+                </div>
+                <div class="row" id="tracksInAlbumDiv">
+                </div>
+            </div>
+        </div>
     </div>
 
 

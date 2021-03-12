@@ -1,7 +1,6 @@
 'use strict';
 // Global vars
 const pageTitle = document.querySelector("title");
-var currentUser;
 var token;
 
 // Paths
@@ -18,7 +17,9 @@ const artistsContainer = document.getElementById("artistsContainer")
 const genresContainer = document.getElementById("genresContainer")
 const playlistsContainer = document.getElementById("playlistsContainer")
 const albumsByArtistDiv = document.getElementById("albumsByArtistDiv")
-const tracksByArtistDiv = document.getElementById("trackByArtistDiv")
+const tracksByArtistDiv = document.getElementById("tracksByArtistDiv")
+const tracksInAlbumDiv=document.getElementById("tracksInAlbumDiv")
+const tracksInPlaylistDiv=document.getElementById("tracksInPlaylistDiv")
 
 //Other Outputs
 const createdArtistMsg = document.getElementById("createdArtistMsg")
@@ -30,8 +31,12 @@ const trackNameDisplay = document.getElementById("trackNameDisplay")
 const trackLyricsDisplay = document.getElementById("trackLyricsDisplay")
 const eachTrackDiv = document.getElementById("eachTrackDiv");
 const tracksByArtistTitle = document.getElementById("tracksByArtistTitle")
+const tracksInAlbumTitle=document.getElementById("tracksInAlbumTitle")
+const tracksInPlaylistTitle=document.getElementById("tracksInPlaylistTitle")
 const artistChild = document.querySelectorAll(".artist-child")
-const greet=document.querySelectorAll(".greet")
+const greet = document.querySelectorAll(".greet")
+const userTitle = document.getElementById("userTitle")
+const userPlaylists = document.getElementById("userPlaylists")
 
 // Form Divs
 const createArtistForm = document.getElementById("createArtistForm")
@@ -73,10 +78,10 @@ const trackLyricsUpdate = document.getElementById("trackLyricsUpdate")
 const trackDurationUpdate = document.getElementById("trackDurationUpdate")
 const trackAlbumUpdate = document.getElementById("trackAlbumUpdate")
 const trackPlaylistUpdate = document.getElementById("trackPlaylistUpdate")
-const usernameUp=document.getElementById("usernameUp")
-const passwordUp=document.getElementById("passwordUp")
-const usernameIn=document.getElementById("usernameIn")
-const passwordIn=document.getElementById("passwordIn")
+const usernameUp = document.getElementById("usernameUp")
+const passwordUp = document.getElementById("passwordUp")
+const usernameIn = document.getElementById("usernameIn")
+const passwordIn = document.getElementById("passwordIn")
 
 
 // Variables for navigation
@@ -216,6 +221,7 @@ function readArtistById(id) {
 
 function readArtistPageLoad() {
     readArtistById(params.get('id'));
+    greetUser();
 }
 function readAlbumsByArtist(id) {
     fetch(`http://localhost:8082/albums/read/by-artist/${id}`)
@@ -241,6 +247,7 @@ function readTracksByArtist(id) {
                 .then((data) => {
                     for (let track of data) {
                         createTrackCard(tracksByArtistDiv, track);
+                        console.log(track);
                     }
                 }).catch((err) => console.log(err))
         })
@@ -344,6 +351,7 @@ function readGenreById(id) {
 }
 function readGenrePageLoad() {
     readGenreById(params.get('id'));
+    greetUser();
 }
 
 function updateGenre(id) {
@@ -466,11 +474,29 @@ function readAlbumById(id) {
                     updateAlbumBtn.setAttribute("onclick", `updateAlbum(${data.id})`);
                     deleteEachAlbum.setAttribute("onclick", `confirmDeleteAlbum(${data.id})`);
                     pageTitle.innerHTML = data.name;
+                    readTracksInAlbum(data.id);
                 }).catch((err) => console.log(err))
         })
 }
+function readTracksInAlbum(id) {
+    fetch(`http://localhost:8082/tracks/read/by-album/${id}`)
+        .then((res) => {
+            if (res.ok != true) {
+                console.log("Status is not OK!");
+            }
+            res.json()
+                .then((data) => {
+                    for (let track of data) {
+                        createTrackCard(tracksInAlbumDiv, track);
+                        console.log(track);
+                    }
+                }).catch((err) => console.log(err))
+        })
+}
+
 function readAlbumPageLoad() {
     readAlbumById(params.get('id'));
+    greetUser();
 }
 
 function updateAlbum(id) {
@@ -580,9 +606,29 @@ function readPlaylistById(id) {
                 }).catch((err) => console.log(err))
         })
 }
+function readTracksInPlaylist(id) {
+    fetch(`http://localhost:8082/tracks/read/by-playlist/${id}`)
+        .then((res) => {
+            if (res.ok != true) {
+                console.log("Status is not OK!");
+            }
+            res.json()
+                .then((data) => {
+                    for (let track of data) {
+                        createTrackCard(tracksInPlaylistDiv, track);
+                        console.log(track);
+                    }
+                }).catch((err) => console.log(err))
+        })
+}
 
+function readAlbumPageLoad() {
+    readAlbumById(params.get('id'));
+    greetUser();
+}
 function readPlaylistPageLoad() {
     readPlaylistById(params.get('id'));
+    greetUser();
 }
 
 function updatePlaylist(id) {
@@ -640,6 +686,7 @@ function createTrackCard(display, track) {
     trackCard.appendChild(trackAlbum);
     trackCard.setAttribute("onclick", `goTo(tracksPath,${track.id})`);
     display.appendChild(trackCard);
+    console.log(trackCard);
 }
 
 
@@ -652,11 +699,14 @@ function createTrack() {
         "album": {
             "id": trackAlbum.value
         },
+        "playlist": {
+            "id": trackPlaylist.value
+        }
     }
 
-    if (trackPlaylist != null) {
-        formData.playlist.id = trackPlaylist.value;
-    }
+    // if (trackPlaylist != null) {
+    //     formData.playlist.id = trackPlaylist.value;
+    // }
     fetch("http://localhost:8082/tracks/create", {
         method: 'post',
         headers: {
@@ -716,6 +766,7 @@ function readTrackById(id) {
 
 function readTrackPageLoad() {
     readTrackById(params.get('id'));
+    greetUser();
 }
 
 function updateTrack(id) {
@@ -726,7 +777,7 @@ function updateTrack(id) {
         "album": {
             "id": trackAlbumUpdate.value
         },
-        playlist: {
+        "playlist": {
             "id": trackPlaylistUpdate.value
         }
     }
@@ -768,10 +819,10 @@ function confirmDeleteTrack(id) {
 //#################################################################################################################
 //#################################################################################################################
 // METHODS FOR USER
-function readUserPageLoad() {
+function readUserActionsPage() {
     if (params.get('action') == "signUp") {
         userFormToggle(signUpForm);
-    } else if (params.get('action') == "signIn") {
+    } else if (params.get('action') == "login") {
         userFormToggle(signInForm);
     } else {
         confirmUser();
@@ -780,18 +831,18 @@ function readUserPageLoad() {
 
 function confirmUser() {
     if (confirm("Do you have an account?\nClick ok if yes.")) {
-        userFormToggle(signInForm);
+        window.location.replace(`${root}/user.html?action=signUp`);
     } else {
-        userFormToggle(signUpForm);
+        window.location.replace(`${root}/user.html?action=signUp`);
     }
 }
 
-function confirmLogout(){
-    if (confirm("Are you sure you want to logout?")){
+function confirmLogout() {
+    if (confirm("Are you sure you want to logout?")) {
         logout();
     }
 }
-function signUp(){
+function signUp() {
     let formData = {
         "username": usernameUp.value,
         "password": passwordUp.value
@@ -807,52 +858,93 @@ function signUp(){
         .then(res => res.json())
         .then(data => {
             console.log(`Request succeeded with JSON response ${data}`);
-            signUpForm.innerHTML="User created."
+            signUpForm.innerHTML = "User created.\n"
+            let loginLink = document.createElement("a");
+            loginLink.innerHTML = "Sign in";
+            loginLink.setAttribute("href", `${root}/user.html?action=login`)
+            signUpForm.appendChild(loginLink);
         })
         .catch((err) => console.log(err))
 }
 
-function login(){
+function login() {
     fetch("http://localhost:8082/users/login", {
         method: 'post',
         headers: {
-        "username": usernameIn.value,
-        "password": passwordIn.value
+            "username": usernameIn.value,
+            "password": passwordIn.value
+        }
+    })
+        .then(data => {
+            console.log(data.type);
+            window.localStorage.setItem("token", data);
+            console.log(window.localStorage.getItem("token"));
+            signInForm.innerHTML = "Successfully Logged in";
+            window.localStorage.setItem("currentUser", usernameIn.value);
+            greetUser();
+        })
+        .catch((err) => console.log(err))
+}
+
+function greetUser() {
+    for (let greeting of greet) {
+        console.log(greeting);
+        greeting.innerHTML = " Hi, " + window.localStorage.getItem("currentUser")
+    };
+}
+
+function logout() {
+    fetch("http://localhost:8082/users/logout", {
+        method: 'post',
+        headers: {
+            "token": token.value
         }
     })
         .then(data => {
             console.log(`Token returned: ${data}`);
-            token="";
-            for (let i in data){
-                token+=i;
-            }
-            console.log(token);
-            console.log(greet);
-                currentUser=usernameIn.value;
-                token=data.value;
-                signInForm.innerHTML="Successfully Logged in";
-                greetUser();
+            signInForm.innerHTML = "Successfully Logged out";
         })
         .catch((err) => console.log(err))
 }
 
-function greetUser(){
-    for (let greeting of greet){
-        console.log(greeting);
-        greeting.innerHTML="Hi, "+currentUser};
+function userIconActions() {
+    for (let greeting of greet) {
+        if (greeting.innerHTML != "") {
+            confirmLogout();
+        } else {
+            window.location.replace(`${root}/readUser.html?id=${window.localStorage.getItem("currentUserId")}`);
+        }
+    }
 }
 
-function logout(){
-    
+function readUserPage() {
+    readUserById(params.get('id'));
 }
 
-function userIconActions(){
-    for (let greeting of greet){
-    if (greeting.innerHTML=""){
-        confirmLogout();
-    } else{
-        window.location.replace(`${root}/user.html`)
-    }}}
+function readUserById(id) {
+    fetch(`http://localhost:8082/users/read/${id}`)
+        .then((res) => {
+            if (res.ok != true) {
+                console.log("Status is not OK!");
+            }
+            res.json()
+                .then((data) => {
+                    let userTitle = document.createElement("h1");
+                    userTitle.innerHTML = data.username;
+                    if (playlist.length == 0) {
+                        userPlaylists.innerHTML = "You do not have playlists yet\nGo to ";
+                        let playlistLink = document.createElement("a");
+                        playlistLink.setAttribute("href", "playlists.html");
+                        userPlaylists.append(playlistLink);
+                        userPlaylists.append(document.createTextNode(" to create a playlist"));
+                    } else {
+                        for (let each of playlist) {
+                            createPlaylistCard(userPlaylists, each);
+                        }
+                    }
+                }).catch((err) => console.log(err))
+        })
+}
 
 
 //#################################################################################################################
@@ -870,6 +962,10 @@ function goTo(path, id) {
     } else if (path == playlistsPath) {
         window.location.replace(`${root}/readPlaylist.html?id=${id}`);
     }
+}
+
+function readIndex() {
+    greetUser();
 }
 
 const readPage = (path) => {
@@ -922,7 +1018,8 @@ const readPage = (path) => {
                             }
                         }
                     }
-                    greetUser(currentUser);
+                    greetUser();
+                    console.log(greet);
                     console.log(`${path} page loaded.`);
                 }).catch((err) => console.log(err))
         })
