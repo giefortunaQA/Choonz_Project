@@ -79,8 +79,7 @@ public class UserController {
 			return new ResponseEntity<>("INVALID", HttpStatus.BAD_REQUEST);
 		}
 		String loggedIn = AuthUtils.createUserToken(userId);
-		ResponseEntity<String> response = new ResponseEntity<>(loggedIn, HttpStatus.OK);
-		return response;
+		return new ResponseEntity<>(loggedIn, HttpStatus.OK);
 	}
 
 	@PostMapping("/logout")
