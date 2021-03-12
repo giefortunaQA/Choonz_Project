@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genres</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
-    <title>Choonz Music</title>
 </head>
-
-<body onload="readIndex()">
+<body onload="readPage(genresPath)">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.html">
             <img src="../img/Choonz.png" alt="" width=150px>
@@ -33,42 +32,46 @@
               <li class="nav-item">
                 <a class="nav-link" href="playlists.html">Playlists</a>
               </li>
-            <li class="nav-item">
+            <li class="nav-item active ">
               <a class="nav-link" href="genres.html">Genres</a>
             </li>
           </ul>
           <div id="userDisplay" class="pull-right">
             <button type="button" onclick="userIconActions()" class="btn">
-              <img src="../img/person-circle.svg" alt="SignUp/SignIn/Logout"><span class="greet"></span>
+              <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
             </button>
+              
           </div>
         </div>
       </nav>
-
-
-<!-- Search -->
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg mt-5">
-                <div class="center">
-                    <h1> Welcome to Choonz!</h1>
-                    <h2>Please enjoy our variety of music.</h2>
-                    <br>
-                </div>
-                <form class="form-inline d-flex justify-content-center md-form form-sm">
-                    <input class="form-control form-control-sm mr-1 w-75" type="text" placeholder="Search for music..." aria-label="Search">
-                    <button type="submit" id="Search" class="btn btn-light"> Search </button>
-                </form>
-            </div>
-           
+      
+      <!-- CREATE GENRE -->
+      <div class="myContainer">
+        <button type="button" class="btn" onclick="show(createGenreForm)">
+            <img src="../img/plus-circle.svg" alt="Add genre">
+            <span> Create a genre</span> 
+            <span class="msg" id="createdGenreMsg" style="display:none"> Genre
+                created</span>
+        </button>
+        <div id="createGenreForm" style="display:none">
+            <input type="text" placeholder="Enter genre name" id="genreName">
+            <input type="text" placeholder="Enter description" id="genreDesc">
+            <span><button type="button" class="btn btn-success" onclick="createGenre()">Submit</button></span>
+            <span><button type="button" class="btn btn-secondary" onclick="hide(createGenreForm)">Cancel</button></span>
         </div>
+
     </div>
 
-<!-- /Search -->
-<script src="js/index.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <!-- GENRES CONTAINER -->
+    <div class="myContainer" >
+      <div class="row" id="genresContainer">
+        
+      </div>
+    </div>
+    
+    <script src="js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
 </body>
 </html>
