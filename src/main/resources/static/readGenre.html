@@ -16,7 +16,7 @@
 <body onload="readGenrePageLoad()">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.html">
-            <img src="../img/Choonz.png" alt="" width=150px>
+            <img src="img/Choonz.png" alt="" width=150px>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
             </ul>
             <div id="userDisplay" class="pull-right">
                 <button type="button" onclick="userIconActions()" class="btn">
-                    <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
+                    <img src="img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
                   </button>
                   
               </div>
@@ -52,14 +52,14 @@
 
     <div class="myContainer">
         <a href="genres.html" class="btn btn-light">
-            <img src="../img/arrow-left.svg" alt="Go back to Artists"><span> Go Back to Genres
+            <img src="img/arrow-left.svg" alt="Go back to Artists"><span> Go Back to Genres
             </span>
         </a>
         <div class="card">
             <div id="options">
                 <ul class="list-group list-group-horizontal pull-right list-unstyled">
                     <li>
-                        <button type="button" class="btn" id="updateEachGenre" onclick="show(updateGenreForm)">Update</button>
+                        <button type="button" class="btn crud-btn" id="updateEachGenre" onclick="show(updateGenreForm)">Update</button>
 
                         <!-- UPDATE GENRE -->
                         <div id="updateGenreForm" style="display:none">
@@ -70,7 +70,7 @@
 
                     </li>
                     <li>
-                        <button type="button" class="btn" id="deleteEachGenre">Delete</button>
+                        <button type="button" class="btn crud-btn" id="deleteEachGenre">Delete</button>
                     </li>
                 </ul>
             </div>
@@ -79,6 +79,36 @@
                 <div class="card-title" id="genreNameDisplay">
                 </div>
                 <div class="card-text" id="genreDescDisplay">
+                </div>
+            </div>
+        </div>
+        <!-- PLAYLISTS IN GENRE -->
+        <div class="card genre-child">
+            <div class="card-body">
+                <div class=card-title>
+                    <h2 id="playlistsInGenreTitle">Playlists</h2>
+                </div>
+                <div class="row" id="playlistsInGenreDiv">
+                </div>
+            </div>
+        </div>
+        <!-- ALBUMS IN GENRE -->
+        <div class="card genre-child">
+            <div class="card-body">
+                <div class=card-title>
+                    <h2 id="albumsInGenreTitle">Albums</h2>
+                </div>
+                <div class="row" id="albumsInGenreDiv">
+                </div>
+            </div>
+        </div>
+         <!-- SONGS IN GENRE -->
+        <div class="card genre-child">
+            <div class="card-body">
+                <div class=card-title>
+                    <h2 id="tracksInGenreTitle">Songs</h2>
+                </div>
+                <div class="row" id="tracksInGenreDiv">
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ import com.qa.choonz.persistence.domain.Playlist;
 
 @Repository
 public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
-	@Query(value="SELECT * FROM playlist a JOIN genre ar ON ar.id=a.id WHERE ar.id=?",nativeQuery=true)
+	@Query(value="SELECT * FROM playlist p JOIN genre g ON g.id=p.genre_id WHERE g.id=?",nativeQuery=true)
 	List<Playlist> findPlaylistsInGenres(Long id);
 
 }
