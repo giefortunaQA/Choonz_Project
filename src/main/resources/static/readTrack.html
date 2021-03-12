@@ -16,7 +16,7 @@
 <body onload="readTrackPageLoad()">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.html">
-            <img src="../img/Choonz.png" alt="" width=150px>
+            <img src="img/Choonz.png" alt="" width=150px>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
             </ul>
             <div id="userDisplay" class="pull-right">
                 <button type="button" onclick="userIconActions()" class="btn">
-                    <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
+                    <img src="img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
                   </button>
                   
               </div>
@@ -52,14 +52,14 @@
 
     <div class="myContainer">
         <a href="tracks.html" class="btn btn-light">
-            <img src="../img/arrow-left.svg" alt="Go back to Artists"><span> Go Back to Tracks
+            <img src="img/arrow-left.svg" alt="Go back to Artists"><span> Go Back to Tracks
             </span>
         </a>
         <div class="card">
             <div id="options">
                 <ul class="list-group list-group-horizontal pull-right list-unstyled">
                     <li>
-                        <button type="button" class="btn" id="updateEachGenre" onclick="show(updateTrackForm)">Update</button>
+                        <button type="button" class="btn crud-btn" id="updateEachGenre" onclick="show(updateTrackForm)">Update</button>
 
                         <!-- UPDATE TRACK -->
                         <div id="updateTrackForm" style="display:none">
@@ -73,7 +73,7 @@
 
                     </li>
                     <li>
-                        <button type="button" class="btn" id="deleteEachTrack">Delete</button>
+                        <button type="button" class="btn crud-btn" id="deleteEachTrack">Delete</button>
                     </li>
                 </ul>
             </div>

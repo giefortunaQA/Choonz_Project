@@ -16,7 +16,7 @@
 <body onload="readAlbumPageLoad()">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.html">
-            <img src="../img/Choonz.png" alt="" width=150px>
+            <img src="img/Choonz.png" alt="" width=150px>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
             </ul>
             <div id="userDisplay" class="pull-right">
                 <button type="button" onclick="userIconActions()" class="btn">
-                    <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
+                    <img src="img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
                   </button>
                   
               </div>
@@ -52,14 +52,14 @@
 
     <div class="myContainer">
         <a href="albums.html" class="btn btn-light">
-            <img src="../img/arrow-left.svg" alt="Go back to Artists"><span> Go Back to Albums
+            <img src="img/arrow-left.svg" alt="Go back to Artists"><span> Go Back to Albums
             </span>
         </a>
         <div class="card">
             <div id="options">
                 <ul class="list-group list-group-horizontal pull-right list-unstyled">
                     <li>
-                        <button type="button" class="btn" id="updateEachAlbum" onclick="show(updateAlbumForm)">Update</button>
+                        <button type="button" class="btn crud-btn" id="updateEachAlbum" onclick="show(updateAlbumForm)">Update</button>
 
                         <!-- UPDATE album -->
                         <div id="updateAlbumForm" style="display:none">
@@ -72,13 +72,15 @@
 
                     </li>
                     <li>
-                        <button type="button" class="btn" id="deleteEachAlbum">Delete</button>
+                        <button type="button" class="btn crud-btn" id="deleteEachAlbum">Delete</button>
                     </li>
                 </ul>
             </div>
 
             <div class="card-body">
                 <div class="card-title" id="albumNameDisplay">
+                <h1 id="albumTitle"></h1>
+                <h3 id="albumArtist"></h3>
                 </div>
             </div>
         </div>
@@ -86,7 +88,7 @@
         <div class="card album-child">
             <div class="card-body">
                 <div class=card-title>
-                    <h2 id="tracksInAlbumTitle"></h2>
+                    <h2 id="tracksInAlbumTitle">Songs</h2>
                 </div>
                 <div class="row" id="tracksInAlbumDiv">
                 </div>

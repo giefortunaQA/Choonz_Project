@@ -16,7 +16,7 @@
 <body onload="readPlaylistPageLoad()">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.html">
-            <img src="../img/Choonz.png" alt="" width=150px>
+            <img src="img/Choonz.png" alt="" width=150px>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,23 +43,24 @@
             </ul>
             <div id="userDisplay" class="pull-right">
                 <button type="button" onclick="userIconActions()" class="btn">
-                    <img src="../img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
-                  </button> 
-                  
-              </div>
+                    <img src="img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
+                </button>
+
+            </div>
         </div>
     </nav>
 
     <div class="myContainer">
         <a href="playlists.html" class="btn btn-light">
-            <img src="../img/arrow-left.svg" alt="Go back to Playlists"><span> Go Back to Playlists
+            <img src="img/arrow-left.svg" alt="Go back to Playlists"><span> Go Back to Playlists
             </span>
         </a>
         <div class="card">
             <div id="options">
                 <ul class="list-group list-group-horizontal pull-right list-unstyled">
                     <li>
-                        <button type="button" class="btn" id="updateEachPlaylist" onclick="show(updatePlaylistForm)">Update</button>
+                        <button type="button" class="btn crud-btn" id="updateEachPlaylist"
+                            onclick="show(updatePlaylistForm)">Update</button>
 
                         <!-- UPDATE PLAYLIST -->
                         <div id="updatePlaylistForm" style="display:none">
@@ -67,12 +68,13 @@
                             <input type="text" placeholder="Enter artwork url" id="playlistArtworkUpdate">
                             <input type="text" placeholder="Enter description" id="playlistDescUpdate">
                             <input type="text" placeholder="Enter user id" id="playlistUserUpdate">
-                            <span><button type="button" class="btn btn-success" id="updatePlaylistBtn">Update</button></span>
+                            <span><button type="button" class="btn btn-success"
+                                    id="updatePlaylistBtn">Update</button></span>
                         </div>
 
                     </li>
                     <li>
-                        <button type="button" class="btn" id="deleteEachPlaylist">Delete</button>
+                        <button type="button" class="btn crud-btn" id="deleteEachPlaylist">Delete</button>
                     </li>
                 </ul>
             </div>
@@ -80,14 +82,14 @@
             <div class="card-body">
                 <div class="card-title" id="playlistNameDisplay">
                 </div>
-               
+
             </div>
         </div>
-          <!-- SONGS IN PLAYLIST -->
-          <div class="card playlist-child">
+        <!-- SONGS IN PLAYLIST -->
+        <div class="card playlist-child">
             <div class="card-body">
                 <div class=card-title>
-                    <h2 id="tracksInPlaylistTitle"></h2>
+                    <h2 id="tracksInPlaylistTitle">Songs</h2>
                 </div>
                 <div class="row" id="tracksInPlaylistDiv">
                 </div>
