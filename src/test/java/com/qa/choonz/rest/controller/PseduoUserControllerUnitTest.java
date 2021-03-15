@@ -10,6 +10,9 @@ public class PseduoUserControllerUnitTest {
 	{
 		//RESOURCES
 		
+		//New User Object (username,password)
+		//To store our user values
+		
 		//new UserDTO object
 		
 	}
