@@ -1,9 +1,14 @@
 'use strict';
 // Global vars
 const pageTitle = document.querySelector("title");
-var token;
-const greet = document.querySelectorAll(".greet")
+const greet = document.getElementById("greet")
 const btns = document.querySelectorAll(".crud-btn")
+const body=document.querySelector("body");
+var userId=parseInt(window.localStorage.getItem("userId"));
+var sessionToken=window.localStorage.getItem("token");
+var currentUser=window.localStorage.getItem("currentUser");
+var status= window.localStorage.getItem("userStatus");
+const forms=document.querySelectorAll("input");
 // Variables for navigation
 const root = "http://localhost:8082";
 const params = new URLSearchParams(window.location.search);
@@ -26,7 +31,7 @@ const tracksInAlbumDiv = document.getElementById("tracksInAlbumDiv")
 const tracksInPlaylistDiv = document.getElementById("tracksInPlaylistDiv")
 const playlistsInGenreDiv = document.getElementById("playlistsInGenreDiv")
 const albumsInGenreDiv = document.getElementById("albumsInGenreDiv")
-const tracksInGenreDiv=document.getElementById("tracksInGenreDiv")
+const tracksInGenreDiv = document.getElementById("tracksInGenreDiv")
 
 //Other Outputs
 const createdArtistMsg = document.getElementById("createdArtistMsg")
@@ -43,11 +48,12 @@ const tracksInPlaylistTitle = document.getElementById("tracksInPlaylistTitle")
 const playlistsInGenreTitle = document.getElementById("playlistsInGenreTitle")
 const albumsInGenreTitle = document.getElementById("albumsInGenreTitle")
 const artistChild = document.querySelectorAll(".artist-child")
+const userChild=document.querySelectorAll(".user-child")
 const userDisplay = document.getElementById("userDisplay")
-
 const userTitle = document.getElementById("userTitle")
 const userPlaylists = document.getElementById("userPlaylists")
-
+const userMsg=document.getElementById("userMsg")
+const notNav=document.querySelector("nav+div")
 // Form Divs
 const createArtistForm = document.getElementById("createArtistForm")
 const createGenreForm = document.getElementById("createGenreForm")
@@ -56,10 +62,12 @@ const signInForm = document.getElementById("signInForm")
 const signUpForm = document.getElementById("signUpForm")
 
 // Buttons
-let updateEachArtist = document.getElementById("updateEachArtist")
-let updateArtistBtn = document.getElementById("updateArtistBtn")
-let deleteEachAlbum = document.getElementById("deleteEachAlbum")
-let updateEachGenre = document.getElementById("updateEachGenre")
+const updateEachArtist = document.getElementById("updateEachArtist")
+const updateArtistBtn = document.getElementById("updateArtistBtn")
+const deleteEachAlbum = document.getElementById("deleteEachAlbum")
+const updateEachGenre = document.getElementById("updateEachGenre")
+const updateUserBtn=document.getElementById("updateUserBtn")
+const deleteUserBtn=document.getElementById("deleteUserBtn")
 
 // Inputs
 const artistName = document.getElementById("artistName")
@@ -92,6 +100,9 @@ const usernameUp = document.getElementById("usernameUp")
 const passwordUp = document.getElementById("passwordUp")
 const usernameIn = document.getElementById("usernameIn")
 const passwordIn = document.getElementById("passwordIn")
+const usernameUpdate = document.getElementById("usernameUpdate")
+const passwordUpdate = document.getElementById("passwordUpdate")
+const updateUserForm=document.getElementById("updateUserForm")
 
 
 //#################################################################################################################
@@ -195,7 +206,7 @@ function createArtist() {
 	})
 		.then(res => res.json())
 		.then(data => {
-			console.log(`Request succeeded with JSON response ${data}`);
+			console.log(`Artist created. ${data}`);
 			hide(createArtistForm);
 			show(createdArtistMsg);
 			setTimeout(hide(createdArtistMsg), 3000);
@@ -211,6 +222,7 @@ function readArtistById(id) {
 			}
 			res.json()
 				.then((data) => {
+					console.log(`Artist retrieved. ${data}`);
 					let title = document.createElement("h1");
 					title.innerHTML = "This is: " + data.name;
 					artistNameDisplay.appendChild(title);
@@ -237,6 +249,7 @@ function readAlbumsByArtist(id) {
 			}
 			res.json()
 				.then((data) => {
+					console.log(`Albums by artist retrieved. ${data}`);
 					for (let album of data) {
 						createAlbumCard(albumsByArtistDiv, album);
 					}
@@ -251,6 +264,7 @@ function readTracksByArtist(id) {
 			}
 			res.json()
 				.then((data) => {
+					console.log(`Tracks by artist retrieved. ${data}`);
 					for (let track of data) {
 						createTrackCard(tracksByArtistDiv, track);
 						console.log(track);
@@ -272,6 +286,7 @@ function updateArtist(id) {
 	})
 		.then(res => res.json())
 		.then(data => {
+			console.log(`Artist updated. ${data}`);
 			console.log(`Request succeeded with JSON response ${data}`);
 			location.reload();
 		})
@@ -284,6 +299,7 @@ function deleteArtist(id) {
 	})
 		.then(res => res.json())
 		.then(data => {
+			console.log(`Artist deleted`);
 			console.log(`Request succeeded with JSON response ${data}`);
 			window.location.replace(`${root}/readArtist.html#deleted`);
 
@@ -326,6 +342,7 @@ function createGenre() {
 	})
 		.then(res => res.json())
 		.then(data => {
+			console.log(`Genre created. ${data}`);
 			console.log(`Request succeeded with JSON response ${data}`);
 			hide(createGenreForm);
 			show(createdGenreMsg);
@@ -343,6 +360,7 @@ function readGenreById(id) {
 			}
 			res.json()
 				.then((data) => {
+					console.log(`Genre retrieved. ${data}`);
 					let title = document.createElement("h1");
 					title.innerHTML = data.name;
 					let desc = document.createElement("h4");
@@ -352,28 +370,13 @@ function readGenreById(id) {
 					updateGenreBtn.setAttribute("onclick", `updateGenre(${data.id})`);
 					deleteEachGenre.setAttribute("onclick", `confirmDeleteGenre(${data.id})`);
 					pageTitle.innerHTML = data.name;
-					readPlaylistsInGenre(data.id);
 					readAlbumsInGenre(data.id);
 					readTracksInGenre(data.id);
 				}).catch((err) => console.log(err))
 		})
 }
 
-function readPlaylistsInGenre(id) {
-	fetch(`http://localhost:8082/playlists/read/by-genre/${id}`)
-		.then((res) => {
-			if (res.ok != true) {
-				console.log("Status is not OK!");
-			}
-			res.json()
-				.then((data) => {
-					for (let playlist of data) {
-						createPlaylistCard(playlistsInGenreDiv, playlist);
-						console.log(playlist);
-					}
-				}).catch((err) => console.log(err))
-		})
-}
+
 
 function readAlbumsInGenre(id) {
 	fetch(`http://localhost:8082/albums/read/by-genre/${id}`)
@@ -384,6 +387,7 @@ function readAlbumsInGenre(id) {
 			res.json()
 				.then((data) => {
 					for (let album of data) {
+						console.log(`Albums in genre. ${data}`);
 						createAlbumCard(albumsInGenreDiv, album);
 						console.log(album);
 					}
@@ -400,6 +404,7 @@ function readTracksInGenre(id) {
 			res.json()
 				.then((data) => {
 					for (let track of data) {
+						console.log(`Tracks in genre. ${data}`);
 						createTrackCard(tracksInGenreDiv, track);
 						console.log(track);
 					}
@@ -425,6 +430,7 @@ function updateGenre(id) {
 	})
 		.then(res => res.json())
 		.then(data => {
+			console.log(`Genre updated. ${data}`);
 			console.log(`Request succeeded with JSON response ${data}`);
 			location.reload();
 		})
@@ -437,6 +443,7 @@ function deleteGenre(id) {
 	})
 		.then(res => JSON.stringify(res))
 		.then(data => {
+			console.log(`Genre deleted. ${data}`);
 			console.log(`Request succeeded with JSON response ${data}`);
 			window.location.replace(`${root}/readGenre.html#deleted`);
 		})
@@ -528,7 +535,7 @@ function readAlbumById(id) {
 					albumNameDisplay.appendChild(artistLink);
 					albumNameDisplay.appendChild(document.createElement("br"));
 					albumNameDisplay.appendChild(genreLink);
-					
+
 					updateAlbumBtn.setAttribute("onclick", `updateAlbum(${data.id})`);
 					deleteEachAlbum.setAttribute("onclick", `confirmDeleteAlbum(${data.id})`);
 					pageTitle.innerHTML = data.name;
@@ -623,7 +630,7 @@ function createPlaylist() {
 		"artwork": playlistArtwork.value,
 		"description": playlistDesc.value,
 		"user": {
-			"id": playlistUser.value
+			"id": userId
 		}
 	}
 	fetch("http://localhost:8082/playlists/create", {
@@ -696,7 +703,7 @@ function updatePlaylist(id) {
 		"artwork": playlistArtworkUpdate.value,
 		"description": playlistDescUpdate.value,
 		"user": {
-			"id": playlistUserUpdate.value
+			"id": userId
 		}
 	}
 	fetch(`http://localhost:8082/playlists/update/${id}`, {
@@ -887,9 +894,10 @@ function readUserActionsPage() {
 		confirmUser();
 	}
 }
+
 function limitCrud() {
 	for (let btn of btns) {
-		if (window.localStorage.getItem("userStatus") == "0") {
+		if (status != 1) {
 			btn.style.display = "none";
 		}
 		else {
@@ -908,7 +916,7 @@ function confirmUser() {
 
 function confirmLogout() {
 	if (confirm("Are you sure you want to logout?")) {
-		dummyLogout();
+		logout();
 	}
 }
 function signUp() {
@@ -926,7 +934,7 @@ function signUp() {
 	})
 		.then(res => res.json())
 		.then(data => {
-			console.log(`Request succeeded with JSON response ${data}`);
+			console.log(`User created ${data}`);
 			signUpForm.innerHTML = "User created.\n"
 			let loginLink = document.createElement("a");
 			loginLink.innerHTML = "Sign in";
@@ -937,68 +945,79 @@ function signUp() {
 }
 
 function login() {
-    fetch("http://localhost:8082/users/login", {
-        method: 'post',
-        headers: {
-            "username": usernameIn.value,
-            "password": passwordIn.value
-        }
-    }).then(data => data.text() )
-        .then(data => {
-            console.log(data);
+	fetch("http://localhost:8082/users/login", {
+		method: 'post',
+		headers: {
+			"username": usernameIn.value,
+			"password": passwordIn.value
+		}
+	}).then(res => res.text())
+		.then(data => {
+			console.log(`User is logged in`);
 			window.localStorage.setItem("token", data);
-			console.log(window.localStorage.getItem("token"));
 			signInForm.innerHTML = "Successfully Logged in";
 			window.localStorage.setItem("currentUser", usernameIn.value);
 			window.localStorage.setItem("userStatus", 1);
-			console.log("user status:" + window.localStorage.getItem("userStatus"));
-			greetUser();
-        })
-        .catch((err) => console.log(err))
+			greet.innerHTML="Hi, "+usernameIn.value;
+			setTimeout(window.location.replace(`${root}/readUser.html`),1000);
+		})
+		.catch((err) => console.log(err))
 }
 
+
 function greetUser() {
-	console.log("user status: "+window.localStorage.getItem("userStatus"));
-	if (window.localStorage.getItem("userStatus") != "0") {
-		for (let greeting of greet) {
-			greeting.innerHTML = " Hi, " + window.localStorage.getItem("currentUser");
-			let logoutLink= document.createElement("button");
+	if (status==1) {
+		console.log(greet);
+			greet.innerHTML = " Hi, " + currentUser;
+			let logoutLink = document.createElement("button");
 			logoutLink.setAttribute("class", "btn btn-link");
-			logoutLink.setAttribute("onclick", "dummyLogout()");
+			logoutLink.setAttribute("onclick", "confirmLogout()");
 			logoutLink.innerHTML = "Logout";
 			userDisplay.appendChild(logoutLink);
-		};
+			console.log(window.localStorage);
 	}
 	limitCrud();
 }
 
-// function logout() {
-//     fetch("http://localhost:8082/users/logout", {
-//         method: 'post',
-//         headers: {
-//             "token": token.value
-//         }
-//     })
-//         .then(data => {
-//             console.log(`Token returned: ${data}`);
-//             signInForm.innerHTML = "Successfully Logged out";
-//         })
-//         .catch((err) => console.log(err))
-// }
+ function logout() {
+    fetch("http://localhost:8082/users/logout", {
+         method: 'post',
+         headers: {
+            "token": sessionToken
+         }
+     })
+         .then(data => {
+            console.log(data);
+			body.appendChild(document.createTextNode("Successfully logged out\n"));
+            let home=document.createElement("a");
+			home.innerHTML="Go to home";
+			home.href=`${root}`;
+			body.appendChild(home);
+			resetCred();
+			hide(notNav);
+			hide(greet);
+			let LOlink=document.querySelector("button[onclick='confirmLogout()']");
+			LOlink.remove();
+        })
+        .catch((err) => console.log(err))
+}
 
 function userIconActions() {
-	for (let greeting of greet) {
-		if (greeting.innerHTML != "") { //if there is a user logged in
-			window.location.replace(`${root}/readUser.html?user=${window.localStorage.getItem("currentUser")}`);
+		if (window.localStorage.userStatus==1) { //if there is a user logged in
+			window.location.replace(`${root}/readUser.html`);
 		} else {
 			window.location.replace(`${root}/user.html`)
 		}
-	}
 }
 
 function readUserPage() {
-	readUserByUsername(window.localStorage.getItem("currentUser"));
-	greetUser();
+	if (status==1){
+		readUserByUsername(currentUser);
+		greetUser();
+	} else {
+		body.append(document.createTextNode("You are not logged in."))
+		hide(notNav)
+	}
 }
 
 function readUserByUsername(username) {
@@ -1012,11 +1031,15 @@ function readUserByUsername(username) {
 					let title = document.createElement("h1");
 					title.innerHTML = data.username;
 					userTitle.appendChild(title);
+					window.localStorage.setItem("userId",data.id);
+					updateUserBtn.setAttribute("onclick","updateUser(userId)");
+					deleteUserBtn.setAttribute("onclick","confirmDeleteUser(userId)");
+					
 					if (data.playlists.length == 0) {
 						userPlaylists.innerHTML = "You do not have playlists yet\nGo to ";
 						let playlistLink = document.createElement("a");
 						playlistLink.setAttribute("href", "playlists.html");
-						playlistLink.innerHTML="playlists";
+						playlistLink.innerHTML = "playlists";
 						userPlaylists.append(playlistLink);
 						userPlaylists.append(document.createTextNode(" to create a playlist"));
 					} else {
@@ -1028,12 +1051,63 @@ function readUserByUsername(username) {
 		})
 }
 
+function updateUser(id) {
+	fetch(`http://localhost:8082/users/update/${id}`, {
+		method: 'put',
+		headers: {
+			"token": sessionToken,
+			"Content-Type":"application/json"
+		},
+		body: JSON.stringify({
+			"username": usernameUpdate.value,
+			"password": passwordUpdate.value,
+		}),
+	}).then(res => res.json())
+		.then(data=>{
+			hide(notNav);
+			body.appendChild(document.createTextNode("User credentials updated."));
+			console.log(data.username);
+			window.localStorage.setItem("currentUser", data.username);
+			greet.innerHTML="Hi, "+data.username;
+		})
+}
 
+function deleteUser(id) {
+	fetch(`http://localhost:8082/users/delete/${id}`, {
+		method: 'delete',
+		headers: {
+			"token": sessionToken
+		}
+	})
+		.then(data => {
+			console.log(`Request succeeded with JSON response ${data}`);
+			logout();
+		})
+		.catch((err) => console.log(err))
+}
+
+function confirmDeleteUser(id) {
+	if (confirm("Are you sure?")) {
+		deleteUser(id);
+		hide(notNav);
+		body.appendChild(document.createTextNode("User deleted.\n"))
+	}
+}
 //#################################################################################################################
 //#################################################################################################################
 // METHODS FOR ALL ENTITIES
-function resertCred(){
+
+function hideChildren(childGrp){
+	for (let child of childGrp){
+			hide(child);
+		}
+}
+function resetCred() {
 	window.localStorage.clear();
+	for (let form of forms){
+		form.value="";
+	}
+	
 }
 
 function goTo(path, id) {

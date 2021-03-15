@@ -42,11 +42,11 @@
         </li>
       </ul>
       <div id="userDisplay" class="pull-right">
-        <button type="button" onclick="userIconActions()" class="btn">
-          <img src="img/person-circle.svg" alt="SignUp/SignIn"><span class="greet"></span>
-        </button>
-          
-      </div>
+            <button type="button" onclick="userIconActions()" class="btn">
+              <img src="img/person-circle.svg" alt="SignUp/SignIn">
+            </button>
+             <span><a id="greet" href="readUser.html"></a></span>
+          </div>
     </div>
   </nav>
 
@@ -63,7 +63,6 @@
       <input type="text" placeholder="Enter playlist name" id="playlistName">
       <input type="text" placeholder="Enter artwork url" id="playlistArtwork">
       <input type="text" placeholder="Enter description" id="playlistDesc">
-      <input type="text" placeholder="Enter user id" id="playlistUser">
       <span><button type="button" class="btn btn-success" onclick="createPlaylist()">Submit</button></span>
       <span><button type="button" class="btn btn-secondary" onclick="hide(createPlaylistForm)">Cancel</button></span>
     </div>

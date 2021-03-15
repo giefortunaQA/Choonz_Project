@@ -13,7 +13,7 @@ public interface AlbumRepository extends JpaRepository<Album, Long> {
 	@Query(value="SELECT * FROM album a JOIN artist ar ON ar.id=a.artist_id WHERE ar.id=?",nativeQuery=true)
 	List<Album> findAlbumsInArtist(Long id);
 	
-	@Query(value="SELECT * FROM album a JOIN genre g ON ar.id=a.id WHERE g.id=?",nativeQuery=true)
+	@Query(value="SELECT * FROM album a JOIN genre g ON g.id=a.genre_id WHERE g.id=?",nativeQuery=true)
 	List<Album> findAlbumsInGenres(Long id);
 
 }

@@ -10,7 +10,7 @@
     <title>Choonz Music</title>
 </head>
 
-<body onload="readIndex()" onunload="resetCred()">
+<body onload="readIndex()">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.html">
             <img src="img/Choonz.png" alt="" width=150px>
@@ -37,18 +37,22 @@
               <a class="nav-link" href="genres.html">Genres</a>
             </li>
           </ul>
-          <div id="userDisplay" class="pull-right">
+           <div id="userDisplay" class="pull-right">
             <button type="button" onclick="userIconActions()" class="btn">
-              <img src="img/person-circle.svg" alt="SignUp/SignIn/Logout"><span class="greet"></span>
+              <img src="img/person-circle.svg" alt="SignUp/SignIn">
             </button>
+             <span><a id="greet" href="readUser.html"></a></span>
           </div>
         </div>
       </nav>
 
 
 <!-- Search -->
-
+	<div id="loggedOut" style="display:none">
+		<p class="msg"> Successfully Logged out</p>
+	</div>
     <div class="container">
+ 
         <div class="row">
             <div class="col-lg mt-5">
                 <div class="center">
@@ -61,8 +65,8 @@
                     <button type="submit" id="Search" class="btn btn-light"> Search </button>
                 </form>
             </div>
-           
         </div>
+        
     </div>
 
 <!-- /Search -->
