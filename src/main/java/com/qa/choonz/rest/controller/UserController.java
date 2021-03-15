@@ -2,6 +2,7 @@ package com.qa.choonz.rest.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +27,8 @@ import com.qa.choonz.utils.AuthUtils;
 public class UserController {
 
 	private UserService service;
-
+	
+	@Autowired
 	public UserController(UserService service) {
 		super();
 		this.service = service;
