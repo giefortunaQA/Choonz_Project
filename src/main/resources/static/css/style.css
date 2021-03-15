@@ -1,33 +1,48 @@
-body {
-    padding-top: 70px;
+
+.myContainer {
+  margin:30px;
 }
 
-/* ditch the ugle blue outline */
-.navbar-toggler:focus,
-.navbar-toggler:active {
-    outline: 0;
+.center{
+  text-align: center;
 }
 
-/* hide close when burger shown */
-.navbar-toggler.collapsed .close-icon {
-    display: none;
+.nav-item:hover{
+  color:rgba(13, 97, 13, 0.884);
 }
 
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon {
-    display: inline;
-
+.active{
+  color: rgb(29, 112, 29);
 }
 
-#Search {
-  background-color: white;
-  color: black;
-  border: 2px solid grey;
-  border-radius: 3px;  // for no radius
-
-  }
-
-#Search:hover {
-  background-color: grey;
-  color: white;
-
+.msg{
+  color:green;
 }
+
+.link{
+  transform: bold;
+  color: green
+}
+
+
+.col-2,.row, h1 ,h2,h3,h4,h5,h6{
+  margin:10px;
+}
+
+.album-title{
+  color:white;
+  text-shadow:
+  -1.5px -1px 0 #000,
+  1.5px -1px 0 #000,
+  -1.5px 1px 0 #000,
+  1.5px 1px 0 #000;  
+  text-align: center;
+}
+
+.sub-link, .card-link{
+  color:#000;
+}
+.sub-link:hover{
+  color: rgb(54, 53, 53);
+}
+
