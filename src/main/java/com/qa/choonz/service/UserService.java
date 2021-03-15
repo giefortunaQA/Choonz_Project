@@ -10,6 +10,7 @@ import com.qa.choonz.exception.UserNotFoundException;
 import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.persistence.repository.UserRepository;
 import com.qa.choonz.rest.dto.UserDTO;
+import com.qa.choonz.utils.BeanUtils;
 
 @Service
 public class UserService {
@@ -56,8 +57,7 @@ public class UserService {
 
 	public UserDTO update(User user, long id) {
 		User toUpdate = this.repo.findById(id).orElseThrow(UserNotFoundException::new);
-		toUpdate.setUsername(user.getUsername());
-		toUpdate.setPassword(user.getPassword());
+		BeanUtils.mergeNotNull(user,toUpdate);
 		User updatedUser = this.repo.save(toUpdate);
 		return this.mapToDTO(updatedUser);
 	}
