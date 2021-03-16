@@ -140,12 +140,4 @@ public class ArtistControllerUnitTest {
 		verify(this.ArtistService, atLeastOnce()).delete(testID);
 	}
 	
-	/*
-	 * @Test void deleteTest() throws Exception {
-	 * when(this.service.delete(1L)).thenReturn(true); assertThat(new
-	 * ResponseEntity<ToDoDTO>(HttpStatus.NO_CONTENT))
-	 * .isEqualTo(this.controller.delete(1L)); verify(this.service,
-	 * atLeastOnce()).delete(1L); }
-	 */
-	
 }
