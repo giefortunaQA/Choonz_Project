@@ -30,13 +30,18 @@ public class StepDefs {
 	@Given("that I can navigate to {string}")
 	public void that_i_can_navigate_to(String string) {
 	    driver.get(string);
-	    base.waitUntilPageLoad(driver);
+	}
+	
+	@When("I toggle the navbar")
+	public void i_toggle_the_navbar() {
+		base.waitUntilNavToggle(driver);
+		base.toggleNav();
 	}
 
 	@When("I click the account button")
 	public void i_click_the_account_button() {
+		base.waitUntilUserLink(driver);
 	    base.navLogin();
-	    base.waitUntilPageLoad(driver);
 	}
 
 	@When("I cancel the alert")

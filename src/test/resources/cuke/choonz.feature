@@ -2,7 +2,8 @@ Feature: Choonz website tests
 
   Scenario Outline: As a User I want to create an account on the website so that I can login
     Given that I can navigate to "http://localhost:8082/index.html"
-    When I click the account button
+    When I toggle the navbar
+    And I click the account button
     And I cancel the alert
     And I enter a username of "<username>"
     And I enter a password of "<password>"

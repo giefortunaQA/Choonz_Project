@@ -1,5 +1,8 @@
 package com.qa.choonz.cuke.pom;
 
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +13,9 @@ public class PageBase {
 	
 	@FindBy(xpath = "/html/body/nav/a")
 	private WebElement linkHome;
+	
+	@FindBy(xpath = "/html/body/nav/button")
+	private WebElement toggleNav;
 	
 	@FindBy(xpath = "//*[@id=\"navbarSupportedContent\"]/ul/li[1]/a")
 	private WebElement linkTracks;
@@ -34,6 +40,10 @@ public class PageBase {
 	
 	public void navHome() {
 		linkHome.click();
+	}
+	
+	public void toggleNav() {
+		toggleNav.click();
 	}
 	
 	public void navTracks() {
@@ -64,9 +74,24 @@ public class PageBase {
 		linkLogout.click();
 	}
 	
-	public void waitUntilPageLoad(WebDriver driver) {
+//	public void waitUntilPageLoad(WebDriver driver) {
+//		WebDriverWait wait = new WebDriverWait(driver, 10);
+//		wait.until(ExpectedConditions.jsReturnsValue("return document.readyState==\"complete\";"));
+//	}
+//	
+	
+	public void waitUntilNavToggle(WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.jsReturnsValue("return document.readyState==\"complete\";"));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/nav/button")));
 	}
+	
+	public void waitUntilUserLink(WebDriver driver) {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("userDisplay")));
+	}
+	
+//	public void waitFive(WebDriver driver) {
+//		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+//	}
 	
 }
