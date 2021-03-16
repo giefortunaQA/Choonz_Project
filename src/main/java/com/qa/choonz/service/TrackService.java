@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.TrackNotFoundException;
@@ -11,17 +12,14 @@ import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.persistence.repository.TrackRepository;
 import com.qa.choonz.rest.dto.TrackDTO;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TrackService {
 
-    private TrackRepository repo;
-    private ModelMapper mapper;
-
-    public TrackService(TrackRepository repo, ModelMapper mapper) {
-        super();
-        this.repo = repo;
-        this.mapper = mapper;
-    }
+    private final TrackRepository repo;
+    private final ModelMapper mapper;
 
     private TrackDTO mapToDTO(Track track) {
         return this.mapper.map(track, TrackDTO.class);
