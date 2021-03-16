@@ -10,7 +10,7 @@ import io.cucumber.junit.CucumberOptions;
 		features = "src/test/resources/cuke",
 		tags = "not @ignore",
 		stepNotifications = true,
-		glue = "cucumber.stepdefs",
+		glue = "com.qa.choonz.pom.cuke.stepdefs",
 		plugin = {"pretty", "html:target/cucumber-reports.html"},
 		monochrome = true)
 public class CukeRunner {
