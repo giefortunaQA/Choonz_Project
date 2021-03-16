@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PlaylistService {
 
-	private PlaylistRepository repo;
-	private ModelMapper mapper;
+	private final PlaylistRepository repo;
+	private final ModelMapper mapper;
 
 	private PlaylistDTO mapToDTO(Playlist playlist) {
 		return this.mapper.map(playlist, PlaylistDTO.class);
@@ -52,7 +52,7 @@ public class PlaylistService {
 		this.repo.deleteById(id);
 		return !this.repo.existsById(id);
 	}
-	
+
 	public List<PlaylistDTO> findPlaylistsInGenres(long id){
 		return this.repo.findPlaylistsInGenres(id).stream().map(this::mapToDTO).collect(Collectors.toList());
 		

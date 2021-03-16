@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TrackService {
 
-    private TrackRepository repo;
-    private ModelMapper mapper;
+    private final TrackRepository repo;
+    private final ModelMapper mapper;
 
     private TrackDTO mapToDTO(Track track) {
         return this.mapper.map(track, TrackDTO.class);
