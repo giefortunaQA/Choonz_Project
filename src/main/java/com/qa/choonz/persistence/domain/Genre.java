@@ -39,4 +39,18 @@ public class Genre {
 	@OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
 	private List<Album> albums;
 
+	public Genre(Long id, @NotNull @Size(max = 100) String name, @NotNull @Size(max = 250) String description) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
+
+	public Genre(@NotNull @Size(max = 100) String name, @NotNull @Size(max = 250) String description) {
+		super();
+		this.name = name;
+		this.description = description;
+	}
+
+	
 }

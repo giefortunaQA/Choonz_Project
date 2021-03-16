@@ -70,9 +70,10 @@ public class ArtistServiceTest {
 	@Test
 	void testUpdate() throws Exception{
 		Long id=1L;
-		Artist updated=new Artist(1L,"Artist 1 Updated");
+		Artist orig=new Artist(1L,"Artist");
+		Artist updated=new Artist(1L,"Artist Updated");
 		ArtistDTO updatedAsDto=this.mapToDTO(updated);
-		when(this.repo.findById(id)).thenReturn(Optional.of(testArtist1));
+		when(this.repo.findById(id)).thenReturn(Optional.of(orig));
 		when(this.repo.save(updated)).thenReturn(updated);
 		assertThat(this.service.update(updated, id)).isEqualTo(updatedAsDto);
 		verify(this.repo,times(1)).findById(id);
@@ -87,4 +88,11 @@ public class ArtistServiceTest {
 		verify(this.repo,times(1)).existsById(id);
 	}
 	
+	@Test
+	void testDeletePass() throws Exception{
+		Long id=1L;
+		when(this.repo.existsById(id)).thenReturn(false);
+		assertThat(this.service.delete(id)).isTrue();
+		verify(this.repo,times(1)).existsById(id);
+	}
 }

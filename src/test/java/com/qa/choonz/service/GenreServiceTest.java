@@ -12,13 +12,18 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.qa.choonz.persistence.domain.Genre;
 import com.qa.choonz.persistence.repository.GenreRepository;
 import com.qa.choonz.rest.dto.GenreDTO;
 
+@SpringBootTest
+@ActiveProfiles	("test")
 public class GenreServiceTest {
+	
 	@Autowired
 	private GenreService service;
 	
@@ -34,11 +39,10 @@ public class GenreServiceTest {
 	private final Genre testGenre1=new Genre("Genre 1","description 1");
 	private final Genre testGenre2=new Genre("Genre 2","description 2");
 	private final List<Genre> testList=List.of(testGenre1,testGenre2); 
-	
 	@Test
 	void testCreate() throws Exception{
-		Genre toCreate=new Genre("Genre");
-		Genre created=new Genre(5L,"Genre");
+		Genre toCreate=new Genre("Genre","description");
+		Genre created=new Genre(5L,"Genre","description");
 		
 		when(this.repo.save(toCreate)).thenReturn(created);
 		
@@ -64,7 +68,7 @@ public class GenreServiceTest {
 	@Test
 	void testUpdate() throws Exception{
 		Long id=1L;
-		Genre updated=new Genre(1L,"Genre 1 Updated");
+		Genre updated=new Genre(1L,"Genre 1 Updated","description updated");
 		GenreDTO updatedAsDto=this.mapToDTO(updated);
 		when(this.repo.findById(id)).thenReturn(Optional.of(testGenre1));
 		when(this.repo.save(updated)).thenReturn(updated);
@@ -78,6 +82,13 @@ public class GenreServiceTest {
 		Long id=1L;
 		when(this.repo.existsById(id)).thenReturn(true);
 		assertThat(this.service.delete(id)).isFalse();
+		verify(this.repo,times(1)).existsById(id);
+	}
+	@Test
+	void testDeletePass() throws Exception{
+		Long id=1L;
+		when(this.repo.existsById(id)).thenReturn(false);
+		assertThat(this.service.delete(id)).isTrue();
 		verify(this.repo,times(1)).existsById(id);
 	}
 }
