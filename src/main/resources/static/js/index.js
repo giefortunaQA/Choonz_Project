@@ -417,10 +417,15 @@ function readGenrePageLoad() {
 }
 
 function updateGenre(id) {
-	let formData = {
-		"name": genreNameUpdate.value,
-		"description": genreDescUpdate.value
+	let formData = {}
+	if (genreNameUpdate.value!=""){
+		formData.name=genreNameUpdate.value;
 	}
+	console.log(formData);
+	if (genreDescUpdate.value!=""){
+		formData.description=genreDescUpdate.value;
+	}
+	console.log(formData);
 	fetch(`http://localhost:8082/genres/update/${id}`, {
 		method: 'put',
 		headers: {
@@ -565,15 +570,18 @@ function readAlbumPageLoad() {
 }
 
 function updateAlbum(id) {
-	let formData = {
-		"name": albumNameUpdate.value,
-		"cover": albumCoverUpdate.value,
-		"artist": {
-			"id": albumArtistUpdate.value
-		},
-		"genre": {
-			"id": albumGenreUpdate.value
-		}
+	let formData = {};
+	if (albumNameUpdate.value!=""){
+		formData.name=albumNameUpdate.value;
+	}
+	if (albumCoverUpdate.value!=""){
+		formData.cover=albumCoverUpdate.value;
+	}
+	if(albumArtistUpdate.value!=""){
+		formData.artist.id=albumArtistUpdate.value;
+	}
+	if( albumGenreUpdate.value!=""){
+		formData.genre.id= albumGenreUpdate.value;
 	}
 	fetch(`http://localhost:8082/albums/update/${id}`, {
 		method: 'put',
@@ -698,13 +706,18 @@ function readPlaylistPageLoad() {
 }
 
 function updatePlaylist(id) {
-	let formData = {
-		"name": playlistNameUpdate.value,
-		"artwork": playlistArtworkUpdate.value,
-		"description": playlistDescUpdate.value,
-		"user": {
-			"id": userId
-		}
+	let formData = {};
+	if (playlistNameUpdate.value!=""){
+		formData.name=playlistNameUpdate.value
+	}
+	if (playlistArtworkUpdate.value!=""){
+		formData.artwork=playlistArtworkUpdate.value
+	}
+	if (playlistDescUpdate.value!=""){
+		formData.description=playlistDescUpdate.value
+	}
+	if (userId!=""){
+		formData.user.id=userId
 	}
 	fetch(`http://localhost:8082/playlists/update/${id}`, {
 		method: 'put',
@@ -746,10 +759,10 @@ function createTrackCard(display, track) {
 	let trackCard = createCardDiv(tracksPath, track);
 	let trackTitle = createCardTitle(track.name);
 	let trackDur = createCardSubtitle(`Duration: ${track.duration}s`)
-	let trackAlbum = createCardLink(`${root}/readAlbum.html?id=${track.album.id}`, track.album.name);
+	//let trackAlbum = createCardLink(`${root}/readAlbum.html?id=${track.album.id}`, track.album.name);
 	trackCard.appendChild(trackTitle);
 	trackCard.appendChild(trackDur);
-	trackCard.appendChild(trackAlbum);
+	//trackCard.appendChild(trackAlbum);
 	trackCard.setAttribute("onclick", `goTo(tracksPath,${track.id})`);
 	display.appendChild(trackCard);
 	console.log(trackCard);
@@ -836,16 +849,21 @@ function readTrackPageLoad() {
 }
 
 function updateTrack(id) {
-	let formData = {
-		"name": trackNameUpdate.value,
-		"duration": trackDurationUpdate.value,
-		"lyrics": trackLyricsUpdate.value,
-		"album": {
-			"id": trackAlbumUpdate.value
-		},
-		"playlist": {
-			"id": trackPlaylistUpdate.value
-		}
+	let formData = {};
+	if (trackNameUpdate.value!=""){
+		formData.name=trackNameUpdate.value
+	}
+	if (trackDurationUpdate.value!=""){
+		formData.duration=trackDurationUpdate.value
+	}
+	if (trackLyricsUpdate.value!=""){
+		formData.lyrics=trackLyricsUpdate.value
+	}
+	if (trackAlbumUpdate.value!=""){
+		formData.album.id=trackAlbumUpdate.value
+	}
+	if (trackPlaylistUpdate.value!=""){
+		formData.playlist.id=trackPlaylistUpdate.value
 	}
 	fetch(`http://localhost:8082/tracks/update/${id}`, {
 		method: 'put',
@@ -1052,16 +1070,20 @@ function readUserByUsername(username) {
 }
 
 function updateUser(id) {
+	let formData={};
+	if (usernameUpdate.value!=""){
+		formData.username=usernameUpdate.value;
+	}
+	if (passwordUpdate.value!=""){
+		formData.password=passwordUpdate.value;
+	}
 	fetch(`http://localhost:8082/users/update/${id}`, {
 		method: 'put',
 		headers: {
 			"token": sessionToken,
 			"Content-Type":"application/json"
 		},
-		body: JSON.stringify({
-			"username": usernameUpdate.value,
-			"password": passwordUpdate.value,
-		}),
+		body: JSON.stringify(formData),
 	}).then(res => res.json())
 		.then(data=>{
 			hide(notNav);
@@ -1136,12 +1158,14 @@ const readPage = (path) => {
 			}
 			res.json()
 				.then((data) => {
+					console.log(data);
 					if (path == tracksPath) {
 						if (data.length == 0) {
 							noRecordsMsg(tracksPath, tracksContainer);
 						}
 						else {
 							for (let track of data) {
+								console.log(track);
 								createTrackCard(tracksContainer, track)
 							}
 						}
