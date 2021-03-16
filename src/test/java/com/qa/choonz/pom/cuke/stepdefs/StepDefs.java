@@ -16,7 +16,7 @@ public class StepDefs {
 
 	@Before
 	public void setup() {
-		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chrome/chromedriver.exe");
 		driver = new ChromeDriver();
 	}
 	
