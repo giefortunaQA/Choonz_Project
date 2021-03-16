@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.AlbumNotFoundException;
@@ -11,17 +12,14 @@ import com.qa.choonz.persistence.domain.Album;
 import com.qa.choonz.persistence.repository.AlbumRepository;
 import com.qa.choonz.rest.dto.AlbumDTO;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AlbumService {
 
-	private AlbumRepository repo;
-	private ModelMapper mapper;
-
-	public AlbumService(AlbumRepository repo, ModelMapper mapper) {
-		super();
-		this.repo = repo;
-		this.mapper = mapper;
-	}
+	private final AlbumRepository repo;
+	private final ModelMapper mapper;
 
 	private AlbumDTO mapToDTO(Album album) {
 		return this.mapper.map(album, AlbumDTO.class);
