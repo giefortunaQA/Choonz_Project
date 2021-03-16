@@ -1,4 +1,4 @@
-package com.qa.choonz.pom.cuke;
+package com.qa.choonz.cuke;
 
 import org.junit.runner.RunWith;
 
@@ -10,7 +10,7 @@ import io.cucumber.junit.CucumberOptions;
 		features = "src/test/resources/cuke",
 		tags = "not @ignore",
 		stepNotifications = true,
-		glue = "com.qa.choonz.pom.cuke.stepdefs",
+		//glue = "com.qa.choonz.pom.cuke.stepdefs",
 		plugin = {"pretty", "html:target/cucumber-reports.html"},
 		monochrome = true)
 public class CukeRunner {

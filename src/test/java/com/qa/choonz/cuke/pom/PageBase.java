@@ -1,4 +1,4 @@
-package com.qa.choonz.pom.pages;
+package com.qa.choonz.cuke.pom;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

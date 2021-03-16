@@ -1,10 +1,10 @@
-package com.qa.choonz.pom.cuke.stepdefs;
+package com.qa.choonz.cuke.stepdefs;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import com.qa.choonz.pom.pages.PageBase;
+import com.qa.choonz.cuke.pom.PageBase;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
