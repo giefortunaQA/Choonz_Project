@@ -97,9 +97,18 @@ public class TrackServiceTest {
 		Long id=1L;
 		List<Track> tracksByArtist=List.of(testTrack1,testTrack2);
 		List<TrackDTO> tracksByArtistAsDtos=tracksByArtist.stream().map(this::mapToDTO).collect(Collectors.toList());
-		when(this.repo.findTracksInAlbums(id)).thenReturn(tracksByArtist);
-		assertThat(this.service.findTracksInAlbums(id)).isEqualTo(tracksByArtistAsDtos);
-		verify(this.repo,times(1)).findTracksInAlbums(id);
+		when(this.repo.findTracksInArtists(id)).thenReturn(tracksByArtist);
+		assertThat(this.service.findTracksInArtists(id)).isEqualTo(tracksByArtistAsDtos);
+		verify(this.repo,times(1)).findTracksInArtists(id);
+	}
+	@Test
+	void testReadTracksByGenre() throws Exception{
+		Long id=1L;
+		List<Track> tracksByGenre=List.of(testTrack1,testTrack2);
+		List<TrackDTO> tracksByGenreAsDtos=tracksByGenre.stream().map(this::mapToDTO).collect(Collectors.toList());
+		when(this.repo.findTracksInGenres(id)).thenReturn(tracksByGenre);
+		assertThat(this.service.findTracksInGenres(id)).isEqualTo(tracksByGenreAsDtos);
+		verify(this.repo,times(1)).findTracksInGenres(id);
 	}
 	@Test
 	void testReadTracksInAlbum() throws Exception{
