@@ -52,11 +52,5 @@ public class User {
 		this.password = password;
 	}
 
-	public User(Long id, @NotNull @Size(max = 20) String username, @NotNull @Size(max = 20) String password) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-	}
 
 }
