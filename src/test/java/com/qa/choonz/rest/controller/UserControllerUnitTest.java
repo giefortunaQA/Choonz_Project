@@ -24,6 +24,7 @@ import com.qa.choonz.service.UserService;
 import com.qa.choonz.utils.AuthUtils;
 
 
+
 @SpringBootTest
 public class UserControllerUnitTest {
 
@@ -97,7 +98,7 @@ public class UserControllerUnitTest {
 	@Test
 	public void readUserByNameTest() {
 
-		// RESOURCES
+		         // RESOURCES
 				String testName = "Sehun";
 				UserDTO testReadUser = this.mapToDTO(testUser);
 
@@ -116,16 +117,21 @@ public class UserControllerUnitTest {
 	@Test
 	public void updateUserTest()
 	{
-		
+		   // RESOURCES
 		Long testID = 2L;
 		String token = AuthUtils.createUserToken(testID);
 		 
 		 User newUser = new User();
 		 newUser.setId(testID);
 		 newUser.setUsername("Updated Task name");
+		 
+		          // ACTIONS
 		 UserDTO testUpdateUser = this.mapToDTO(newUser);
 		
 		 when(this.userService.update(newUser, testID)).thenReturn(testUpdateUser);
+		 
+		 
+		       // ASSERTIONS
 		 ResponseEntity <UserDTO> expected = new ResponseEntity<UserDTO>(testUpdateUser, HttpStatus.ACCEPTED);
 		 ResponseEntity <UserDTO> result = this.controller.update(newUser, testID, token);
 	
@@ -141,20 +147,92 @@ public class UserControllerUnitTest {
 	@Test
 	public void updateUnauthorisedUser()
 	{
+			// RESOURCES
 		Long testID = 2L;
 		Long badTestID = 3L;
 		String secondToken = AuthUtils.createUserToken(badTestID);
 		 
+			// ACTIONS
 		 User newUser2 = new User();
 		 newUser2.setId(2L);
 		 newUser2.setUsername("Updated Task name");
 		 UserDTO testUpdateUser2 = this.mapToDTO(newUser2);
 		
 		 when(this.userService.update(newUser2, testID)).thenReturn(testUpdateUser2);
+		 
+		 
+		 				// ASSERTIONS
 		 ResponseEntity <UserDTO> expected2 = new ResponseEntity<UserDTO>(HttpStatus.UNAUTHORIZED);
 		 ResponseEntity <UserDTO> result2 = this.controller.update(newUser2, testID, secondToken);
 	
 			assertEquals(expected2,result2);
 		 verify(this.userService, Mockito.times(0)).update(newUser2, testID);
 	}
+	
+	
+	
+	@Test
+	public void deleteUserTest()
+	{
+				// RESOURCES
+		Long testID = 2L;
+		String token = AuthUtils.createUserToken(testID);
+		
+					// ACTIONS
+		 when(this.userService.delete(testID)).thenReturn(true);
+		 
+		 		// ASSERTIONS
+		 ResponseEntity <UserDTO> expected = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		 ResponseEntity <UserDTO> result = this.controller.delete(testID, token);
+		 System.out.println(expected);
+		 System.out.println(result);
+		 
+		 assertEquals(expected,result);
+		  verify(this.userService, Mockito.times(1)).delete(testID);
+		  
+		  
+		      // ACTIONS
+			
+			 when(this.userService.delete(testID)).thenReturn(false);
+			   
+			 // ASSERTIONS
+			 ResponseEntity <UserDTO> expected2 = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			 
+			 
+			 ResponseEntity <UserDTO> result2 = this.controller.delete(testID, token);
+			 System.out.println(expected2);
+			 System.out.println(result2);
+			 
+			 assertEquals(expected,result);
+			  verify(this.userService, Mockito.times(2)).delete(testID);
+		
+	}
+	
+	@Test
+	public void deleteUnauthorisedUserTest()
+	{
+		      //RESOURCES
+		Long testID = 2L;
+		Long badTestID = 3L;
+		String token = AuthUtils.createUserToken(badTestID);
+		
+					//ACTIONS
+		 when(this.userService.delete(testID)).thenReturn(false);
+		 
+		 			// ASSERTIONS
+		 ResponseEntity <UserDTO> expected = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		 ResponseEntity <UserDTO> result = this.controller.delete(testID, token);
+		 System.out.println(expected);
+		 System.out.println(result);
+		 
+		 assertEquals(expected,result);
+		  verify(this.userService, Mockito.times(0)).delete(testID);
+		  
+	}
+	
+	
+	
+	
 }
+
+
