@@ -1,6 +1,5 @@
 package com.qa.choonz.persistence.domain;
 
-public class AlbumUnitTest {
-	
+public class GenreUnitTest {
 
 }
