@@ -94,4 +94,33 @@ public class UserServiceTest {
 		verify(this.repo,times(1)).existsById(id);
 	}
 	
+	@Test
+	void testLogin() throws Exception{
+		User target=new User(1L,"User 1","pass 1");
+		User otherUser=new User(1L,"Other user","password");
+		List<User> targetUsers=List.of(target,otherUser);
+		when(this.repo.findAll()).thenReturn(targetUsers);
+		assertThat(this.service.login(target.getUsername(),target.getPassword())).isEqualTo(target.getId());
+		
+	}
+	@Test
+	void testLoginFail() throws Exception{
+		User user1=new User(1L,"User 1","pass 1");
+		User user2=new User(2L,"Other user","password");
+		User target=new User(3L,"Non User","password");
+		List<User> targetUsers=List.of(user1,user2);
+		when(this.repo.findAll()).thenReturn(targetUsers);
+		assertThat(this.service.login(target.getUsername(),target.getPassword())).isEqualTo(null);
+		
+	}
+
+
+	@Test
+	void testReadByUsername() throws Exception{
+		String username="User 1";
+		when(this.repo.findByUsername(username)).thenReturn(Optional.of(testUser1));
+		assertThat(this.service.read(username)).isEqualTo(this.mapToDTO(testUser1));
+		verify(this.repo,times(1)).findByUsername(username);
+	}
+	
 }
