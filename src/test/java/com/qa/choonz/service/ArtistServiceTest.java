@@ -70,10 +70,10 @@ public class ArtistServiceTest {
 	@Test
 	void testUpdate() throws Exception{
 		Long id=1L;
-		Artist orig=new Artist(1L,"Artist");
+		Artist toUpdate=new Artist(1L,"Artist");
 		Artist updated=new Artist(1L,"Artist Updated");
 		ArtistDTO updatedAsDto=this.mapToDTO(updated);
-		when(this.repo.findById(id)).thenReturn(Optional.of(orig));
+		when(this.repo.findById(id)).thenReturn(Optional.of(toUpdate));
 		when(this.repo.save(updated)).thenReturn(updated);
 		assertThat(this.service.update(updated, id)).isEqualTo(updatedAsDto);
 		verify(this.repo,times(1)).findById(id);
