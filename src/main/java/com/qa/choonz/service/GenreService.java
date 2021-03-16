@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GenreService {
 
-    private GenreRepository repo;
-    private ModelMapper mapper;
+    private final GenreRepository repo;
+    private final ModelMapper mapper;
 
     private GenreDTO mapToDTO(Genre genre) {
         return this.mapper.map(genre, GenreDTO.class);

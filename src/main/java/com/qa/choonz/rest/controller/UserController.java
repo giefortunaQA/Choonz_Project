@@ -27,7 +27,7 @@ import com.qa.choonz.utils.AuthUtils;
 public class UserController {
 
 	private UserService service;
-	
+
 	@Autowired
 	public UserController(UserService service) {
 		super();

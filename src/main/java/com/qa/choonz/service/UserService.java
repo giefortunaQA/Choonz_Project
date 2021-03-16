@@ -20,8 +20,8 @@ public class UserService {
 
 	// variables
 
-	private UserRepository repo;
-	private ModelMapper mapper;
+	private final UserRepository repo;
+	private final ModelMapper mapper;
 
 	// methods
 
@@ -47,8 +47,6 @@ public class UserService {
 		User user = this.repo.findByUsername(username).orElseThrow(UserNotFoundException::new);
 		return this.mapToDTO(user);
 	}
-
-	
 
 	public UserDTO update(User user, long id) {
 		User toUpdate = this.repo.findById(id).orElseThrow(UserNotFoundException::new);

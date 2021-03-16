@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AlbumService {
 
-	private AlbumRepository repo;
-	private ModelMapper mapper;
+	private final AlbumRepository repo;
+	private final ModelMapper mapper;
 
 	private AlbumDTO mapToDTO(Album album) {
 		return this.mapper.map(album, AlbumDTO.class);

@@ -1,6 +1,5 @@
 package com.qa.choonz.persistence.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -42,6 +41,15 @@ public class User {
 	// https://www.logicbig.com/tutorials/misc/jackson/json-managed-reference.html
 	@JsonManagedReference(value="ownedBy")
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Playlist> playlists = new ArrayList<>();
+	private List<Playlist> playlists;
+	
+//	public User() {
+//		this.playlists = new ArrayList<>();
+//	};
+	
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
 
 }
