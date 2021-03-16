@@ -1,7 +1,10 @@
 package com.qa.choonz.pom.pages;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PageBase {
 	
@@ -59,6 +62,11 @@ public class PageBase {
 	
 	public void navLogout() {
 		linkLogout.click();
+	}
+	
+	public void waitUntilPageLoad(WebDriver driver) {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.jsReturnsValue("return document.readyState==\"complete\";"));
 	}
 	
 }
