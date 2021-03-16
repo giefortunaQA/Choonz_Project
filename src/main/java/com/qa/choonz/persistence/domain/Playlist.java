@@ -51,4 +51,24 @@ public class Playlist {
 	@ManyToOne
     private User user;
 
+	public Playlist(Long id, @NotNull @Size(max = 100) String name, @NotNull @Size(max = 500) String description,
+			@NotNull @Size(max = 1000) String artwork, User user) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.artwork = artwork;
+		this.user = user;
+	}
+
+	public Playlist(@NotNull @Size(max = 100) String name, @NotNull @Size(max = 500) String description,
+			@NotNull @Size(max = 1000) String artwork, User user) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.artwork = artwork;
+		this.user = user;
+	}
+
+	
 }

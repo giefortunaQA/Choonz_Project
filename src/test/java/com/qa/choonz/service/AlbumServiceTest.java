@@ -1,6 +1,7 @@
 package com.qa.choonz.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,17 +13,17 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.qa.choonz.persistence.domain.Album;
 import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.domain.Genre;
-import com.qa.choonz.persistence.domain.Album;
-import com.qa.choonz.persistence.repository.AlbumRepository;
 import com.qa.choonz.persistence.repository.AlbumRepository;
 import com.qa.choonz.rest.dto.AlbumDTO;
-import com.qa.choonz.rest.dto.AlbumDTO;
-
+@SpringBootTest
+@ActiveProfiles	("test")
 public class AlbumServiceTest {
 	@Autowired
 	private AlbumService service;
@@ -36,16 +37,17 @@ public class AlbumServiceTest {
 		return this.mapper.map(album,AlbumDTO.class);
 	}
 	//class resources
-	private final Album testAlbum1=new Album("Album 1",testArtist,testGenre,"cover 1");
-	private final Album testAlbum2=new Album("Album 2",testArtist,testGenre,"cover 2");
 	private final Genre testGenre=new Genre(1L,"Genre","description");
 	private final Artist testArtist=new Artist(1L,"Artist");
+	private final Album testAlbum1=new Album("Album 1",testArtist,testGenre,"cover 1");
+	private final Album testAlbum2=new Album("Album 2",testArtist,testGenre,"cover 2");
+	
 	private final List<Album> testList=List.of(testAlbum1,testAlbum2); 
 	
 	@Test
 	void testCreate() throws Exception{
-		Album toCreate=new Album("Album","cover",testArtist,testGenre);
-		Album created=new Album(5L,"Album",testArtist,testGenre);
+		Album toCreate=new Album("Album",testArtist,testGenre,"cover");
+		Album created=new Album(5L,"Album",testArtist,testGenre,"cover updated");
 		
 		when(this.repo.save(toCreate)).thenReturn(created);
 		

@@ -12,19 +12,17 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.qa.choonz.persistence.domain.Playlist;
-import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.persistence.domain.User;
-import com.qa.choonz.persistence.domain.Artist;
-import com.qa.choonz.persistence.domain.Genre;
-import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.repository.PlaylistRepository;
-import com.qa.choonz.persistence.repository.PlaylistRepository;
-import com.qa.choonz.rest.dto.PlaylistDTO;
 import com.qa.choonz.rest.dto.PlaylistDTO;
 
+@SpringBootTest
+@ActiveProfiles	("test")
 public class PlaylistServiceTest {
 	@Autowired
 	private PlaylistService service;
@@ -38,19 +36,15 @@ public class PlaylistServiceTest {
 		return this.mapper.map(playlist,PlaylistDTO.class);
 	}
 	//class resources
-	private final Playlist testPlaylist1=new Playlist("Playlist 1","description 1","artwork 1",testTracks1,testUser);
-	private final Playlist testPlaylist2=new Playlist("Playlist 2","description 2","artwork 2",testTracks2,testUser);
-	private final User testUser=new User("user","pass");
+	private final User testUser=new User();
+	private final Playlist testPlaylist1=new Playlist("Playlist 1","description 1","artwork 1",testUser);
+	private final Playlist testPlaylist2=new Playlist("Playlist 2","description 2","artwork 2",testUser);
 	private final List<Playlist> testList=List.of(testPlaylist1,testPlaylist2); 
-	private final Track testTrack1=new Track("Track 1",testAlbum,testPlaylist1,200,"lyrics 1");
-	private final Track testTrack2=new Track("Track 2",testAlbum,testPlaylist2,200,"lyrics 2");
-	private final List<Track> testTracks1=List.of(testTrack1); 
-	private final List<Track> testTracks2=List.of(testTrack2); 
 	
 	@Test
 	void testCreate() throws Exception{
-		Playlist toCreate=new Playlist("Playlist","desc","art",testTracks1,testUser);
-		Playlist created=new Playlist(5L,"Playlist","desc","art",testTracks1,testUser);
+		Playlist toCreate=new Playlist("Playlist","desc","art",testUser);
+		Playlist created=new Playlist(5L,"Playlist","desc","art",testUser);
 		
 		when(this.repo.save(toCreate)).thenReturn(created);
 		
@@ -76,7 +70,7 @@ public class PlaylistServiceTest {
 	@Test
 	void testUpdate() throws Exception{
 		Long id=1L;
-		Playlist updated=new Playlist(1L,"Playlist","desc","art",testTracks1,testUser);
+		Playlist updated=new Playlist(1L,"Playlist","desc","art",testUser);
 		PlaylistDTO updatedAsDto=this.mapToDTO(updated);
 		when(this.repo.findById(id)).thenReturn(Optional.of(testPlaylist1));
 		when(this.repo.save(updated)).thenReturn(updated);
