@@ -11,6 +11,9 @@ import com.qa.choonz.exception.GenreNotFoundException;
 import com.qa.choonz.persistence.domain.Genre;
 import com.qa.choonz.persistence.repository.GenreRepository;
 import com.qa.choonz.rest.dto.GenreDTO;
+import com.qa.choonz.utils.BeanUtils;
+
+import lombok.RequiredArgsConstructor;
 
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +45,7 @@ public class GenreService {
 
     public GenreDTO update(Genre genre, long id) {
         Genre toUpdate = this.repo.findById(id).orElseThrow(GenreNotFoundException::new);
-        toUpdate.setName(genre.getName());
-        toUpdate.setDescription(genre.getDescription());
+        BeanUtils.mergeNotNull(genre,toUpdate);
         Genre updated = this.repo.save(toUpdate);
         return this.mapToDTO(updated);
     }

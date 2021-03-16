@@ -52,5 +52,4 @@ public class Genre {
 		this.description = description;
 	}
 
-	
 }
