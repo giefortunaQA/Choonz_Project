@@ -21,6 +21,8 @@ import org.springframework.http.ResponseEntity;
 import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.rest.dto.UserDTO;
 import com.qa.choonz.service.UserService;
+import com.qa.choonz.utils.AuthUtils;
+
 
 @SpringBootTest
 public class UserControllerUnitTest {
@@ -70,7 +72,7 @@ public class UserControllerUnitTest {
 		ResponseEntity<List<UserDTO>> expected = ResponseEntity.ok(testReadList);
 		ResponseEntity<List<UserDTO>> result = this.controller.read();
 		assertEquals(expected, result);
-
+		verify(this.userService, atLeastOnce()).read();
 	}
 
 	@Test
@@ -88,7 +90,7 @@ public class UserControllerUnitTest {
 		ResponseEntity<UserDTO> expected = ResponseEntity.ok(testReadUser);
 		ResponseEntity<UserDTO> result = this.controller.read(testID);
 		assertEquals(expected, result);
-		verify(this.userService, atLeastOnce()).read(testID);
+		verify(this.userService, Mockito.times(1)).read(testID);
 
 	}
 
@@ -107,7 +109,52 @@ public class UserControllerUnitTest {
 				ResponseEntity<UserDTO> expected = ResponseEntity.ok(testReadUser);
 				ResponseEntity<UserDTO> result = this.controller.read(testName);
 				assertEquals(expected, result);
-				verify(this.userService, atLeastOnce()).read(testName);
+				verify(this.userService,Mockito.times(1)).read(testName);
 	}
 
+	
+	@Test
+	public void updateUserTest()
+	{
+		
+		Long testID = 2L;
+		String token = AuthUtils.createUserToken(testID);
+		 
+		 User newUser = new User();
+		 newUser.setId(testID);
+		 newUser.setUsername("Updated Task name");
+		 UserDTO testUpdateUser = this.mapToDTO(newUser);
+		
+		 when(this.userService.update(newUser, testID)).thenReturn(testUpdateUser);
+		 ResponseEntity <UserDTO> expected = new ResponseEntity<UserDTO>(testUpdateUser, HttpStatus.ACCEPTED);
+		 ResponseEntity <UserDTO> result = this.controller.update(newUser, testID, token);
+	
+			assertEquals(expected,result);
+		  verify(this.userService, Mockito.times(1)).update(newUser, testID);
+		  
+		  
+		  
+			
+	
+	}
+	
+	@Test
+	public void updateUnauthorisedUser()
+	{
+		Long testID = 2L;
+		Long badTestID = 3L;
+		String secondToken = AuthUtils.createUserToken(badTestID);
+		 
+		 User newUser2 = new User();
+		 newUser2.setId(2L);
+		 newUser2.setUsername("Updated Task name");
+		 UserDTO testUpdateUser2 = this.mapToDTO(newUser2);
+		
+		 when(this.userService.update(newUser2, testID)).thenReturn(testUpdateUser2);
+		 ResponseEntity <UserDTO> expected2 = new ResponseEntity<UserDTO>(HttpStatus.UNAUTHORIZED);
+		 ResponseEntity <UserDTO> result2 = this.controller.update(newUser2, testID, secondToken);
+	
+			assertEquals(expected2,result2);
+		 verify(this.userService, Mockito.times(0)).update(newUser2, testID);
+	}
 }
