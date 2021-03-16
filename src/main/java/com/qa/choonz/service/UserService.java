@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.UserNotFoundException;
@@ -11,21 +12,16 @@ import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.persistence.repository.UserRepository;
 import com.qa.choonz.rest.dto.UserDTO;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserService {
 
 	// variables
 
-	private UserRepository repo;
-	private ModelMapper mapper;
-
-	// constructor
-
-	public UserService(UserRepository repo, ModelMapper mapper) {
-		super();
-		this.repo = repo;
-		this.mapper = mapper;
-	}
+	private final UserRepository repo;
+	private final ModelMapper mapper;
 
 	// methods
 
@@ -51,8 +47,6 @@ public class UserService {
 		User user = this.repo.findByUsername(username).orElseThrow(UserNotFoundException::new);
 		return this.mapToDTO(user);
 	}
-
-	
 
 	public UserDTO update(User user, long id) {
 		User toUpdate = this.repo.findById(id).orElseThrow(UserNotFoundException::new);
