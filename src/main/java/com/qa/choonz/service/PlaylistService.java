@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.PlaylistNotFoundException;
@@ -11,17 +12,14 @@ import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.repository.PlaylistRepository;
 import com.qa.choonz.rest.dto.PlaylistDTO;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PlaylistService {
 
-	private PlaylistRepository repo;
-	private ModelMapper mapper;
-
-	public PlaylistService(PlaylistRepository repo, ModelMapper mapper) {
-		super();
-		this.repo = repo;
-		this.mapper = mapper;
-	}
+	private final PlaylistRepository repo;
+	private final ModelMapper mapper;
 
 	private PlaylistDTO mapToDTO(Playlist playlist) {
 		return this.mapper.map(playlist, PlaylistDTO.class);
@@ -54,7 +52,7 @@ public class PlaylistService {
 		this.repo.deleteById(id);
 		return !this.repo.existsById(id);
 	}
-	
+
 	public List<PlaylistDTO> findPlaylistsInGenres(long id){
 		return this.repo.findPlaylistsInGenres(id).stream().map(this::mapToDTO).collect(Collectors.toList());
 		
