@@ -1,15 +1,16 @@
 package com.qa.choonz.rest.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.domain.Genre;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class AlbumDTO {
 
 	private long id;
@@ -17,5 +18,6 @@ public class AlbumDTO {
 	private Artist artist;
 	private Genre genre;
 	private String cover;
-
+	private List<TrackDTO> tracks = new ArrayList<>();
+	
 }
