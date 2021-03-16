@@ -15,6 +15,6 @@ public class PlaylistDTO {
 	private String name;
 	private String description;
 	private String artwork;
-	private List<TrackDTO> track;
+	private List<TrackDTO> tracks;
 	
 }
