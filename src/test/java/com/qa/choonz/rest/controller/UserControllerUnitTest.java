@@ -22,88 +22,79 @@ import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.rest.dto.UserDTO;
 import com.qa.choonz.service.UserService;
 
-
 @SpringBootTest
 public class UserControllerUnitTest {
-	
-  
-	        @Autowired
-			private UserController controller;
-		    
-		    @MockBean
-		    private UserService userService;
-		 
-		    
-		    @Autowired
-		    private ModelMapper mapper;
-			
-		    private final User testUser = new User(2L, "Sehun",  "Password", null);
-		    private final List<User> listOfUsers = List.of(testUser);
-		    
-		    private UserDTO mapToDTO(User user)
-		    {
-		    	return this.mapper.map(user, UserDTO.class);
-		    }
-	
-	
-	@Test
-	public void createUserTest()
-	{
-                             	//ACTIONS
-		Mockito.when(this.userService.create(testUser)).thenReturn(this.mapToDTO(testUser));
-		
-								
-		                       //ASSERTIONS
-		
-		assertThat(new ResponseEntity<UserDTO>(this.mapToDTO(testUser), HttpStatus.CREATED))
-		.isEqualTo(this.controller.create(testUser));
-			
-		
-	    verify(this.userService, atLeastOnce()).create(testUser);
-		
+
+	@Autowired
+	private UserController controller;
+
+	@MockBean
+	private UserService userService;
+
+	@Autowired
+	private ModelMapper mapper;
+
+	private final User testUser = new User(2L, "Sehun", "Password", null);
+	private final List<User> listOfUsers = List.of(testUser);
+
+	private UserDTO mapToDTO(User user) {
+		return this.mapper.map(user, UserDTO.class);
 	}
-	
+
 	@Test
-	public void readAllUsersTest()
-	{
+	public void createUserTest() {
 		
-							//RESOURCES
-		List<UserDTO> testReadList = listOfUsers.stream().map(this:: mapToDTO).
-				collect(Collectors.toList());
-				
-		
-							  //ACTIONS
+		// ACTIONS
+		Mockito.when(this.userService.create(testUser)).thenReturn(this.mapToDTO(testUser));
+
+		// ASSERTIONS
+
+		assertThat(new ResponseEntity<UserDTO>(this.mapToDTO(testUser), HttpStatus.CREATED))
+				.isEqualTo(this.controller.create(testUser));
+
+		verify(this.userService, atLeastOnce()).create(testUser);
+
+	}
+
+	@Test
+	public void readAllUsersTest() {
+
+		// RESOURCES
+		List<UserDTO> testReadList = listOfUsers.stream().map(this::mapToDTO).collect(Collectors.toList());
+
+		// ACTIONS
 		when(this.userService.read()).thenReturn(testReadList);
-		
-						
-							//ASSERTIONS
-		
+
+		// ASSERTIONS
+
 		ResponseEntity<List<UserDTO>> expected = ResponseEntity.ok(testReadList);
 		ResponseEntity<List<UserDTO>> result = this.controller.read();
 		assertEquals(expected, result);
-		
-		
+
 	}
-	
-	
 
 	@Test
-	public void readUserByIDTest()
-	{
+	public void readUserByIDTest() {
 
-		
-		
+		// RESOURCES
+		Long testID = 2L;
+		UserDTO testReadUser = this.mapToDTO(testUser);
+
+		// ACTIONS
+		when(this.userService.read(testID)).thenReturn(testReadUser);
+
+		// ASSERTIONS
+
+		ResponseEntity<UserDTO> expected = ResponseEntity.ok(testReadUser);
+		ResponseEntity<UserDTO> result = this.controller.read(testID);
+		assertEquals(expected, result);
+		verify(this.userService, atLeastOnce()).read(testID);
+
 	}
-	
 
 	@Test
-	public void readUserByNameTest()
-	{
+	public void readUserByNameTest() {
 
-	
-		
 	}
-	
-	
 
 }
