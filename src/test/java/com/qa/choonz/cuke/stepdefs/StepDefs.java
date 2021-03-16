@@ -1,10 +1,13 @@
 package com.qa.choonz.cuke.stepdefs;
 
+import static org.junit.Assert.assertEquals;
+
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.qa.choonz.cuke.pom.PageBase;
+import com.qa.choonz.cuke.pom.PageUser;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -16,6 +19,7 @@ public class StepDefs {
 	
 	private static RemoteWebDriver driver;
 	private static PageBase base = PageFactory.initElements(driver, PageBase.class);
+    private static PageUser userPage = PageFactory.initElements(driver, PageUser.class);
 
 	@Before
 	public void setup() {
@@ -25,44 +29,41 @@ public class StepDefs {
 	
 	@Given("that I can navigate to {string}")
 	public void that_i_can_navigate_to(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    driver.get(string);
+	    base.waitUntilPageLoad(driver);
 	}
 
 	@When("I click the account button")
 	public void i_click_the_account_button() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    base.navLogin();
+	    base.waitUntilPageLoad(driver);
 	}
 
 	@When("I cancel the alert")
 	public void i_cancel_the_alert() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    driver.switchTo().alert().dismiss();
 	}
 
 	@When("I enter a username of {string}")
 	public void i_enter_a_username_of(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    userPage.inputUsername(string);
 	}
 
 	@When("I enter a password of {string}")
 	public void i_enter_a_password_of(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    userPage.inputPassword(string);
 	}
 
 	@When("I submit the sign up form")
 	public void i_submit_the_sign_up_form() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    userPage.clickSubmit();
 	}
 
 	@Then("I see the text {string}")
 	public void i_see_the_text(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    String expected = string;
+	    String result = userPage.getResultText();
+	    assertEquals(expected,result);
 	}
 	
 	@After
