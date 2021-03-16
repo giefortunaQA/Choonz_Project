@@ -20,7 +20,7 @@ public class Track {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotNull
     @Size(max = 100)
@@ -39,7 +39,7 @@ public class Track {
     @Size(max = 5000)
     private String lyrics;
 
-    public Track(long id, String name, int duration, String lyrics) {
+    public Track(Long id, String name, int duration, String lyrics) {
     	this.id = id;
     	this.name = name;
     	this.duration = duration;

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GenreDTO {
 
-	private long id;
+	private Long id;
 	private String name;
 	private String description;
 

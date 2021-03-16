@@ -24,7 +24,7 @@ public class Artist {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@NotNull
 	@Size(max = 100)
@@ -34,7 +34,7 @@ public class Artist {
 	@OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
 	private List<Album> albums;
 
-	public Artist(long id, @NotNull @Size(max = 100) String name) {
+	public Artist(Long id, @NotNull @Size(max = 100) String name) {
 		super();
 		this.id = id;
 		this.name = name;

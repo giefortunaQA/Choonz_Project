@@ -24,7 +24,7 @@ public class Album {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@NotNull
 	@Size(max = 100)
@@ -43,7 +43,7 @@ public class Album {
 
 	private String cover;
 
-	public Album(long id, @NotNull @Size(max = 100) String name, Artist artist, Genre genre, String cover) {
+	public Album(Long id, @NotNull @Size(max = 100) String name, Artist artist, Genre genre, String cover) {
 		super();
 		this.id = id;
 		this.name = name;
