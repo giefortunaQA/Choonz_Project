@@ -86,5 +86,12 @@ public class UserServiceTest {
 		assertThat(this.service.delete(id)).isFalse();
 		verify(this.repo,times(1)).existsById(id);
 	}
+	@Test
+	void testDeletePass() throws Exception{
+		Long id=1L;
+		when(this.repo.existsById(id)).thenReturn(false);
+		assertThat(this.service.delete(id)).isTrue();
+		verify(this.repo,times(1)).existsById(id);
+	}
 	
 }

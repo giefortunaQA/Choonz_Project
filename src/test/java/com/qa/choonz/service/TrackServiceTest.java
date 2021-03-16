@@ -12,23 +12,16 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.qa.choonz.persistence.domain.Track;
-import com.qa.choonz.persistence.domain.User;
-import com.qa.choonz.persistence.domain.Album;
-import com.qa.choonz.persistence.domain.Artist;
-import com.qa.choonz.persistence.domain.Genre;
-import com.qa.choonz.persistence.domain.Playlist;
-import com.qa.choonz.persistence.domain.Track;
-import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.persistence.repository.TrackRepository;
-import com.qa.choonz.persistence.repository.TrackRepository;
-import com.qa.choonz.persistence.repository.TrackRepository;
-import com.qa.choonz.rest.dto.AlbumDTO;
-import com.qa.choonz.rest.dto.TrackDTO;
 import com.qa.choonz.rest.dto.TrackDTO;
 
+@SpringBootTest
+@ActiveProfiles	("test")
 public class TrackServiceTest {
 	@Autowired
 	private TrackService service;
@@ -42,17 +35,15 @@ public class TrackServiceTest {
 		return this.mapper.map(track,TrackDTO.class);
 	}
 	//class resources
-	private final Track testTrack1=new Track("Track 1",testAlbum,testPlaylist,200,"lyrics 1");
-	private final Track testTrack2=new Track("Track 2",testAlbum,testPlaylist,200,"lyrics 2");
-	private final Album testAlbum=new Album("Album","cover",testArtist,testGenre);
-	private final Playlist testPlaylist=new Playlist("Playlist","Playlist description","Playlist artwork",testList,testUser);
-	private final User testUser=new User("username","password");
+	private final Track testTrack1=new Track("Track 1",200,"lyrics 1");
+	private final Track testTrack2=new Track("Track 2",200,"lyrics 2");
+	
 	private final List<Track> testList=List.of(testTrack1,testTrack2); 
 	
 	@Test
 	void testCreate() throws Exception{
-		Track toCreate=new Track("Track",testAlbum,testPlaylist,200,"lyrics");
-		Track created=new Track(5L,"Track",testAlbum,testPlaylist,200,"lyrics");
+		Track toCreate=new Track("Track",200,"lyrics");
+		Track created=new Track(5L,"Track",200,"lyrics");
 		
 		when(this.repo.save(toCreate)).thenReturn(created);
 		
@@ -78,7 +69,7 @@ public class TrackServiceTest {
 	@Test
 	void testUpdate() throws Exception{
 		Long id=1L;
-		Track updated=new Track(1L,"Track 1 Updated",testAlbum,testPlaylist,200,"lyrics updated");
+		Track updated=new Track(1L,"Track 1 Updated",200,"lyrics updated");
 		TrackDTO updatedAsDto=this.mapToDTO(updated);
 		when(this.repo.findById(id)).thenReturn(Optional.of(testTrack1));
 		when(this.repo.save(updated)).thenReturn(updated);
@@ -92,6 +83,13 @@ public class TrackServiceTest {
 		Long id=1L;
 		when(this.repo.existsById(id)).thenReturn(true);
 		assertThat(this.service.delete(id)).isFalse();
+		verify(this.repo,times(1)).existsById(id);
+	}
+	@Test
+	void testDeletePass() throws Exception{
+		Long id=1L;
+		when(this.repo.existsById(id)).thenReturn(false);
+		assertThat(this.service.delete(id)).isTrue();
 		verify(this.repo,times(1)).existsById(id);
 	}
 	@Test
