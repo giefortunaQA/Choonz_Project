@@ -3,7 +3,6 @@ package com.qa.choonz.persistence.domain;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,17 +30,17 @@ public class Playlist {
 
 	@NotNull
 	@Size(max = 100)
-	@Column(unique = true)
+	//@Column(unique = true)
 	private String name;
 
 	@NotNull
 	@Size(max = 500)
-	@Column(unique = true)
+	//@Column(unique = true)
 	private String description;
 
 	@NotNull
 	@Size(max = 1000)
-	@Column(unique = true)
+	//@Column(unique = true)
 	private String artwork;
 
 	@OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)

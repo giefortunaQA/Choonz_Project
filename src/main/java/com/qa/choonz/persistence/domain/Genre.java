@@ -33,7 +33,7 @@ public class Genre {
 
 	@NotNull
 	@Size(max = 250)
-	@Column(unique = true)
+	//@Column(unique = true)
 	private String description;
 
 	@OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
