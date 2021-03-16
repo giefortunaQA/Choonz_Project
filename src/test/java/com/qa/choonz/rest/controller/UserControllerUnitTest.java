@@ -22,6 +22,7 @@ import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.rest.dto.UserDTO;
 import com.qa.choonz.service.UserService;
 
+
 @SpringBootTest
 public class UserControllerUnitTest {
 
@@ -110,4 +111,26 @@ public class UserControllerUnitTest {
 				verify(this.userService, atLeastOnce()).read(testName);
 	}
 
+	
+	
+//	@Test
+//	public void updateUserTest()
+//	{
+//		Long testID = 2L;
+//		String token = "";
+//		
+//		 User newUser = new User();
+//		 newUser.setId(testID);
+//		 newUser.setUsername("Updatedusername");
+//		 newUser.setPassword("newPassword");
+//		 UserDTO testUpdateUser = this.mapToDTO(testUser);
+//		 
+//		
+//		 when(this.userService.update(newUser, testID)).thenReturn(testUpdateUser);
+//		 ResponseEntity <UserDTO> expected = new ResponseEntity<>(newUser, HttpStatus.ACCEPTED);
+//			ResponseEntity <UserDTO> result = this.controller.update(newUser, testID,token);
+//	
+//			assertEquals(expected,result);
+//		  verify(this.userService, atLeastOnce()).update(newUser, testID);
+//	}
 }
