@@ -178,7 +178,7 @@ public class TrackControllerTest {
 }
 	
 	@Test
-	public void updateTaskTest() throws Exception
+	public void updateTrackTest() throws Exception
     {
 		
 		
@@ -201,7 +201,7 @@ public class TrackControllerTest {
 	
 	
 	@Test
-	public void deleteTaskTest() throws Exception
+	public void deleteTrackTest() throws Exception
     {
 		Long testID = 2L;
 		 when(this.trackService.delete(testID)).thenReturn(true);
