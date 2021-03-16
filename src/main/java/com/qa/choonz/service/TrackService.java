@@ -11,6 +11,7 @@ import com.qa.choonz.exception.TrackNotFoundException;
 import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.persistence.repository.TrackRepository;
 import com.qa.choonz.rest.dto.TrackDTO;
+import com.qa.choonz.utils.BeanUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,11 +42,7 @@ public class TrackService {
 
     public TrackDTO update(Track track, long id) {
         Track toUpdate = this.repo.findById(id).orElseThrow(TrackNotFoundException::new);
-        toUpdate.setName(track.getName());
-        toUpdate.setAlbum(track.getAlbum());
-        toUpdate.setDuration(track.getDuration());
-        toUpdate.setLyrics(track.getLyrics());
-        toUpdate.setPlaylist(track.getPlaylist());
+        BeanUtils.mergeNotNull(track,toUpdate);
         Track updated = this.repo.save(toUpdate);
         return this.mapToDTO(updated);
     }
