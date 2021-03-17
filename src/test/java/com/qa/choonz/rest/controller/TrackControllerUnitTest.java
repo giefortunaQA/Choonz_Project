@@ -26,7 +26,7 @@ import com.qa.choonz.service.TrackService;
 
 @SpringBootTest
 @ActiveProfiles	("test")
-public class TrackControllerTest {
+public class TrackControllerUnitTest {
 	
 	@Autowired
 	private TrackController controller;
