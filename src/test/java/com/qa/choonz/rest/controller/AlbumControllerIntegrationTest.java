@@ -61,8 +61,7 @@ public class AlbumControllerIntegrationTest {
 	Album testAlbum2 = new Album(2L, "24K Magic",testArtist4,testGenre1,"https://upload.wikimedia.org/wikipedia/en/2/2b/Bruno_Mars_-_24K_Magic_%28Official_Album_Cover%29.png");
 	Album testAlbum3 = new Album(3L, "25 Album",testArtist3,testGenre1,"https://upload.wikimedia.org/wikipedia/en/9/96/Adele_-_25_%28Official_Album_Cover%29.png");
 	Album testAlbum4 = new Album(4L, "Purpose",testArtist2,testGenre1,"https://upload.wikimedia.org/wikipedia/en/2/27/Justin_Bieber_-_Purpose_%28Official_Album_Cover%29.png");
-
-
+	Album testAlbum5 = new Album(5L, "Test",testArtist2,testGenre3,"Test");
 
 	private final String URI = "/albums";
 	
@@ -80,15 +79,14 @@ public class AlbumControllerIntegrationTest {
 		// ASSERTIONS
 		ResultMatcher checkStatus = status().isCreated();
 		ResultMatcher checkBody = content().json(TestSavedDTOAsJson);
-		assertNotNull(checkBody);
-		assertNotNull(checkStatus);
+		assertNotNull(request);
 		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkBody);
 	}
 
 	@Test
 	void readAllIntegrationTest() throws Exception {
 		// RESOURCES
-		List<AlbumDTO> testSavedListDTO = List.of(mapToDTO(testAlbum1), mapToDTO(testAlbum2), mapToDTO(testAlbum3), mapToDTO(testAlbum4)); 
+		List<AlbumDTO> testSavedListDTO = List.of(mapToDTO(testAlbum1), mapToDTO(testAlbum2), mapToDTO(testAlbum3), mapToDTO(testAlbum4), mapToDTO(testAlbum5)); 
 
 		String testSavedListAsJson = this.jsonifier.writeValueAsString(testSavedListDTO);
 
@@ -100,8 +98,7 @@ public class AlbumControllerIntegrationTest {
 		// ASSERTIONS
 		ResultMatcher checkStatus = status().isOk();
 		ResultMatcher checkBody = content().json(testSavedListAsJson);
-		assertNotNull(checkBody);
-		assertNotNull(checkStatus);
+		assertNotNull(request);
 		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkBody);
 	}
 
@@ -118,8 +115,7 @@ public class AlbumControllerIntegrationTest {
 		// ASSERTIONS
 		ResultMatcher checkStatus = status().isOk();
 		ResultMatcher checkBody = content().json(this.jsonifier.writeValueAsString(testAlbum2));
-		assertNotNull(checkBody);
-		assertNotNull(checkStatus);
+		assertNotNull(request);
 		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkBody);
 	}
 
@@ -143,8 +139,7 @@ public class AlbumControllerIntegrationTest {
 		// ASSERTIONS
 		ResultMatcher checkStatus = status().isAccepted();
 		ResultMatcher checkBody = content().json(this.jsonifier.writeValueAsString(updatedDTO));
-		assertNotNull(checkBody);
-		assertNotNull(checkStatus);
+		assertNotNull(request);
 		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkBody);
 	}
 
@@ -158,7 +153,7 @@ public class AlbumControllerIntegrationTest {
 		// ASSERTIONS
 		ResultMatcher checkStatus = status().isNoContent();
 
-		assertNotNull(checkStatus);
+		assertNotNull(request);
 		this.mvc.perform(request).andExpect(checkStatus);
 	}
 	
@@ -171,7 +166,7 @@ public class AlbumControllerIntegrationTest {
 		
 		// ASSERTIONS
 		ResultMatcher checkStatus = status().isInternalServerError();
-		assertNotNull(checkStatus);
+		assertNotNull(request);
 		this.mvc.perform(request).andExpect(checkStatus);
 	}
 	
@@ -189,4 +184,37 @@ public class AlbumControllerIntegrationTest {
 	 * this.mvc.perform(request).andExpect(status().isInternalServerError()); }
 	 */
 
+	@Test
+	void readByArtistIntegrationTest() throws Exception {
+		// RESOURCES
+		List<AlbumDTO> testSavedListDTO = List.of(mapToDTO(testAlbum4), mapToDTO(testAlbum5)); 
+
+		// ACTIONS
+		RequestBuilder request = get(URI + "/read/by-artist/2")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(this.jsonifier.writeValueAsString(testSavedListDTO));
+
+		// ASSERTIONS
+		ResultMatcher checkStatus = status().isOk();
+		ResultMatcher checkBody = content().json(this.jsonifier.writeValueAsString(testSavedListDTO));
+		assertNotNull(request);
+		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkBody);
+	}
+	
+	@Test
+	void readByGenreIntegrationTest() throws Exception {
+		// RESOURCES
+		List<AlbumDTO> testSavedListDTO = List.of(mapToDTO(testAlbum5)); 
+		
+		// ACTIONS
+		RequestBuilder request = get(URI + "/read/by-genre/3")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(this.jsonifier.writeValueAsString(testSavedListDTO));
+
+		// ASSERTIONS
+		ResultMatcher checkStatus = status().isOk();
+		ResultMatcher checkBody = content().json(this.jsonifier.writeValueAsString(testSavedListDTO));
+		assertNotNull(request);
+		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkBody);
+	}
 }

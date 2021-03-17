@@ -10,6 +10,7 @@ INSERT INTO ALBUM (name, cover, artist_id, genre_id) VALUES ('Thank U, Next','ht
 INSERT INTO ALBUM (name, cover, artist_id, genre_id) VALUES ('24K Magic','https://upload.wikimedia.org/wikipedia/en/2/2b/Bruno_Mars_-_24K_Magic_%28Official_Album_Cover%29.png',4,1);
 INSERT INTO ALBUM (name, cover, artist_id, genre_id) VALUES ('25 Album','https://upload.wikimedia.org/wikipedia/en/9/96/Adele_-_25_%28Official_Album_Cover%29.png',3,1);
 INSERT INTO ALBUM (name, cover, artist_id, genre_id) VALUES ('Purpose','https://upload.wikimedia.org/wikipedia/en/2/27/Justin_Bieber_-_Purpose_%28Official_Album_Cover%29.png',2,1);
+INSERT INTO ALBUM (name, cover, artist_id, genre_id) VALUES ('Test','Test',2,3);
 INSERT INTO USER (username, password) VALUES ('admin','admin');
 INSERT INTO PLAYLIST (name, description, artwork,user_id) VALUES ('Favourites','This is a playlist by admin consisting of public favourites.','https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png',1);
 INSERT INTO TRACK (name, lyrics, duration, album_id, playlist_id) VALUES ('Thank U Next','Thank U Next lyrics',207,1,1);
