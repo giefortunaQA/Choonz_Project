@@ -14,9 +14,9 @@ public class PageArtists extends PageBase {
 	@FindBy(xpath = "//*[@id=\"createArtistForm\"]/span[1]/button")
 	private WebElement buttonCreateArtistSubmit;
 	
-	// this will need to be changed from artist1 to artist5
+	// this will need to be changed from artist2 to artistX
 	// when the data.sql is implemented for testing
-	@FindBy(xpath = "//*[@id=\"artists1\"]/button/h3")
+	@FindBy(xpath = "//*[@id=\"artists2\"]/button/h3")
 	private WebElement textArtistName;
 	
 	@FindBy(xpath = "//*[@id=\"updateEachArtist\"]")

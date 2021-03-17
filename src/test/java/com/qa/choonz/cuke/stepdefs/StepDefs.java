@@ -142,6 +142,7 @@ public class StepDefs {
 
 	@When("I click the create artist button")
 	public void i_click_the_create_artist_button() {
+		hang();
 	    artistsPage.clickCreateArtist();
 	}
 
@@ -162,13 +163,15 @@ public class StepDefs {
 		artistsPage.clickCreateArtistSubmit();
 	}
 	
-	@When("I select the artist {string}")
-	public void i_select_the_artist(String string) {
+	@When("I select an artist")
+	public void i_select_an_artist() {
+		hang();
 	    artistsPage.clickArtistName();
 	}
 
 	@When("I click the update artist button")
 	public void i_click_the_update_artist_button() {
+		hang();
 	    artistsPage.clickUpdateArtist();
 	}
 
@@ -190,6 +193,7 @@ public class StepDefs {
 
 	@Then("I can read an updated artist with the name {string}")
 	public void i_can_read_an_updated_artist_with_the_name(String string) {
+		hang();
 	    String expected = string;
 	    String result = artistsPage.getArtistNameUpdated();
 	    assertEquals(expected,result);
@@ -197,6 +201,7 @@ public class StepDefs {
 
 	@Then("I can read an artist with the name {string}")
 	public void i_can_read_an_artist_with_the_name(String string) {
+		hang();
 	    String expected = string;
 	    String result = artistsPage.getArtistName();
 	    assertEquals(expected,result);
@@ -204,6 +209,7 @@ public class StepDefs {
 
 	@Then("I see the text {string}")
 	public void i_see_the_text(String string) {
+		hang();
 	    String expected = string;
 	    String result = userPage.getResultText();
 	    assertEquals(expected,result);
@@ -217,6 +223,12 @@ public class StepDefs {
 		assertEquals(expected,result);
 	}
 	
+	@After
+	public static void tearDown() {
+		driver.quit();
+		System.out.println("driver closed");
+	}
+	
 	public static void hang() {
 		base.waitUntilPageLoad(driver);
 		try {
@@ -225,12 +237,6 @@ public class StepDefs {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	@After
-	public static void tearDown() {
-		driver.quit();
-		System.out.println("driver closed");
 	}
 	
 //	public static ChromeOptions chromeCfg() {

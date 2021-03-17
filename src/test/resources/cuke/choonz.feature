@@ -1,6 +1,5 @@
 Feature: Choonz website tests
 	
-	@ignore
   Scenario Outline: As a User I want to create an account on the website so that I can login
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -19,11 +18,7 @@ Feature: Choonz website tests
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
     And I click the account button
-    And I dismiss the alert
-    And I enter a username of "<username>" in the signup form
-    And I enter a password of "<password>" in the signup form
-    And I submit the sign up form
-    And I click the sign in link
+    And I accept the alert
     And I enter a username of "<username>" in the login form
     And I enter a password of "<password>" in the login form
     And I submit the login form
@@ -33,9 +28,8 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password |
-  		| test_user | test_user |
+  		| test_user | test_password |
   
-  @ignore
 	Scenario Outline: As a User I want to create an Artist so that I can add albums to it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -54,9 +48,8 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password | artist name |
-  		| admin | admin | test artist |
-  
-  @ignore
+  		| test_user | test_password | test artist |
+ 
   Scenario Outline: As a User I want to update an Artist so that the information is current
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -67,11 +60,7 @@ Feature: Choonz website tests
     And I submit the login form
     And I toggle the navbar
     And I navigate to the artists page
-    And I click the create artist button
-    And I enter the create artist details:
-    | artist name | <artist name> |
-    And I submit the create artist form
-    And I select the artist "<artist name>"
+    And I select an artist
     And I click the update artist button
     And I enter the update artist details:
     | artist updated name | <artist updated name> |
@@ -80,7 +69,7 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password | artist name | artist updated name |
-  		| admin | admin | test artist | test artist updated |
+  		| test_user | test_password | test artist | test artist updated |
   		
   	@ignore
   	Scenario: something is here
