@@ -1,6 +1,7 @@
 package com.qa.choonz.cuke.stepdefs;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Map;
 
@@ -204,8 +205,7 @@ public class StepDefs {
 	    String result = artistsPage.getArtistDeletedText();
 	    assertEquals(expected,result);
 	}
-
-
+	
 	@Then("I can read an updated artist with the name {string}")
 	public void i_can_read_an_updated_artist_with_the_name(String string) {
 		hang();
@@ -213,6 +213,19 @@ public class StepDefs {
 	    String result = artistsPage.getArtistNameUpdated();
 	    assertEquals(expected,result);
 	}
+
+	@Then("I can read a list of artists")
+	public void i_can_read_a_list_of_artists() {
+		hang();
+		assertNotNull(artistsPage.getArtistName());
+	}
+	
+	@Then("I can read a single artist")
+	public void i_can_read_a_single_artist() {
+		hang();
+		assertNotNull(artistsPage.getArtistNameUpdated());
+	}
+
 
 	@Then("I can read an artist with the name {string}")
 	public void i_can_read_an_artist_with_the_name(String string) {

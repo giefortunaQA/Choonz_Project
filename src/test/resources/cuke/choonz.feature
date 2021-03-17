@@ -49,6 +49,39 @@ Feature: Choonz website tests
     Examples:
   		| username | password | artist name |
   		| test_user | test_password | test artist |
+  		
+  Scenario Outline: As a User I want to read a list of Artists so that I can choose one to update
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the artists page
+    Then I can read a list of artists
+    
+    Examples:
+  		| username | password |
+  		| test_user | test_password |
+  		
+  Scenario Outline: As a User I want to read a single Artists so that I can update or delete it
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the artists page
+	  And I select an artist
+    Then I can read a single artist
+    
+    Examples:
+  		| username | password |
+  		| test_user | test_password |
  
   Scenario Outline: As a User I want to update an Artist so that the information is current
     Given that I can navigate to "http://localhost:8082/index.html"
