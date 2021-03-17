@@ -29,6 +29,12 @@ public class PageUser extends PageBase {
 	@FindBy(xpath = "//*[@id=\"signUpForm\"]/a")
 	private WebElement linkSignIn;
 	
+	@FindBy(xpath = "//*[@id=\"deleteUserBtn\"]")
+	private WebElement linkDeleteUser;
+	
+	@FindBy(xpath = "/html/body")
+	private WebElement textBody;
+	
 	public void inputSignUpUsername(String username) {
 		inputSignUpUsername.sendKeys(username);
 	}
@@ -61,4 +67,11 @@ public class PageUser extends PageBase {
 		return resultText.getText().substring(0,13);
 	}
 	
+	public void clickDeleteUser() {
+		linkDeleteUser.click();
+	}
+	
+	public String getUserDeleteText() {
+		return textBody.getText().substring(0,13);
+	}
 }

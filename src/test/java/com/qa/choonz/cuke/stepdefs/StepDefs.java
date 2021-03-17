@@ -192,6 +192,12 @@ public class StepDefs {
 	    artistsPage.clickUpdateArtistSubmit();
 	}
 	
+	@When("I click the delete user button")
+	public void i_click_the_delete_user_button() {
+		hang();
+	    userPage.clickDeleteUser();
+	}
+	
 	@When("I click the delete artist button")
 	public void i_click_the_delete_artist_button() {
 	    hang();
@@ -204,6 +210,14 @@ public class StepDefs {
 	    String expected = string;
 	    String result = artistsPage.getArtistDeletedText();
 	    assertEquals(expected,result);
+	}
+	
+	@Then("the user account is deleted")
+	public void the_user_account_is_deleted() {
+		hang();
+		String expected = "User deleted.";
+		String result = userPage.getUserDeleteText();
+		assertEquals(expected,result);
 	}
 	
 	@Then("I can read an updated artist with the name {string}")
@@ -225,7 +239,6 @@ public class StepDefs {
 		hang();
 		assertNotNull(artistsPage.getArtistNameUpdated());
 	}
-
 
 	@Then("I can read an artist with the name {string}")
 	public void i_can_read_an_artist_with_the_name(String string) {
