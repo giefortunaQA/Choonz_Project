@@ -164,5 +164,15 @@ public class AlbumControllerIntegrationTest {
 		assertNotNull(checkStatus);
 		this.mvc.perform(request).andExpect(checkStatus);
 	}
+	
+	/*
+	 * @Test void deleteIntegrationFailTest() throws Exception {
+	 * 
+	 * // ACTIONS RequestBuilder request = delete(URI + "/delete/9999999");
+	 * 
+	 * // ASSERTIONS ResultMatcher checkStatus = status().isInternalServerError();
+	 * assertNotNull(checkStatus);
+	 * this.mvc.perform(request).andExpect(status().isInternalServerError()); }
+	 */
 
 }
