@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.GenreNotFoundException;
@@ -12,17 +13,17 @@ import com.qa.choonz.persistence.repository.GenreRepository;
 import com.qa.choonz.rest.dto.GenreDTO;
 import com.qa.choonz.utils.BeanUtils;
 
+import lombok.RequiredArgsConstructor;
+
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GenreService {
 
-    private GenreRepository repo;
-    private ModelMapper mapper;
-
-    public GenreService(GenreRepository repo, ModelMapper mapper) {
-        super();
-        this.repo = repo;
-        this.mapper = mapper;
-    }
+    private final GenreRepository repo;
+    private final ModelMapper mapper;
 
     private GenreDTO mapToDTO(Genre genre) {
         return this.mapper.map(genre, GenreDTO.class);
