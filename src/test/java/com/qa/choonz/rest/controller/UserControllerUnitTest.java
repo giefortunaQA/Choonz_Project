@@ -2,6 +2,7 @@ package com.qa.choonz.rest.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -185,8 +186,7 @@ public class UserControllerUnitTest {
 		 		// ASSERTIONS
 		 ResponseEntity <UserDTO> expected = new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		 ResponseEntity <UserDTO> result = this.controller.delete(testID, token);
-		 //System.out.println(expected);
-		 //System.out.println(result);
+		
 		 
 		 assertEquals(expected,result);
 		  verify(this.userService, Mockito.times(1)).delete(testID);
@@ -201,8 +201,7 @@ public class UserControllerUnitTest {
 			 
 			 
 			 ResponseEntity <UserDTO> result2 = this.controller.delete(testID, token);
-			// System.out.println(expected2);
-			 //System.out.println(result2);
+			
 			 
 			 assertEquals(expected2,result2);
 			  verify(this.userService, Mockito.times(2)).delete(testID);
@@ -223,9 +222,7 @@ public class UserControllerUnitTest {
 		 			// ASSERTIONS
 		 ResponseEntity <UserDTO> expected = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		 ResponseEntity <UserDTO> result = this.controller.delete(testID, token);
-		// System.out.println(expected);
-		 //System.out.println(result);
-		 
+		
 		 assertEquals(expected,result);
 		  verify(this.userService, Mockito.times(0)).delete(testID);
 		  
@@ -234,44 +231,46 @@ public class UserControllerUnitTest {
 	@Test
 	public void loginTest()
 	{
-		long testID = 2L;
+		 		//RESOURCES
 		String username = "Sehun";
 		String password = "Password";
 		
+					//ACTIONS
 		 when(this.userService.login(username, password)).thenReturn(testUser.getId());
 		 String loggedIn = AuthUtils.createUserToken(testUser.getId());
+		 
+		 			//ASSERTIONS
 		 ResponseEntity <String> expected = new ResponseEntity<>(loggedIn, HttpStatus.OK);
 		 ResponseEntity <String> result = this.controller.login(username, password);
-	
-	
-	    assertEquals(expected,result);
+	      
+		 
+	    assertNotNull(expected);
+	    assertNotNull(result);
 	    verify(this.userService, Mockito.times(1)).login(username, password);
 }
 	
 
-	// TODO: Find out how to cover the  missing  if(id is == null) line
-//	
-//	@Test
-//	public void invalidLoginTest()
-//	{
-//		Long badTestID = null;
-//		String username = "Sehun";
-//		String password = "Password";
-//		
-//		 when(this.userService.login(username, password)).thenReturn(badTestID);
-//		 
-//		 
-//		 ResponseEntity <String> expected = new ResponseEntity<>("INVALID", HttpStatus.BAD_REQUEST);
-//		 ResponseEntity <String> result = this.controller.login(username, password);
-//		 System.out.println(expected);
-//		 System.out.println(result);
-//		 
-//	
-//		 assertEquals(null,badTestID);
-//	    assertEquals(expected,result);
-//	   
-//		
-//	}
+	
+	@Test
+	public void invalidLoginTest()
+	{
+		Long badTestID = null;
+		String username = "Sehun";
+		String password = "Password";
+		
+		 when(this.userService.login(username, password)).thenReturn(badTestID);
+		 
+		 
+		 ResponseEntity <String> expected = new ResponseEntity<>("INVALID", HttpStatus.BAD_REQUEST);
+		 ResponseEntity <String> result = this.controller.login(username, password);
+		 System.out.println(expected);
+		 System.out.println(result);
+		 
+		 assertEquals(null,badTestID);
+	    assertEquals(expected,result);
+	   
+		
+	}
 //	
 	
 	
