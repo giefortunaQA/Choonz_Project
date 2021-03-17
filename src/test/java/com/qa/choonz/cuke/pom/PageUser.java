@@ -26,12 +26,15 @@ public class PageUser extends PageBase {
 	@FindBy(xpath = "//*[@id=\"signUpForm\"]")
 	private WebElement resultText;
 	
+	@FindBy(xpath = "//*[@id=\"signUpForm\"]/a")
+	private WebElement linkSignIn;
+	
 	public void inputSignUpUsername(String username) {
 		inputSignUpUsername.sendKeys(username);
 	}
 	
 	public void inputSignUpPassword(String password) {
-		inputSignUpUsername.sendKeys(password);
+		inputSignUpPassword.sendKeys(password);
 	}
 	
 	public void clickSignUpSubmit() {
@@ -43,11 +46,15 @@ public class PageUser extends PageBase {
 	}
 	
 	public void inputLoginPassword(String password) {
-		inputLoginUsername.sendKeys(password);
+		inputLoginPassword.sendKeys(password);
 	}
 	
 	public void clickLoginSubmit() {
 		buttonLoginSubmit.click();
+	}
+	
+	public void navLogin() {
+		linkSignIn.click();
 	}
 	
 	public String getResultText() {
