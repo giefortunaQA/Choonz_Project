@@ -16,6 +16,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import com.qa.choonz.cuke.pom.PageArtists;
 import com.qa.choonz.cuke.pom.PageBase;
 import com.qa.choonz.cuke.pom.PageGenres;
+import com.qa.choonz.cuke.pom.PagePlaylists;
 import com.qa.choonz.cuke.pom.PageUser;
 
 import io.cucumber.java.After;
@@ -38,6 +39,7 @@ public class StepDefs {
 	private static PageUser userPage;
 	private static PageArtists artistsPage;
 	private static PageGenres genresPage;
+	private static PagePlaylists playlistsPage;
 
 	@Before
 	public void setup() {
@@ -53,6 +55,7 @@ public class StepDefs {
 		userPage = PageFactory.initElements(driver, PageUser.class);
 		artistsPage = PageFactory.initElements(driver, PageArtists.class);
 		genresPage = PageFactory.initElements(driver, PageGenres.class);
+		playlistsPage = PageFactory.initElements(driver, PagePlaylists.class);
 	}
 	
 	@Given("that I can genre {string}")
@@ -275,6 +278,48 @@ public class StepDefs {
 	    genresPage.clickDeleteGenre();
 	}
 	
+	@When("I navigate to the playlists page")
+	public void i_navigate_to_the_playlists_page() {
+	    hang();
+	    base.navPlaylists();
+	}
+	
+	@When("I click the create playlist button")
+	public void i_click_the_create_playlist_button() {
+	    hang();
+	    playlistsPage.clickCreatePlaylistButton();
+	}
+	
+	@When("I enter the create playlist details:")
+	public void i_enter_the_create_playlist_details(Map<String, String> dataTable) {
+	    hang();
+		String
+			playlistName,
+			playlistArtwork,
+			playlistDescription;
+			
+		playlistName = dataTable.get("playlist name");
+		playlistArtwork = dataTable.get("playlist artwork");
+		playlistDescription = dataTable.get("playlist description");
+		
+		playlistsPage.inputCreatePlaylistName(playlistName);
+		playlistsPage.inputCreatePlaylistArtwork(playlistArtwork);
+		playlistsPage.inputCreatePlaylistDescription(playlistDescription);
+	}
+	
+	@When("I submit the create playlist form")
+	public void i_submit_the_create_playlist_form() {
+	    playlistsPage.clickCreatePlaylistSubmitButton();
+	}
+	
+	@Then("I can read a playlist with the name {string}")
+	public void i_can_read_a_playlist_with_the_name(String string) {
+	    hang();
+	    String expected = string;
+	    String result = playlistsPage.getCreatePlaylistText();
+	    assertEquals(expected,result);
+	}
+
 	@Then("I can read {string} on the genre page")
 	public void i_can_read_on_the_genre_page(String string) {
 	    hang();

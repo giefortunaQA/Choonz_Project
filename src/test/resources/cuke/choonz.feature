@@ -53,7 +53,7 @@ Feature: Choonz website tests
   		| username | password | artist name |
   		| test_user | test_password | test artist |
   
-  
+  @ignore
   Scenario Outline: As a User I want to create a Genre so that I can add it to albums
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -74,6 +74,28 @@ Feature: Choonz website tests
     Examples:
   		| username | password | genre name | genre description | 
   		| test_user | test_password | test genre | test genre description |
+  		
+  Scenario Outline: As a User I want to create a Playlist so that I can add tracks to it
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the playlists page
+    And I click the create playlist button
+    And I enter the create playlist details:
+    | playlist name | <playlist name> |
+    | playlist artwork | <playlist artwork> |
+    | playlist description | <playlist description> |
+    And I submit the create playlist form
+    Then I can read a playlist with the name "<playlist name>"
+    
+    Examples:
+  		| username | password | playlist name | playlist artwork | playlist description | 
+  		| test_user | test_password | test playlist | https://upload.wikimedia.org/wikipedia/commons/3/34/Art-portrait-collage_2.jpg | test playlist description |
   		
 	@ignore
   Scenario Outline: As a User I want to read a list of Artists so that I can choose one to update
@@ -189,7 +211,8 @@ Feature: Choonz website tests
     Examples:
   		| username | password | genre updated name | genre updated name |
   		| test_user | test_password | test genre updated | test genre description updated |
-  		
+  
+  @ignore
  	Scenario Outline: As a User I want to delete a Genre so that it is removed from the database
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
