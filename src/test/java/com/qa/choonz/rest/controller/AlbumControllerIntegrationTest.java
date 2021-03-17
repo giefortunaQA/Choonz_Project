@@ -11,10 +11,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -27,11 +29,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.choonz.persistence.domain.Album;
 import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.domain.Genre;
+import com.qa.choonz.persistence.repository.AlbumRepository;
 import com.qa.choonz.rest.dto.AlbumDTO;
+import com.qa.choonz.service.AlbumService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 @Sql(scripts = { "classpath:Choonz-schema.sql",
 "classpath:data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 public class AlbumControllerIntegrationTest {
@@ -151,13 +155,10 @@ public class AlbumControllerIntegrationTest {
 	@Test
 	void deleteIntegrationTest() throws Exception {
 		// RESOURCES
-		AlbumDTO testSavedDTO = mapToDTO(testAlbum1);    
-		
 		// ACTIONS
 		RequestBuilder request = delete(URI + "/delete/1")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(this.jsonifier.writeValueAsString(testSavedDTO));
-		
+				.contentType(MediaType.APPLICATION_JSON);
+				
 		// ASSERTIONS
 		ResultMatcher checkStatus = status().isNoContent();
 
@@ -165,14 +166,30 @@ public class AlbumControllerIntegrationTest {
 		this.mvc.perform(request).andExpect(checkStatus);
 	}
 	
-	/*
-	 * @Test void deleteIntegrationFailTest() throws Exception {
-	 * 
-	 * // ACTIONS RequestBuilder request = delete(URI + "/delete/9999999");
-	 * 
-	 * // ASSERTIONS ResultMatcher checkStatus = status().isInternalServerError();
-	 * assertNotNull(checkStatus);
-	 * this.mvc.perform(request).andExpect(status().isInternalServerError()); }
-	 */
+	@Test
+	void deleteIntegrationIDFailTest() throws Exception {
+		// RESOURCES
+
+		// ACTIONS
+		RequestBuilder request = delete(URI + "/delete/999");
+		
+		// ASSERTIONS
+		ResultMatcher checkStatus = ;
+		assertNotNull(checkStatus);
+		this.mvc.perform(request).andExpect(checkStatus);
+	}
+	
+	@Test void deleteIntegrationErrorTest() throws Exception {
+		// RESOURCES
+		Album falseAlbum = new Album(999L, "here", testArtist1, testGenre1, "cover");
+		
+		// ACTIONS 
+		RequestBuilder request = delete(URI + "/delete/999");
+// Need to be change context of the test st that repo can read the DB but not delete
+
+		// ASSERTIONS 
+		ResultMatcher checkStatus = status().isInternalServerError();
+		assertNotNull(checkStatus);
+		this.mvc.perform(request).andExpect(status().isInternalServerError()); }
 
 }
