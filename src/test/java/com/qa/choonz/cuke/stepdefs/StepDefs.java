@@ -2,16 +2,17 @@ package com.qa.choonz.cuke.stepdefs;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.qa.choonz.cuke.pom.PageArtists;
 import com.qa.choonz.cuke.pom.PageBase;
@@ -23,6 +24,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+@SpringBootTest
+@ActiveProfiles("test")
+@Sql(scripts = {"classpath:Choonz-schema.sql","classpath:data.sql"},
+	executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 public class StepDefs {
 	
 	private static RemoteWebDriver driver;
@@ -34,7 +39,7 @@ public class StepDefs {
 	@Before
 	public void setup() {
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chrome/chromedriver.exe");
-		driver = new ChromeDriver();
+		driver = new ChromeDriver(chromeCfg());
 	}
 	
 	@Given("that I can navigate to {string}")
@@ -46,11 +51,11 @@ public class StepDefs {
 		artistsPage = PageFactory.initElements(driver, PageArtists.class);
 	}
 	
-	@When("I go home")
-	public void i_go_home() {
-		base.waitUntilPageLoad(driver);
-	    userPage.navHome();
-	}
+//	@When("I go home")
+//	public void i_go_home() {
+//		base.waitUntilPageLoad(driver);
+//	    userPage.navHome();
+//	}
 	
 	@When("I toggle the navbar")
 	public void i_toggle_the_navbar() {
@@ -70,25 +75,27 @@ public class StepDefs {
 	    base.navArtists();
 	}
 
-	@When("I dismiss the alert")
-	public void i_cancel_the_alert() {
-	    driver.switchTo().alert().dismiss();
-		base.waitUntilPageLoad(driver);
-	}
-	
-	@When("I accept the alert")
-	public void i_accept_the_alert() {
-		driver.switchTo().alert().accept();
-		base.waitUntilPageLoad(driver);
-	}
+//	@When("I dismiss the alert")
+//	public void i_cancel_the_alert() {
+//	    driver.switchTo().alert().dismiss();
+//		base.waitUntilPageLoad(driver);
+//	}
+//	
+//	@When("I accept the alert")
+//	public void i_accept_the_alert() {
+//		driver.switchTo().alert().accept();
+//		base.waitUntilPageLoad(driver);
+//	}
 
 	@When("I enter a username of {string} in the signup form")
 	public void i_enter_a_username_of_in_the_signup_form(String string) {
+		base.waitUntilPageLoad(driver);
 	    userPage.inputSignUpUsername(string);
 	}
 	
 	@When("I enter a username of {string} in the login form")
 	public void i_enter_a_username_of_in_the_login_form(String string) {
+		base.waitUntilPageLoad(driver);
 	    userPage.inputLoginUsername(string);
 	}
 
@@ -107,12 +114,12 @@ public class StepDefs {
 	    userPage.clickSignUpSubmit();
 	}
 	
-	@When("I click the sign in link")
-	public void i_click_the_sign_in_link() {
-		base.waitUntilPageLoad(driver);
-	    userPage.navLogin();
-		base.waitUntilPageLoad(driver);
-	}
+//	@When("I click the sign in link")
+//	public void i_click_the_sign_in_link() {
+//		base.waitUntilPageLoad(driver);
+//	    userPage.navLogin();
+//		base.waitUntilPageLoad(driver);
+//	}
 
 	@When("I submit the login form")
 	public void i_submit_the_login_form() {
@@ -205,4 +212,20 @@ public class StepDefs {
 		driver.quit();
 		System.out.println("driver closed");
 	}
+	
+	public static ChromeOptions chromeCfg() {
+	     Map<String, Object> prefs = new HashMap<String, Object>();
+	     ChromeOptions cOptions = new ChromeOptions();
+	      
+	     // Settings
+	     prefs.put("profile.default_content_setting_values.cookies", 2);
+	     prefs.put("network.cookie.cookieBehavior", 2);
+	     prefs.put("profile.block_third_party_cookies", true);
+	
+	     // Create ChromeOptions to disable Cookies pop-up
+	     cOptions.setExperimentalOption("prefs", prefs);
+	
+	     return cOptions;
+    }
+   
 }

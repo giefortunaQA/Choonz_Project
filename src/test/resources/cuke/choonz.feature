@@ -5,7 +5,6 @@ Feature: Choonz website tests
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
     And I click the account button
-    And I dismiss the alert
     And I enter a username of "<username>" in the signup form
     And I enter a password of "<password>" in the signup form
     And I submit the sign up form
@@ -16,24 +15,16 @@ Feature: Choonz website tests
   		| test_user | test_password |
   		
 	Scenario Outline: As a User I want to login to an account so that I can CRUD
-    Given that I can navigate to "http://localhost:8082/index.html"
-    When I toggle the navbar
-    And I click the account button
-    And I dismiss the alert
-    And I enter a username of "<username>" in the signup form
-    And I enter a password of "<password>" in the signup form
-    And I submit the sign up form
-    And I click the sign in link
+    Given that I can navigate to "http://localhost:8082/user.html?action=login"
     And I enter a username of "<username>" in the login form
     And I enter a password of "<password>" in the login form
     And I submit the login form
-    And I go home
     And I toggle the navbar
     Then I can see the logout button
     
     Examples:
   		| username | password |
-  		| test_user | test_user |
+  		| admin | admin |
   
   @ignore
 	Scenario Outline: As a User I want to create an Artist so that I can add albums to it
