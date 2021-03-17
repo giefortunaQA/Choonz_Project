@@ -9,12 +9,13 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Track {
 
@@ -39,23 +40,20 @@ public class Track {
     @Size(max = 5000)
     private String lyrics;
 
+	public Track(@NotNull @Size(max = 100) String name, Album album, Playlist playlist, Long duration,
+			@Size(max = 5000) String lyrics) {
+		super();
+		this.name = name;
+		this.album = album;
+		this.playlist = playlist;
+		this.duration = duration;
+		this.lyrics = lyrics;
+	}
+
+	
+
  
 
-	public Track(@NotNull @Size(max = 100) String name, Long duration, @Size(max = 5000) String lyrics) {
-		super();
-		this.name = name;
-		this.duration = duration;
-		this.lyrics = lyrics;
-	}
 
-
-
-	public Track(Long id, @NotNull @Size(max = 100) String name, Long duration, @Size(max = 5000) String lyrics) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.duration = duration;
-		this.lyrics = lyrics;
-	}
     
 }
