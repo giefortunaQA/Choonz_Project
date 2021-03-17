@@ -14,8 +14,22 @@ public class PageArtists extends PageBase {
 	@FindBy(xpath = "//*[@id=\"createArtistForm\"]/span[1]/button")
 	private WebElement buttonCreateArtistSubmit;
 	
+	// this will need to be changed from artist1 to artist5
+	// when the data.sql is implemented for testing
 	@FindBy(xpath = "//*[@id=\"artists1\"]/button/h3")
 	private WebElement textArtistName;
+	
+	@FindBy(xpath = "//*[@id=\"updateEachArtist\"]")
+	private WebElement buttonUpdateArtist;
+	
+	@FindBy(xpath = "//*[@id=\"artistNameUpdate\"]")
+	private WebElement inputUpdateArtist;
+	
+	@FindBy(xpath = "//*[@id=\"updateArtistBtn\"]")
+	private WebElement buttonUpdateArtistSubmit;
+	
+	@FindBy(xpath = "//*[@id=\"artistNameDisplay\"]/h1")
+	private WebElement testArtistNameUpdated;
 	
 	public void clickCreateArtist() {
 		buttonCreateArtist.click();
@@ -31,6 +45,26 @@ public class PageArtists extends PageBase {
 	
 	public String getArtistName() {
 		return textArtistName.getText();
+	}
+	
+	public void clickArtistName() {
+		textArtistName.click();
+	}
+	
+	public void clickUpdateArtist() {
+		buttonUpdateArtist.click();
+	}
+	
+	public void inputUpdateArtistName(String name) {
+		inputUpdateArtist.sendKeys(name);
+	}
+
+	public void clickUpdateArtistSubmit() {
+		buttonUpdateArtistSubmit.click();
+	}
+	
+	public String getArtistNameUpdated() {
+		return testArtistNameUpdated.getText().substring(9);
 	}
 	
 }

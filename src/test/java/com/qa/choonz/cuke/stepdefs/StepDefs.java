@@ -99,8 +99,8 @@ public class StepDefs {
 	    artistsPage.clickCreateArtist();
 	}
 
-	@When("I enter the details:")
-	public void i_enter_the_details(Map<String, String> dataTable) {
+	@When("I enter the create artist details:")
+	public void i_enter_the_create_artist_details(Map<String, String> dataTable) {
 	    
 		String
 			artistName;
@@ -114,6 +114,39 @@ public class StepDefs {
 	@When("I submit the create artist form")
 	public void i_submit_the_create_artist_form() {
 		artistsPage.clickCreateArtistSubmit();
+	}
+	
+	@When("I select the artist {string}")
+	public void i_select_the_artist(String string) {
+	    artistsPage.clickArtistName();
+	}
+
+	@When("I click the update artist button")
+	public void i_click_the_update_artist_button() {
+	    artistsPage.clickUpdateArtist();
+	}
+
+	@When("I enter the update artist details:")
+	public void i_enter_the_update_artist_details(Map<String, String> dataTable) {
+
+		String
+			artistUpdatedName;
+		
+		artistUpdatedName = dataTable.get("artist updated name");
+		
+		artistsPage.inputUpdateArtistName(artistUpdatedName);
+	}
+
+	@When("I submit the update artist form")
+	public void i_submit_the_update_artist_form() {
+	    artistsPage.clickUpdateArtistSubmit();
+	}
+
+	@Then("I can read an updated artist with the name {string}")
+	public void i_can_read_an_updated_artist_with_the_name(String string) {
+	    String expected = string;
+	    String result = artistsPage.getArtistNameUpdated();
+	    assertEquals(expected,result);
 	}
 
 	@Then("I can read an artist with the name {string}")
