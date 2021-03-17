@@ -275,6 +275,12 @@ public class StepDefs {
 		hang();
 		assertNotNull(artistsPage.getArtistName());
 	}
+
+	@Then("I can read a list of genres")
+	public void i_can_read_a_list_of_genres() {
+		hang();
+		assertNotNull(genresPage.getTextGenreName());
+	}
 	
 	@Then("I can read a single artist")
 	public void i_can_read_a_single_artist() {
