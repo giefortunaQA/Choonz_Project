@@ -36,18 +36,17 @@ public class TrackServiceTest {
 	private TrackDTO mapToDTO(Track track) {
 		return this.mapper.map(track,TrackDTO.class);
 	}
-	//class resources
-	private final Album testAlbum;
-	private final Playlist testPlaylist;
-	private final Track testTrack1=new Track("Track 1",200,"lyrics 1");
-	private final Track testTrack2=new Track("Track 2",200,"lyrics 2");
+	private final Album testAlbum = new Album();
+	private final Playlist testPlaylist = new Playlist();
+	private final Track testTrack1=new Track("Track 1",testAlbum,testPlaylist,200L,"lyrics 1");
+	private final Track testTrack2=new Track("Track 2",testAlbum,testPlaylist,200L,"lyrics 2");
 	
 	private final List<Track> testList=List.of(testTrack1,testTrack2); 
 	
 	@Test
 	void testCreate() throws Exception{
-		Track toCreate=new Track("Track",200,"lyrics");
-		Track created=new Track(5L,"Track",200,"lyrics");
+		Track toCreate=new Track("Track",testAlbum,testPlaylist,200L,"lyrics");
+		Track created=new Track(5L,"Track",testAlbum,testPlaylist,200L,"lyrics");
 		
 		when(this.repo.save(toCreate)).thenReturn(created);
 		
@@ -73,7 +72,7 @@ public class TrackServiceTest {
 	@Test
 	void testUpdate() throws Exception{
 		Long id=1L;
-		Track updated=new Track(1L,"Track 1 Updated",200,"lyrics updated");
+		Track updated=new Track(1L,"Track 1 Updated",testAlbum,testPlaylist,200L,"lyrics updated");
 		TrackDTO updatedAsDto=this.mapToDTO(updated);
 		when(this.repo.findById(id)).thenReturn(Optional.of(testTrack1));
 		when(this.repo.save(updated)).thenReturn(updated);

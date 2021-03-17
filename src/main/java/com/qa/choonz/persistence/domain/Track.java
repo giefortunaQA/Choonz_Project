@@ -35,12 +35,12 @@ public class Track {
     private Playlist playlist;
 
     // in seconds
-    private int duration;
+    private Long duration;
     
     @Size(max = 5000)
     private String lyrics;
 
-	public Track(@NotNull @Size(max = 100) String name, Album album, Playlist playlist, int duration,
+	public Track(@NotNull @Size(max = 100) String name, Album album, Playlist playlist, Long duration,
 			@Size(max = 5000) String lyrics) {
 		super();
 		this.name = name;

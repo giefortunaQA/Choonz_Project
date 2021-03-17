@@ -540,29 +540,20 @@ function readAlbumById(id) {
 					albumNameDisplay.appendChild(artistLink);
 					albumNameDisplay.appendChild(document.createElement("br"));
 					albumNameDisplay.appendChild(genreLink);
-
 					updateAlbumBtn.setAttribute("onclick", `updateAlbum(${data.id})`);
 					deleteEachAlbum.setAttribute("onclick", `confirmDeleteAlbum(${data.id})`);
 					pageTitle.innerHTML = data.name;
-					readTracksInAlbum(data.id);
-				}).catch((err) => console.log(err))
-		})
-}
-function readTracksInAlbum(id) {
-	fetch(`http://localhost:8082/tracks/read/by-album/${id}`)
-		.then((res) => {
-			if (res.ok != true) {
-				console.log("Status is not OK!");
-			}
-			res.json()
-				.then((data) => {
-					for (let track of data) {
-						createTrackCard(tracksInAlbumDiv, track);
-						console.log(track);
+					if (data.tracks.length == 0) {
+						tracksInAlbumDiv.innerHTML="This album does not contain any tracks.";
+					} else {
+						for (let each of data.tracks) {
+							createTrackCard(tracksInAlbumDiv, each);
+						}
 					}
 				}).catch((err) => console.log(err))
 		})
 }
+
 
 function readAlbumPageLoad() {
 	readAlbumById(params.get('id'));
