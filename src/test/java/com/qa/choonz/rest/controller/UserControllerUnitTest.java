@@ -27,6 +27,7 @@ import com.qa.choonz.utils.AuthUtils;
 
 
 
+
 @SpringBootTest
 public class UserControllerUnitTest {
 
@@ -249,8 +250,6 @@ public class UserControllerUnitTest {
 	    verify(this.userService, Mockito.times(1)).login(username, password);
 }
 	
-
-	
 	@Test
 	public void invalidLoginTest()
 	{
@@ -293,6 +292,7 @@ public class UserControllerUnitTest {
 		
 	}
 	
+
 }
 
 
