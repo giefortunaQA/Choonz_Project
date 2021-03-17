@@ -35,6 +35,9 @@ public class ArtistControllerUnitTest {
 	private ModelMapper mapper;
 
 	private final Artist testArtist = new Artist(2L, "Ariana Grande");
+
+	
+  
 	private Artist updateArtist = new Artist(2L, "Test");
 	private final List<Artist> listOfArtists = List.of(testArtist);
 
@@ -139,5 +142,5 @@ public class ArtistControllerUnitTest {
 		assertEquals(expected, result);
 		verify(this.ArtistService, atLeastOnce()).delete(testID);
 	}
-	
+
 }

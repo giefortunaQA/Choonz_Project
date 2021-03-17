@@ -101,7 +101,6 @@ public class UserControllerUnitTest {
 	@Test
 	public void readUserByNameTest() {
 
-
 		// RESOURCES
 		String testName = "Sehun";
 		UserDTO testReadUser = this.mapToDTO(testUser);
@@ -111,7 +110,6 @@ public class UserControllerUnitTest {
 		when(this.userService.read(testName)).thenReturn(testReadUser);
 
 		// ASSERTIONS
-
 		ResponseEntity<UserDTO> expected = ResponseEntity.ok(testReadUser);
 		ResponseEntity<UserDTO> result = this.controller.read(testName);
 		assertEquals(expected, result);
