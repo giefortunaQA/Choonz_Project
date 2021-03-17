@@ -33,8 +33,8 @@ public class ArtistControllerUnitTest {
 
 	@Autowired
 	private ModelMapper mapper;
-
-	private final Artist testArtist = new Artist(2L, "Ariana Grande");
+	
+    private final Artist testArtist = new Artist(2L, "Ariana Grande");
 	private Artist updateArtist = new Artist(2L, "Test");
 	private final List<Artist> listOfArtists = List.of(testArtist);
 
@@ -139,13 +139,4 @@ public class ArtistControllerUnitTest {
 		assertEquals(expected, result);
 		verify(this.ArtistService, atLeastOnce()).delete(testID);
 	}
-	
-	/*
-	 * @Test void deleteTest() throws Exception {
-	 * when(this.service.delete(1L)).thenReturn(true); assertThat(new
-	 * ResponseEntity<ToDoDTO>(HttpStatus.NO_CONTENT))
-	 * .isEqualTo(this.controller.delete(1L)); verify(this.service,
-	 * atLeastOnce()).delete(1L); }
-	 */
-	
 }
