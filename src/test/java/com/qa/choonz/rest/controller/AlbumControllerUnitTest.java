@@ -133,7 +133,7 @@ public class AlbumControllerUnitTest {
 	}
 
 	@Test
-	public void deleteAlbumFailTest() throws Exception{
+	public void deleteAlbumErrorTest() throws Exception{
 		// RESOURCES
 		Long testID = 999L;
 		// ACTIONS

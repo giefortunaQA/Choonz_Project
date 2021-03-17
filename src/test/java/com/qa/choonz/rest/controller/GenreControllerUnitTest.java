@@ -125,7 +125,7 @@ public class GenreControllerUnitTest {
 	}
 
 	@Test
-	public void deleteGenreIdFailureTest() {
+	public void deleteGenreIdErrorTest() {
 		// RESOURCES
 		Long testID = 999L;
 
