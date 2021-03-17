@@ -11,12 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -29,9 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.choonz.persistence.domain.Album;
 import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.domain.Genre;
-import com.qa.choonz.persistence.repository.AlbumRepository;
 import com.qa.choonz.rest.dto.AlbumDTO;
-import com.qa.choonz.service.AlbumService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -174,22 +170,23 @@ public class AlbumControllerIntegrationTest {
 		RequestBuilder request = delete(URI + "/delete/999");
 		
 		// ASSERTIONS
-		ResultMatcher checkStatus = ;
+		ResultMatcher checkStatus = status().isInternalServerError();
 		assertNotNull(checkStatus);
 		this.mvc.perform(request).andExpect(checkStatus);
 	}
 	
-	@Test void deleteIntegrationErrorTest() throws Exception {
-		// RESOURCES
-		Album falseAlbum = new Album(999L, "here", testArtist1, testGenre1, "cover");
-		
-		// ACTIONS 
-		RequestBuilder request = delete(URI + "/delete/999");
-// Need to be change context of the test st that repo can read the DB but not delete
-
-		// ASSERTIONS 
-		ResultMatcher checkStatus = status().isInternalServerError();
-		assertNotNull(checkStatus);
-		this.mvc.perform(request).andExpect(status().isInternalServerError()); }
+	//TODO Research how to manipulate context under springboot so below situation can occur.
+	//Where ID does exist but delete doesn't work so ID continues to exist.
+	/*
+	 * @Test void deleteIntegrationErrorTest() throws Exception { // RESOURCES Album
+	 * falseAlbum = new Album(999L, "here", testArtist1, testGenre1, "cover");
+	 * 
+	 * // ACTIONS RequestBuilder request = delete(URI + "/delete/999"); //Need to be
+	 * change context of the test st that repo can read the DB but not delete
+	 * 
+	 * // ASSERTIONS ResultMatcher checkStatus = status().isInternalServerError();
+	 * assertNotNull(checkStatus);
+	 * this.mvc.perform(request).andExpect(status().isInternalServerError()); }
+	 */
 
 }
