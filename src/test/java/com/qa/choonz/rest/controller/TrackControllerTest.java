@@ -181,10 +181,11 @@ public class TrackControllerTest {
 	public void updateTrackTest() throws Exception
     {
 		
-		
+		// RESOURCES
 		Long testID = 2L;
-		
-		 Track newTrack = new Track();
+	    Track newTrack = new Track();
+	    
+	     // ACTIONS
 		 newTrack.setId(testID);
 		 newTrack.setName("Updated Track name");
 		 newTrack.setDuration(4000);
@@ -192,8 +193,10 @@ public class TrackControllerTest {
 		 TrackDTO testUpdateTrack = this.mapToDTO(newTrack);
 		
 		 when(this.trackService.update(newTrack, testID)).thenReturn(testUpdateTrack);
+		 
+		 // ASSERTIONS
 		 ResponseEntity <TrackDTO> expected = new ResponseEntity<TrackDTO>(testUpdateTrack, HttpStatus.ACCEPTED);
-			ResponseEntity <TrackDTO> result = this.controller.update(newTrack, testID);
+		 ResponseEntity <TrackDTO> result = this.controller.update(newTrack, testID);
 	
 			assertEquals(expected,result);
 		  verify(this.trackService, atLeastOnce()).update(newTrack, testID);
@@ -202,27 +205,30 @@ public class TrackControllerTest {
 	
 	@Test
 	public void deleteTrackTest() throws Exception
-    {
+    {  
+		// RESOURCES
 		Long testID = 2L;
+		
+		// ACTIONS
 		 when(this.trackService.delete(testID)).thenReturn(true);
+		 
+		// ASSERTIONS
 		 ResponseEntity <TrackDTO> expected = new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		 ResponseEntity <TrackDTO> result = this.controller.delete(testID);
-		 //System.out.println(expected);
-		 //System.out.println(result);
+		
 		 
 		 assertEquals(expected,result);
 		  verify(this.trackService, atLeastOnce()).delete(testID);
 		  
-		  
-		  
+		    // ACTIONS
 			
 			 when(this.trackService.delete(testID)).thenReturn(false);
+			 
+			// ASSERTIONS
 			 ResponseEntity <TrackDTO> expected2 = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			 ResponseEntity <TrackDTO> result2 = this.controller.delete(testID);
-			 //System.out.println(expected2);
-			 //System.out.println(result2);
-			 
-			 assertEquals(expected,result);
+			
+			 assertEquals(expected2,result2);
 			  verify(this.trackService, atLeastOnce()).delete(testID);
 		
 	}
