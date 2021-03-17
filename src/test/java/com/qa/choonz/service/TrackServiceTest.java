@@ -40,6 +40,7 @@ public class TrackServiceTest {
 	private final Playlist testPlaylist = new Playlist();
 	private final Track testTrack1=new Track("Track 1",testAlbum,testPlaylist,200L,"lyrics 1");
 	private final Track testTrack2=new Track("Track 2",testAlbum,testPlaylist,200L,"lyrics 2");
+
 	
 	private final List<Track> testList=List.of(testTrack1,testTrack2); 
 	
@@ -47,6 +48,7 @@ public class TrackServiceTest {
 	void testCreate() throws Exception{
 		Track toCreate=new Track("Track",testAlbum,testPlaylist,200L,"lyrics");
 		Track created=new Track(5L,"Track",testAlbum,testPlaylist,200L,"lyrics");
+
 		
 		when(this.repo.save(toCreate)).thenReturn(created);
 		
@@ -73,6 +75,7 @@ public class TrackServiceTest {
 	void testUpdate() throws Exception{
 		Long id=1L;
 		Track updated=new Track(1L,"Track 1 Updated",testAlbum,testPlaylist,200L,"lyrics updated");
+
 		TrackDTO updatedAsDto=this.mapToDTO(updated);
 		when(this.repo.findById(id)).thenReturn(Optional.of(testTrack1));
 		when(this.repo.save(updated)).thenReturn(updated);
