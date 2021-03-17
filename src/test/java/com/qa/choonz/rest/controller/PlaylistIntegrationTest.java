@@ -60,11 +60,7 @@ public class PlaylistIntegrationTest {
 	private final Genre reggae=new Genre(4L,"Reggae","Reggae is a popular style of music that began in Jamaica and often has political and spiritual themes.");
 	private final Album testAlbum=new Album(1L,"Thank U, Next",Ariana,pop,"https://upload.wikimedia.org/wikipedia/en/d/dd/Thank_U%2C_Next_album_cover.png");
 	private final Playlist testPlaylist=new Playlist(1L,"Favourites","This is a playlist by admin consisting of public favourites.","https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png",testUser);
-	private final TrackDTO track1=new TrackDTO(1L,"Thank U Next",207L,"Thank U Next lyrics");
-	private final TrackDTO track2=new TrackDTO(2L,"needy",212L,"needy lyrics");
-	private final TrackDTO track4=new TrackDTO();
-	private final TrackDTO track5=new TrackDTO();
-	private final List<TrackDTO> tracks=List.of(track1,track2,track3,track4,track5).stream().map(this::mapToDTO);
+	private final String tracksAsString="[{\"id\":1,\"name\":\"Thank U Next\",\"duration\":207,\"lyrics\":\"Thank U Next lyrics\"},{\"id\":2,\"name\":\"needy\",\"duration\":212,\"lyrics\":\"needy lyrics\"},{\"id\":3,\"name\":\"24K Magic\",\"duration\":240,\"lyrics\":\"24K Magic Lyrics\"},{\"id\":4,\"name\":\"Hello\",\"duration\":220,\"lyrics\":\"Hello lyrics\"},{\"id\":5,\"name\":\"What Do You Mean\",\"duration\":210,\"lyrics\":\"What Do You Mean lyrics\"}]}";
 	private final PlaylistDTO playlistAsDto=this.mapToDTO(testPlaylist);
 	private final List<PlaylistDTO> playlists=List.of(playlistAsDto);
 	
@@ -74,29 +70,36 @@ public class PlaylistIntegrationTest {
 		PlaylistDTO expectedDto=this.mapToDTO(new Playlist(2L,"Test Playlist","Test Description","Test Artwork",testUser));
 		String toCreateJson=this.jsonify.writeValueAsString(toCreateDto);
 		String expectedJson=this.jsonify.writeValueAsString(expectedDto);
-		System.out.println(this.jsonify.writeValueAsString(expectedDto));
+		
 		RequestBuilder request=post(URI+"/create").contentType(MediaType.APPLICATION_JSON).content(toCreateJson);
 	
 		ResultMatcher confirmStatus=status().isCreated();
 		ResultMatcher confirmBody=content().json(expectedJson);
-//		this.mvc.perform(request).andExpect(confirmStatus).andExpect(confirmBody);
+		this.mvc.perform(request).andExpect(confirmStatus).andExpect(confirmBody);
 	}
 	
 	@Test
 	void testReadAll() throws Exception{
-		String artistsJson=this.jsonify.writeValueAsString(playlists);
+		String playlistsJson=this.jsonify.writeValueAsString(playlists);
+		String expectedString=playlistsJson.substring(0,playlistsJson.length()-6);
+		expectedString+=tracksAsString+"]";
+		System.out.println("The expected string is "+expectedString);
 		RequestBuilder request=get(URI+"/read");
 		ResultMatcher confirmStatus=status().isOk();
-		ResultMatcher confirmBody=content().json(artistsJson);
+		ResultMatcher confirmBody=content().json(expectedString);
 		this.mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
 	}
 	
 	@Test
 	void testReadById() throws Exception{
-		String ArianaJson=this.jsonify.writeValueAsString(playlistAsDto);
+		String playlistJson=this.jsonify.writeValueAsString(playlistAsDto);
+		System.out.println(playlistJson);
+		String expectedString=playlistJson.substring(0,playlistJson.length()-5);
+		expectedString+=tracksAsString;
+		System.out.println("The expected String is :"+expectedString);
 		RequestBuilder request=get(URI+"/read/1");
 		ResultMatcher confirmStatus=status().isOk();
-		ResultMatcher confirmBody=content().json(ArianaJson);
+		ResultMatcher confirmBody=content().json(expectedString);
 		this.mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
 	}
 	
@@ -106,15 +109,17 @@ public class PlaylistIntegrationTest {
 		PlaylistDTO expected=this.mapToDTO(new Playlist(1L,"Update","Description update","Artwork Update",testUser));
 		String toUpdateJson=this.jsonify.writeValueAsString(toUpdate);
 		String expectedJson=this.jsonify.writeValueAsString(expected);
+		String expectedString=expectedJson.substring(0,expectedJson.length()-5);
+		expectedString+=tracksAsString;
 		RequestBuilder request=put(URI+"/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdateJson);
 		ResultMatcher confirmStatus=status().isAccepted();
-		ResultMatcher confirmBody=content().json(expectedJson);
+		ResultMatcher confirmBody=content().json(expectedString);
 		this.mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
 	}
 	
 	@Test
 	void testDeletePass() throws Exception{
-		RequestBuilder request=delete(URI+"/delete/2");
+		RequestBuilder request=delete(URI+"/delete/1");
 		ResultMatcher confirmStatus=status().isNoContent();
 		ResultMatcher confirmBody=content().string("");
 		this.mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
