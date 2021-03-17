@@ -1,6 +1,6 @@
 Feature: Choonz website tests
 	
-	@ignore
+	
   Scenario Outline: As a User I want to create an account on the website so that I can login
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -53,7 +53,7 @@ Feature: Choonz website tests
   		| username | password | artist name |
   		| test_user | test_password | test artist |
   
-  @ignore
+  
   Scenario Outline: As a User I want to create a Genre so that I can add it to albums
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -166,7 +166,8 @@ Feature: Choonz website tests
     Examples:
   		| username | password | artist updated name |
   		| test_user | test_password | test artist updated |
-  		
+  
+  @ignore
   Scenario Outline: As a User I want to update a Genre so that the information is correct
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -188,6 +189,25 @@ Feature: Choonz website tests
     Examples:
   		| username | password | genre updated name | genre updated name |
   		| test_user | test_password | test genre updated | test genre description updated |
+  		
+ 	Scenario Outline: As a User I want to delete a Genre so that it is removed from the database
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the genres page
+    And I select a genre
+    And I click the delete genre button
+    And I accept the alert
+    Then I can read "undefined" on the genre page
+    
+    Examples:
+  		| username | password |
+  		| test_user | test_password |
   		
 	@ignore
 	Scenario Outline: As a User I want to delete an Artist so that it is removed from the database

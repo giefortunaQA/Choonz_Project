@@ -40,6 +40,9 @@ public class PageGenres extends PageBase {
 	@FindBy(xpath = "//*[@id=\"updateGenreBtn\"]")
 	private WebElement buttonUpdateGenreSubmit;
 	
+	@FindBy(xpath = "//*[@id=\"deleteEachGenre\"]")
+	private WebElement linkDeleteGenre;
+	
 	public void clickCreateGenreButton() {
 		buttonCreateGenre.click();
 	}
@@ -84,4 +87,11 @@ public class PageGenres extends PageBase {
 		buttonUpdateGenreSubmit.click();
 	}
 	
+	public void clickDeleteGenre() {
+		linkDeleteGenre.click();
+	}
+	
+	public String getDeleteGenreText() {
+		return textGenreNameDisplay.getText();
+	}
 }

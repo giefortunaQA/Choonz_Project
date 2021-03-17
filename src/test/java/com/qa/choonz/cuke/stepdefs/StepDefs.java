@@ -269,6 +269,20 @@ public class StepDefs {
 		genresPage.inputUpdateGenreDescription(genreUpdatedDescription);
 	}
 	
+	@When("I click the delete genre button")
+	public void i_click_the_delete_genre_button() {
+		hang();
+	    genresPage.clickDeleteGenre();
+	}
+	
+	@Then("I can read {string} on the genre page")
+	public void i_can_read_on_the_genre_page(String string) {
+	    hang();
+	    String expected = string;
+	    String result = genresPage.getSingleGenreNameText();
+	    assertEquals(expected,result);
+	}
+	
 	@Then("I can read an updated genre with the name {string}")
 	public void i_can_read_an_updated_genre_with_the_name(String string) {
 	    hang();
