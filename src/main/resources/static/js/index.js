@@ -985,7 +985,6 @@ function login() {
 
 function greetUser() {
 	if (status==1) {
-		console.log(greet);
 			greet.innerHTML = " Hi, " + currentUser;
 			let logoutLink = document.createElement("button");
 			logoutLink.setAttribute("class", "btn btn-link");
@@ -1124,12 +1123,17 @@ function hideChildren(childGrp){
 			hide(child);
 		}
 }
+function leaveAppCheck(){
+	if (window.close()){
+		resetCred();
+	}
+}
+
 function resetCred() {
 	window.localStorage.clear();
 	for (let form of forms){
 		form.value="";
 	}
-	
 }
 
 function goTo(path, id) {
@@ -1158,7 +1162,6 @@ const readPage = (path) => {
 			}
 			res.json()
 				.then((data) => {
-					console.log(data);
 					if (path == tracksPath) {
 						if (data.length == 0) {
 							noRecordsMsg(tracksPath, tracksContainer);
