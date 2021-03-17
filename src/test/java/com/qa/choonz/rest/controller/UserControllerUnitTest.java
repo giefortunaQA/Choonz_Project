@@ -25,6 +25,7 @@ import com.qa.choonz.utils.AuthUtils;
 
 
 
+
 @SpringBootTest
 public class UserControllerUnitTest {
 
@@ -184,8 +185,8 @@ public class UserControllerUnitTest {
 		 		// ASSERTIONS
 		 ResponseEntity <UserDTO> expected = new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		 ResponseEntity <UserDTO> result = this.controller.delete(testID, token);
-		 System.out.println(expected);
-		 System.out.println(result);
+		 //System.out.println(expected);
+		 //System.out.println(result);
 		 
 		 assertEquals(expected,result);
 		  verify(this.userService, Mockito.times(1)).delete(testID);
@@ -200,10 +201,10 @@ public class UserControllerUnitTest {
 			 
 			 
 			 ResponseEntity <UserDTO> result2 = this.controller.delete(testID, token);
-			 System.out.println(expected2);
-			 System.out.println(result2);
+			// System.out.println(expected2);
+			 //System.out.println(result2);
 			 
-			 assertEquals(expected,result);
+			 assertEquals(expected2,result2);
 			  verify(this.userService, Mockito.times(2)).delete(testID);
 		
 	}
@@ -222,16 +223,81 @@ public class UserControllerUnitTest {
 		 			// ASSERTIONS
 		 ResponseEntity <UserDTO> expected = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		 ResponseEntity <UserDTO> result = this.controller.delete(testID, token);
-		 System.out.println(expected);
-		 System.out.println(result);
+		// System.out.println(expected);
+		 //System.out.println(result);
 		 
 		 assertEquals(expected,result);
 		  verify(this.userService, Mockito.times(0)).delete(testID);
 		  
 	}
 	
+	@Test
+	public void loginTest()
+	{
+		long testID = 2L;
+		String username = "Sehun";
+		String password = "Password";
+		
+		 when(this.userService.login(username, password)).thenReturn(testUser.getId());
+		 String loggedIn = AuthUtils.createUserToken(testUser.getId());
+		 ResponseEntity <String> expected = new ResponseEntity<>(loggedIn, HttpStatus.OK);
+		 ResponseEntity <String> result = this.controller.login(username, password);
 	
 	
+	    assertEquals(expected,result);
+	    verify(this.userService, Mockito.times(1)).login(username, password);
+}
+	
+
+	
+//	
+//	@Test
+//	public void invalidLoginTest()
+//	{
+//		Long badTestID = null;
+//		String username = "Sehun";
+//		String password = "Password";
+//		
+//		 when(this.userService.login(username, password)).thenReturn(badTestID);
+//		 
+//		 
+//		 ResponseEntity <String> expected = new ResponseEntity<>("INVALID", HttpStatus.BAD_REQUEST);
+//		 ResponseEntity <String> result = this.controller.login(username, password);
+//		 System.out.println(expected);
+//		 System.out.println(result);
+//		 
+//	
+//		 assertEquals(null,badTestID);
+//	    assertEquals(expected,result);
+//	   
+//		
+//	}
+//	
+	
+	
+	@Test
+	public void logoutTest()
+	{
+		  //RESOURCES
+		String token  = AuthUtils.createUserToken(testUser.getId());
+		UserController mockLogout = Mockito.mock(UserController.class);
+		
+		  //ACTIONS
+	    mockLogout.logout(token);
+	    
+	       //ASSERTIONS
+	    
+		 //when(this.controller.logout(token)).thenReturn(true );
+		 ResponseEntity <String> expected = new ResponseEntity<>("TOKEN HAS BEEN DELETED", HttpStatus.OK);
+		 ResponseEntity <String> result = this.controller.logout(token);
+		 // System.out.println(expected);
+		 //System.out.println(result);
+		 
+	
+	    assertEquals(expected,result);
+	    verify(mockLogout, Mockito.times(1)).logout(token);
+		
+	}
 	
 }
 
