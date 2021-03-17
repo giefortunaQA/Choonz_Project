@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.qa.choonz.persistence.domain.Album;
+import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.persistence.repository.TrackRepository;
 import com.qa.choonz.rest.dto.TrackDTO;
@@ -35,6 +37,8 @@ public class TrackServiceTest {
 		return this.mapper.map(track,TrackDTO.class);
 	}
 	//class resources
+	private final Album testAlbum;
+	private final Playlist testPlaylist;
 	private final Track testTrack1=new Track("Track 1",200,"lyrics 1");
 	private final Track testTrack2=new Track("Track 2",200,"lyrics 2");
 	

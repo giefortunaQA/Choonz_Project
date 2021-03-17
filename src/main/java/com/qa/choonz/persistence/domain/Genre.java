@@ -45,4 +45,11 @@ public class Genre {
 		this.description = description;
 	}
 
+	public Genre(Long id, @NotNull @Size(max = 100) String name, @NotNull @Size(max = 250) String description) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
+
 }

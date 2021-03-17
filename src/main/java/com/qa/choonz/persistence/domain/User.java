@@ -43,11 +43,18 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Playlist> playlists;
 	
-//	public User() {
-//		this.playlists = new ArrayList<>();
-//	};
+
 	
 	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+
+
+
+	public User(Long id, @NotNull @Size(max = 20) String username, @NotNull @Size(max = 20) String password) {
+		super();
+		this.id = id;
 		this.username = username;
 		this.password = password;
 	}
