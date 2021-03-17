@@ -126,7 +126,8 @@ Feature: Choonz website tests
     Examples:
   		| username | password |
   		| test_user | test_password |
-  		
+  
+  @ignore
   Scenario Outline: As a User I want to read a single Genre so that I can update or delete it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -145,7 +146,7 @@ Feature: Choonz website tests
   		| test_user | test_password |
   		
 	@ignore
-  Scenario Outline: As a User I want to update an Artist so that the information is current
+  Scenario Outline: As a User I want to update an Artist so that the information is correct
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
     And I click the account button
@@ -165,7 +166,29 @@ Feature: Choonz website tests
     Examples:
   		| username | password | artist updated name |
   		| test_user | test_password | test artist updated |
-
+  		
+  Scenario Outline: As a User I want to update a Genre so that the information is correct
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the genres page
+    And I select a genre
+    And I click the update genre button
+    And I enter the update genre details:
+    | genre updated name | <genre updated name> |
+    | genre updated description | <genre update description> |
+    And I submit the update genre form
+    Then I can read an updated genre with the name "<genre updated name>"
+    
+    Examples:
+  		| username | password | genre updated name | genre updated name |
+  		| test_user | test_password | test genre updated | test genre description updated |
+  		
 	@ignore
 	Scenario Outline: As a User I want to delete an Artist so that it is removed from the database
     Given that I can navigate to "http://localhost:8082/index.html"

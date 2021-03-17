@@ -227,7 +227,7 @@ public class StepDefs {
 	
 	@When("I enter the create genre details:")
 	public void i_enter_the_create_genre_details(Map<String, String> dataTable) {
-		
+		hang();
 		String
 			genreName,
 			genreDescription;
@@ -242,6 +242,39 @@ public class StepDefs {
 	@When("I submit the create genre form")
 	public void i_submit_the_create_genre_form() {
 	    genresPage.clickCreateGenreSubmitButton();
+	}
+	
+	@When("I submit the update genre form")
+	public void i_submit_the_update_genre_form() {
+	    genresPage.clickUpdateGenreButtonSubmit();
+	}
+	
+	@When("I click the update genre button")
+	public void i_click_the_update_genre_button() {
+	    hang();
+		genresPage.clickUpdateGenreButton();
+	}
+	
+	@When("I enter the update genre details:")
+	public void i_enter_the_update_genre_details(Map<String, String> dataTable) {
+	    hang();
+		String
+			genreUpdatedName,
+			genreUpdatedDescription;
+			
+		genreUpdatedName = dataTable.get("genre updated name");
+		genreUpdatedDescription = dataTable.get("genre updated description");
+		
+		genresPage.inputUpdateGenreName(genreUpdatedName);
+		genresPage.inputUpdateGenreDescription(genreUpdatedDescription);
+	}
+	
+	@Then("I can read an updated genre with the name {string}")
+	public void i_can_read_an_updated_genre_with_the_name(String string) {
+	    hang();
+	    String expected = string;
+	    String result = genresPage.getSingleGenreNameText();
+	    assertEquals(expected,result);
 	}
 	
 	@Then("I can read a genre with the name {string}")

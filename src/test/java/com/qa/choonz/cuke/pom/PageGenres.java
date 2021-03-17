@@ -28,6 +28,18 @@ public class PageGenres extends PageBase {
 	@FindBy(xpath = "//*[@id=\"genreNameDisplay\"]")
 	private WebElement textGenreNameDisplay;
 	
+	@FindBy(xpath = "//*[@id=\"updateEachGenre\"]")
+	private WebElement buttonUpdateGenre;
+	
+	@FindBy(xpath = "//*[@id=\"genreNameUpdate\"]")
+	private WebElement inputUpdateGenreName;
+	
+	@FindBy(xpath = "//*[@id=\"genreDescUpdate\"]")
+	private WebElement inputUpdateGenreDescription;
+	
+	@FindBy(xpath = "//*[@id=\"updateGenreBtn\"]")
+	private WebElement buttonUpdateGenreSubmit;
+	
 	public void clickCreateGenreButton() {
 		buttonCreateGenre.click();
 	}
@@ -55,4 +67,21 @@ public class PageGenres extends PageBase {
 	public String getSingleGenreNameText() {
 		return textGenreNameDisplayHeader.getText();
 	}
+	
+	public void clickUpdateGenreButton() {
+		buttonUpdateGenre.click();
+	}
+	
+	public void inputUpdateGenreName(String name) {
+		inputUpdateGenreName.sendKeys(name);
+	}
+	
+	public void inputUpdateGenreDescription(String description) {
+		inputUpdateGenreDescription.sendKeys(description);
+	}
+	
+	public void clickUpdateGenreButtonSubmit() {
+		buttonUpdateGenreSubmit.click();
+	}
+	
 }
