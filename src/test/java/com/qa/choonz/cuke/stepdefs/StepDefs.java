@@ -2,10 +2,14 @@ package com.qa.choonz.cuke.stepdefs;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import com.qa.choonz.cuke.pom.PageArtists;
 import com.qa.choonz.cuke.pom.PageBase;
 import com.qa.choonz.cuke.pom.PageUser;
 
@@ -20,6 +24,7 @@ public class StepDefs {
 	private static RemoteWebDriver driver;
 	private static PageBase base = PageFactory.initElements(driver, PageBase.class);
     private static PageUser userPage = PageFactory.initElements(driver, PageUser.class);
+    private static PageArtists artistsPage = PageFactory.initElements(driver, PageArtists.class);
 
 	@Before
 	public void setup() {
@@ -40,28 +45,82 @@ public class StepDefs {
 
 	@When("I click the account button")
 	public void i_click_the_account_button() {
-		base.waitUntilUserLink(driver);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	    base.navLogin();
 	}
+	
+	@When("I navigate to the artists page")
+	public void i_navigate_to_the_artists_page() {
+	    base.navArtists();
+	}
 
-	@When("I cancel the alert")
+	@When("I dismiss the alert")
 	public void i_cancel_the_alert() {
 	    driver.switchTo().alert().dismiss();
 	}
-
-	@When("I enter a username of {string}")
-	public void i_enter_a_username_of(String string) {
-	    userPage.inputUsername(string);
+	
+	@When("I accept the alert")
+	public void i_accept_the_alert() {
+		driver.switchTo().alert().accept();
 	}
 
-	@When("I enter a password of {string}")
-	public void i_enter_a_password_of(String string) {
-	    userPage.inputPassword(string);
+	@When("I enter a username of {string} in the signup form")
+	public void i_enter_a_username_of_in_the_signup_form(String string) {
+	    userPage.inputSignUpUsername(string);
+	}
+	
+	@When("I enter a username of {string} in the login form")
+	public void i_enter_a_username_of_in_the_login_form(String string) {
+	    userPage.inputLoginUsername(string);
+	}
+
+	@When("I enter a password of {string} in the signup form")
+	public void i_enter_a_password_of_in_the_signup_form(String string) {
+	    userPage.inputSignUpPassword(string);
+	}
+	
+	@When("I enter a password of {string} in the login form")
+	public void i_enter_a_password_of_in_the_login_form(String string) {
+	    userPage.inputLoginPassword(string);
 	}
 
 	@When("I submit the sign up form")
 	public void i_submit_the_sign_up_form() {
-	    userPage.clickSubmit();
+	    userPage.clickSignUpSubmit();
+	}
+
+	@When("I submit the login form")
+	public void i_submit_the_login_form() {
+	    userPage.clickLoginSubmit();
+	}
+
+	@When("I click the create artist button")
+	public void i_click_the_create_artist_button() {
+	    artistsPage.clickCreateArtist();
+	}
+
+	@When("I enter the details:")
+	public void i_enter_the_details(Map<String, String> dataTable) {
+	    
+		String
+			artistName;
+		
+		artistName = dataTable.get("artist name");
+		
+		artistsPage.inputCreateArtistName(artistName);
+		
+	}
+
+	@When("I submit the create artist form")
+	public void i_submit_the_create_artist_form() {
+		artistsPage.clickCreateArtistSubmit();
+	}
+
+	@Then("I can read an artist with the name {string}")
+	public void i_can_read_an_artist_with_the_name(String string) {
+	    String expected = string;
+	    String result = artistsPage.getArtistName();
+	    assertEquals(expected,result);
 	}
 
 	@Then("I see the text {string}")
@@ -69,6 +128,13 @@ public class StepDefs {
 	    String expected = string;
 	    String result = userPage.getResultText();
 	    assertEquals(expected,result);
+	}
+
+	@Then("I can see the logout button")
+	public void i_can_see_the_logout_button() {
+		String expected = "Logout";
+		String result = userPage.getLogoutText();
+		assertEquals(expected,result);
 	}
 	
 	@After

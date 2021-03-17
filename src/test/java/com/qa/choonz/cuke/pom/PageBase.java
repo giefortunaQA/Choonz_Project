@@ -74,6 +74,10 @@ public class PageBase {
 		linkLogout.click();
 	}
 	
+	public String getLogoutText() {
+		return linkLogout.getText();
+	}
+	
 //	public void waitUntilPageLoad(WebDriver driver) {
 //		WebDriverWait wait = new WebDriverWait(driver, 10);
 //		wait.until(ExpectedConditions.jsReturnsValue("return document.readyState==\"complete\";"));
@@ -81,14 +85,14 @@ public class PageBase {
 //	
 	
 	public void waitUntilNavToggle(WebDriver driver) {
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/nav/button")));
+		new WebDriverWait(driver, 10).until(ExpectedConditions
+				.presenceOfElementLocated(By.xpath("/html/body/nav/button")));
 	}
 	
-	public void waitUntilUserLink(WebDriver driver) {
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("userDisplay")));
-	}
+//	public void waitUntilUserLink(WebDriver driver) {
+//		WebDriverWait wait = new WebDriverWait(driver, 10);
+//		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("userDisplay")));
+//	}
 	
 //	public void waitFive(WebDriver driver) {
 //		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
