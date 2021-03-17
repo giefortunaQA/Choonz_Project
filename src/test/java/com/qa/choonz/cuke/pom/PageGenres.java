@@ -22,6 +22,12 @@ public class PageGenres extends PageBase {
 	@FindBy(xpath = "//*[@id=\"genres2\"]/button/h3")
 	private WebElement textGenreName;
 	
+	@FindBy(xpath = "//*[@id=\"genreNameDisplay\"]/h1")
+	private WebElement textGenreNameDisplayHeader;
+	
+	@FindBy(xpath = "//*[@id=\"genreNameDisplay\"]")
+	private WebElement textGenreNameDisplay;
+	
 	public void clickCreateGenreButton() {
 		buttonCreateGenre.click();
 	}
@@ -40,5 +46,13 @@ public class PageGenres extends PageBase {
 	
 	public String getTextGenreName() {
 		return textGenreName.getText();
+	}
+	
+	public void clickTextGenreName() {
+		textGenreName.click();
+	}
+	
+	public String getSingleGenreNameText() {
+		return textGenreNameDisplayHeader.getText();
 	}
 }
