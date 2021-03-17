@@ -2,11 +2,9 @@ package com.qa.choonz.cuke.stepdefs;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,9 +22,11 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-@SpringBootTest
 @ActiveProfiles("test")
-@Sql(scripts = {"classpath:Choonz-schema.sql","classpath:data.sql"},
+@SpringBootTest
+@Sql(scripts = {"/Choonz_Project/src/test/resources/Choonz-schema.sql",
+			"/Choonz_Project/src/test/resources/data.sql"
+			},
 	executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 public class StepDefs {
 	
@@ -39,7 +39,7 @@ public class StepDefs {
 	@Before
 	public void setup() {
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chrome/chromedriver.exe");
-		driver = new ChromeDriver(chromeCfg());
+		driver = new ChromeDriver();//chromeCfg());
 	}
 	
 	@Given("that I can navigate to {string}")
@@ -51,15 +51,31 @@ public class StepDefs {
 		artistsPage = PageFactory.initElements(driver, PageArtists.class);
 	}
 	
-//	@When("I go home")
-//	public void i_go_home() {
-//		base.waitUntilPageLoad(driver);
-//	    userPage.navHome();
-//	}
+	@Given("that I can genre {string}")
+	public void that_i_can_genre(String string) {
+	    driver.get(string);
+		
+		base = PageFactory.initElements(driver, PageBase.class);
+		userPage = PageFactory.initElements(driver, PageUser.class);
+		artistsPage = PageFactory.initElements(driver, PageArtists.class);
+		base.waitUntilPageLoad(driver);
+		try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@When("I go home")
+	public void i_go_home() {
+		hang();
+	    userPage.navHome();
+	}
 	
 	@When("I toggle the navbar")
 	public void i_toggle_the_navbar() {
-		base.waitUntilPageLoad(driver);
+		hang();
 		base.toggleNav();
 	}
 
@@ -75,27 +91,25 @@ public class StepDefs {
 	    base.navArtists();
 	}
 
-//	@When("I dismiss the alert")
-//	public void i_cancel_the_alert() {
-//	    driver.switchTo().alert().dismiss();
-//		base.waitUntilPageLoad(driver);
-//	}
-//	
-//	@When("I accept the alert")
-//	public void i_accept_the_alert() {
-//		driver.switchTo().alert().accept();
-//		base.waitUntilPageLoad(driver);
-//	}
+	@When("I dismiss the alert")
+	public void i_cancel_the_alert() {
+	    driver.switchTo().alert().dismiss();
+	}
+	
+	@When("I accept the alert")
+	public void i_accept_the_alert() {
+		driver.switchTo().alert().accept();
+	}
 
 	@When("I enter a username of {string} in the signup form")
 	public void i_enter_a_username_of_in_the_signup_form(String string) {
-		base.waitUntilPageLoad(driver);
+		hang();
 	    userPage.inputSignUpUsername(string);
 	}
 	
 	@When("I enter a username of {string} in the login form")
 	public void i_enter_a_username_of_in_the_login_form(String string) {
-		base.waitUntilPageLoad(driver);
+		hang();
 	    userPage.inputLoginUsername(string);
 	}
 
@@ -114,12 +128,12 @@ public class StepDefs {
 	    userPage.clickSignUpSubmit();
 	}
 	
-//	@When("I click the sign in link")
-//	public void i_click_the_sign_in_link() {
-//		base.waitUntilPageLoad(driver);
-//	    userPage.navLogin();
-//		base.waitUntilPageLoad(driver);
-//	}
+	@When("I click the sign in link")
+	public void i_click_the_sign_in_link() {
+		hang();
+	    userPage.navLogin();
+		
+	}
 
 	@When("I submit the login form")
 	public void i_submit_the_login_form() {
@@ -128,7 +142,6 @@ public class StepDefs {
 
 	@When("I click the create artist button")
 	public void i_click_the_create_artist_button() {
-		base.waitUntilPageLoad(driver);
 	    artistsPage.clickCreateArtist();
 	}
 
@@ -177,7 +190,6 @@ public class StepDefs {
 
 	@Then("I can read an updated artist with the name {string}")
 	public void i_can_read_an_updated_artist_with_the_name(String string) {
-		base.waitUntilPageLoad(driver);
 	    String expected = string;
 	    String result = artistsPage.getArtistNameUpdated();
 	    assertEquals(expected,result);
@@ -185,7 +197,6 @@ public class StepDefs {
 
 	@Then("I can read an artist with the name {string}")
 	public void i_can_read_an_artist_with_the_name(String string) {
-		base.waitUntilPageLoad(driver);
 	    String expected = string;
 	    String result = artistsPage.getArtistName();
 	    assertEquals(expected,result);
@@ -193,7 +204,6 @@ public class StepDefs {
 
 	@Then("I see the text {string}")
 	public void i_see_the_text(String string) {
-		base.waitUntilPageLoad(driver);
 	    String expected = string;
 	    String result = userPage.getResultText();
 	    assertEquals(expected,result);
@@ -207,25 +217,35 @@ public class StepDefs {
 		assertEquals(expected,result);
 	}
 	
+	public static void hang() {
+		base.waitUntilPageLoad(driver);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@After
 	public static void tearDown() {
 		driver.quit();
 		System.out.println("driver closed");
 	}
 	
-	public static ChromeOptions chromeCfg() {
-	     Map<String, Object> prefs = new HashMap<String, Object>();
-	     ChromeOptions cOptions = new ChromeOptions();
-	      
-	     // Settings
-	     prefs.put("profile.default_content_setting_values.cookies", 2);
-	     prefs.put("network.cookie.cookieBehavior", 2);
-	     prefs.put("profile.block_third_party_cookies", true);
-	
-	     // Create ChromeOptions to disable Cookies pop-up
-	     cOptions.setExperimentalOption("prefs", prefs);
-	
-	     return cOptions;
-    }
+//	public static ChromeOptions chromeCfg() {
+//	     Map<String, Object> prefs = new HashMap<String, Object>();
+//	     ChromeOptions cOptions = new ChromeOptions();
+//	      
+//	     // Settings
+//	     prefs.put("profile.default_content_setting_values.cookies", 2);
+//	     prefs.put("network.cookie.cookieBehavior", 2);
+//	     prefs.put("profile.block_third_party_cookies", true);
+//	
+//	     // Create ChromeOptions to disable Cookies pop-up
+//	     cOptions.setExperimentalOption("prefs", prefs);
+//	
+//	     return cOptions;
+//    }
    
 }
