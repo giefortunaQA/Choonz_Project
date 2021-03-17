@@ -68,8 +68,27 @@ Feature: Choonz website tests
     Then I can read an updated artist with the name "<artist updated name>"
     
     Examples:
-  		| username | password | artist name | artist updated name |
-  		| test_user | test_password | test artist | test artist updated |
+  		| username | password | artist updated name |
+  		| test_user | test_password | test artist updated |
+  		
+  	Scenario Outline: As a User I want to delete an Artist so that it is removed from the database
+	    Given that I can navigate to "http://localhost:8082/index.html"
+	    When I toggle the navbar
+	    And I click the account button
+	    And I accept the alert
+	    And I enter a username of "<username>" in the login form
+	    And I enter a password of "<password>" in the login form
+	    And I submit the login form
+	    And I toggle the navbar
+	    And I navigate to the artists page
+	    And I select an artist
+	    And I click the delete artist button
+	    And I accept the alert
+	    Then I can read "Artist deleted." on the artist page
+	    
+	    Examples:
+	  		| username | password |
+	  		| test_user | test_password |
   		
   	@ignore
   	Scenario: something is here

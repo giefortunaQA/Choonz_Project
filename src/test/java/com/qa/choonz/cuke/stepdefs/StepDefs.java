@@ -190,6 +190,21 @@ public class StepDefs {
 	public void i_submit_the_update_artist_form() {
 	    artistsPage.clickUpdateArtistSubmit();
 	}
+	
+	@When("I click the delete artist button")
+	public void i_click_the_delete_artist_button() {
+	    hang();
+	    artistsPage.clickDeleteArtist();
+	}
+	
+	@Then("I can read {string} on the artist page")
+	public void i_can_read_on_the_artist_page(String string) {
+	    hang();
+	    String expected = string;
+	    String result = artistsPage.getArtistDeletedText();
+	    assertEquals(expected,result);
+	}
+
 
 	@Then("I can read an updated artist with the name {string}")
 	public void i_can_read_an_updated_artist_with_the_name(String string) {

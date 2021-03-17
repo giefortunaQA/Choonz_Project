@@ -29,7 +29,13 @@ public class PageArtists extends PageBase {
 	private WebElement buttonUpdateArtistSubmit;
 	
 	@FindBy(xpath = "//*[@id=\"artistNameDisplay\"]/h1")
-	private WebElement testArtistNameUpdated;
+	private WebElement testArtistNameDisplayHeader;
+	
+	@FindBy(xpath = "//*[@id=\"artistNameDisplay\"]")
+	private WebElement testArtistNameDisplay;
+	
+	@FindBy(xpath = "//*[@id=\"deleteEachArtist\"]")
+	private WebElement buttonDeleteArtist;
 	
 	public void clickCreateArtist() {
 		buttonCreateArtist.click();
@@ -63,8 +69,16 @@ public class PageArtists extends PageBase {
 		buttonUpdateArtistSubmit.click();
 	}
 	
+	public void clickDeleteArtist() {
+		buttonDeleteArtist.click();
+	}
+	
 	public String getArtistNameUpdated() {
-		return testArtistNameUpdated.getText().substring(9);
+		return testArtistNameDisplayHeader.getText().substring(9);
+	}
+	
+	public String getArtistDeletedText() {
+		return testArtistNameDisplay.getText();
 	}
 	
 }
