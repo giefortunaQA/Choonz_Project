@@ -105,6 +105,7 @@ public class UserControllerUnitTest {
 		String testName = "Sehun";
 		UserDTO testReadUser = this.mapToDTO(testUser);
 
+
 		// ACTIONS
 		when(this.userService.read(testName)).thenReturn(testReadUser);
 
