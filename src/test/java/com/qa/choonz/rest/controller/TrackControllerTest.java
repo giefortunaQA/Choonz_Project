@@ -37,7 +37,7 @@ public class TrackControllerTest {
 	@Autowired
 	private ModelMapper mapper;
 
-	private final Track testTrack = new Track(2L, "Track Name", new Album(2L,"Album Name", null, null, "cool cover"), new Playlist( 2L,"Playlist Name", "A cool description", "cool artwork", null, null), 600, "Lyrics");
+	private final Track testTrack = new Track(2L, "Track Name", 600L, "Lyrics");
 	private final List<Track> listOfTracks = List.of(testTrack);
 
 	private TrackDTO mapToDTO(Track track) {
@@ -188,7 +188,7 @@ public class TrackControllerTest {
 	     // ACTIONS
 		 newTrack.setId(testID);
 		 newTrack.setName("Updated Track name");
-		 newTrack.setDuration(4000);
+		 newTrack.setDuration(4000L);
 		 newTrack.setLyrics("cool lyrics");
 		 TrackDTO testUpdateTrack = this.mapToDTO(newTrack);
 		
