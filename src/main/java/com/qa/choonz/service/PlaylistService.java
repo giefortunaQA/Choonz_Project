@@ -11,6 +11,9 @@ import com.qa.choonz.exception.PlaylistNotFoundException;
 import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.repository.PlaylistRepository;
 import com.qa.choonz.rest.dto.PlaylistDTO;
+import com.qa.choonz.utils.BeanUtils;
+
+import lombok.RequiredArgsConstructor;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,9 +44,7 @@ public class PlaylistService {
 
 	public PlaylistDTO update(Playlist playlist, long id) {
 		Playlist toUpdate = this.repo.findById(id).orElseThrow(PlaylistNotFoundException::new);
-		toUpdate.setName(playlist.getName());
-		toUpdate.setDescription(playlist.getDescription());
-		toUpdate.setArtwork(playlist.getArtwork());
+		BeanUtils.mergeNotNull(playlist,toUpdate);
 		Playlist updated = this.repo.save(toUpdate);
 		return this.mapToDTO(updated);
 	}
@@ -53,9 +54,6 @@ public class PlaylistService {
 		return !this.repo.existsById(id);
 	}
 
-	public List<PlaylistDTO> findPlaylistsInGenres(long id){
-		return this.repo.findPlaylistsInGenres(id).stream().map(this::mapToDTO).collect(Collectors.toList());
-		
-	}
+
 
 }

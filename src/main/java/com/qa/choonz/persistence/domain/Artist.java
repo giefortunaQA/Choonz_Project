@@ -40,4 +40,9 @@ public class Artist {
 		this.name = name;
 	}
 
+	public Artist(@NotNull @Size(max = 100) String name) {
+		super();
+		this.name = name;
+	}
+
 }
