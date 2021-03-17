@@ -52,6 +52,27 @@ Feature: Choonz website tests
     Examples:
   		| username | password | artist name |
   		| test_user | test_password | test artist |
+  
+  Scenario Outline: As a User I want to create a Genre so that I can add it to albums
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the genres page
+    And I click the create genre button
+    And I enter the create genre details:
+    | genre name | <genre name> |
+    | genre description | <genre description> |
+    And I submit the create genre form
+    Then I can read a genre with the name "<genre name>"
+    
+    Examples:
+  		| username | password | genre name | genre description | 
+  		| test_user | test_password | test genre | test genre description |
   		
 	@ignore
   Scenario Outline: As a User I want to read a list of Artists so that I can choose one to update
@@ -129,7 +150,8 @@ Feature: Choonz website tests
     Examples:
   		| username | password |
   		| test_user | test_password |
-  		
+  
+  @ignore
 	Scenario Outline: As a User I want to delete my account so that it is removed from the database
 		Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar

@@ -15,6 +15,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.qa.choonz.cuke.pom.PageArtists;
 import com.qa.choonz.cuke.pom.PageBase;
+import com.qa.choonz.cuke.pom.PageGenres;
 import com.qa.choonz.cuke.pom.PageUser;
 
 import io.cucumber.java.After;
@@ -36,6 +37,7 @@ public class StepDefs {
 	private static PageBase base;
 	private static PageUser userPage;
 	private static PageArtists artistsPage;
+	private static PageGenres genresPage;
 
 	@Before
 	public void setup() {
@@ -50,6 +52,7 @@ public class StepDefs {
 		base = PageFactory.initElements(driver, PageBase.class);
 		userPage = PageFactory.initElements(driver, PageUser.class);
 		artistsPage = PageFactory.initElements(driver, PageArtists.class);
+		genresPage = PageFactory.initElements(driver, PageGenres.class);
 	}
 	
 	@Given("that I can genre {string}")
@@ -202,6 +205,45 @@ public class StepDefs {
 	public void i_click_the_delete_artist_button() {
 	    hang();
 	    artistsPage.clickDeleteArtist();
+	}
+	
+	@When("I navigate to the genres page")
+	public void i_navigate_to_the_genres_page() {
+		base.waitUntilNavExpand(driver);
+	    base.navGenres();
+	}
+	
+	@When("I click the create genre button")
+	public void i_click_the_create_genre_button() {
+	    hang();
+	    genresPage.clickCreateGenreButton();
+	}
+	
+	@When("I enter the create genre details:")
+	public void i_enter_the_create_genre_details(Map<String, String> dataTable) {
+		
+		String
+			genreName,
+			genreDescription;
+			
+		genreName = dataTable.get("genre name");
+		genreDescription = dataTable.get("genre description");
+		
+		genresPage.inputCreateGenreName(genreName);
+		genresPage.inputCreateGenreDescription(genreDescription);
+	}
+	
+	@When("I submit the create genre form")
+	public void i_submit_the_create_genre_form() {
+	    genresPage.clickCreateGenreSubmitButton();
+	}
+	
+	@Then("I can read a genre with the name {string}")
+	public void i_can_read_a_genre_with_the_name(String string) {
+	    hang();
+	    String expected = string;
+	    String result = genresPage.getTextGenreName();
+	    assertEquals(expected,result);
 	}
 	
 	@Then("I can read {string} on the artist page")
