@@ -254,24 +254,23 @@ public class UserControllerUnitTest {
 	@Test
 	public void invalidLoginTest()
 	{
+		//RESOURCES
 		Long badTestID = null;
 		String username = "Sehun";
 		String password = "Password";
 		
+		 //ACTIONS
 		 when(this.userService.login(username, password)).thenReturn(badTestID);
 		 
-		 
+		 //ASSERTIONS
 		 ResponseEntity <String> expected = new ResponseEntity<>("INVALID", HttpStatus.BAD_REQUEST);
 		 ResponseEntity <String> result = this.controller.login(username, password);
-		 System.out.println(expected);
-		 System.out.println(result);
-		 
+		
 		 assertEquals(null,badTestID);
 	    assertEquals(expected,result);
 	   
 		
 	}
-//	
 	
 	
 	@Test
@@ -285,13 +284,9 @@ public class UserControllerUnitTest {
 	    mockLogout.logout(token);
 	    
 	       //ASSERTIONS
-	    
-		 //when(this.controller.logout(token)).thenReturn(true );
 		 ResponseEntity <String> expected = new ResponseEntity<>("TOKEN HAS BEEN DELETED", HttpStatus.OK);
 		 ResponseEntity <String> result = this.controller.logout(token);
-		 // System.out.println(expected);
-		 //System.out.println(result);
-		 
+		
 	
 	    assertEquals(expected,result);
 	    verify(mockLogout, Mockito.times(1)).logout(token);
