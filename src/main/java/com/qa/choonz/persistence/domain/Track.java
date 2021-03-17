@@ -34,14 +34,14 @@ public class Track {
     private Playlist playlist;
 
     // in seconds
-    private int duration;
+    private Long duration;
     
     @Size(max = 5000)
     private String lyrics;
 
  
 
-	public Track(@NotNull @Size(max = 100) String name, int duration, @Size(max = 5000) String lyrics) {
+	public Track(@NotNull @Size(max = 100) String name, Long duration, @Size(max = 5000) String lyrics) {
 		super();
 		this.name = name;
 		this.duration = duration;
@@ -50,7 +50,7 @@ public class Track {
 
 
 
-	public Track(Long id, @NotNull @Size(max = 100) String name, int duration, @Size(max = 5000) String lyrics) {
+	public Track(Long id, @NotNull @Size(max = 100) String name, Long duration, @Size(max = 5000) String lyrics) {
 		super();
 		this.id = id;
 		this.name = name;

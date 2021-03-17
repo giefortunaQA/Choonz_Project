@@ -11,7 +11,7 @@ public class TrackDTO {
 
 	private Long id;
 	private String name;
-	private int duration;
+	private Long duration;
 	private String lyrics;
 
 }
