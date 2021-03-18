@@ -1,6 +1,6 @@
 Feature: Choonz website tests
 	
-	 
+	@ignore
   Scenario Outline: As a User I want to create an account on the website so that I can login
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -15,7 +15,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-	 
+	@ignore
 	Scenario Outline: As a User I want to login to an account so that I can CRUD
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -32,7 +32,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-	 
+	@ignore 
 	Scenario Outline: As a User I want to create an Artist so that I can add albums to it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -53,7 +53,7 @@ Feature: Choonz website tests
   		| username | password | artist name |
   		| test_user | test_password | test artist |
   
-   
+  @ignore 
   Scenario Outline: As a User I want to create a Genre so that I can add it to albums
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -75,7 +75,7 @@ Feature: Choonz website tests
   		| username | password | genre name | genre description | 
   		| test_user | test_password | test genre | test genre description |
   		
-   
+  @ignore 
   Scenario Outline: As a User I want to create a Playlist so that I can add tracks to it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -98,7 +98,7 @@ Feature: Choonz website tests
   		| username | password | playlist name | playlist artwork | playlist description | 
   		| test_user | test_password | test playlist | https://upload.wikimedia.org/wikipedia/commons/3/34/Art-portrait-collage_2.jpg | test playlist description |
   
-  
+  @ignore
 	Scenario Outline: As a User I want to create an Album so that I can add tracks to it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -121,8 +121,33 @@ Feature: Choonz website tests
     Examples:
   		| username | password | album name | album cover | album artist id | album genre id |
   		| test_user | test_password | test album | https://png.pngtree.com/thumb_back/fw800/back_pic/03/90/51/0657dd16e50ff98.jpg | 1 | 1 |
-  		
   
+  
+	Scenario Outline: As a User I want to create a Track so that I can add it to an Album
+    Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the tracks page
+    And I click the create track button
+    And I enter the create track details:
+    | track name | <track name> |
+    | track lyrics | <track lyrics> |
+    | track duration | <track duration> |
+    | track album id | <track album id> |
+    | track playlist id | <track playlist id> |
+    And I submit the create track form
+    Then I can read an track with the name "<album name>"
+    
+    Examples:
+  		| username | password | track name | track lyrics | track duration | track album id | track playlist id |
+  		| test_user | test_password | test track | test track lyrics | 100 | 1 | 1 |
+  	
+  @ignore
   Scenario Outline: As a User I want to read a list of Artists so that I can choose one to update
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -139,7 +164,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  
+  @ignore
   Scenario Outline: As a User I want to read a list of Genres so that I can choose one to update
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -156,7 +181,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
 
-	
+	@ignore
   Scenario Outline: As a User I want to read a list of Playlists so that I can choose one to update
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -173,7 +198,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  
+  @ignore
   Scenario Outline: As a User I want to read a list of Albums so that I can choose one to update
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -190,7 +215,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  
+  @ignore
   Scenario Outline: As a User I want to read my user details so that I can update or delete my account
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -207,7 +232,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-	
+	@ignore
   Scenario Outline: As a User I want to read a single Artist so that I can update or delete it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -225,7 +250,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  
+  @ignore
   Scenario Outline: As a User I want to read a single Genre so that I can update or delete it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -243,7 +268,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   		
-  
+  @ignore
   Scenario Outline: As a User I want to read a single Playlists so that I can update or delete it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -261,7 +286,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  
+  @ignore
   Scenario Outline: As a User I want to read a single Albums so that I can update or delete it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar

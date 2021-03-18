@@ -18,6 +18,7 @@ import com.qa.choonz.cuke.pom.PageArtists;
 import com.qa.choonz.cuke.pom.PageBase;
 import com.qa.choonz.cuke.pom.PageGenres;
 import com.qa.choonz.cuke.pom.PagePlaylists;
+import com.qa.choonz.cuke.pom.PageTracks;
 import com.qa.choonz.cuke.pom.PageUser;
 
 import io.cucumber.java.After;
@@ -42,6 +43,7 @@ public class StepDefs {
 	private static PageGenres genresPage;
 	private static PagePlaylists playlistsPage;
 	private static PageAlbums albumsPage;
+	private static PageTracks tracksPage;
 
 	@Before
 	public void setup() {
@@ -59,6 +61,7 @@ public class StepDefs {
 		genresPage = PageFactory.initElements(driver, PageGenres.class);
 		playlistsPage = PageFactory.initElements(driver, PagePlaylists.class);
 		albumsPage = PageFactory.initElements(driver, PageAlbums.class);
+		tracksPage = PageFactory.initElements(driver, PageTracks.class);
 	}
 	
 	@Given("that I can genre {string}")
@@ -465,6 +468,54 @@ public class StepDefs {
 	public void i_click_the_delete_album_button() {
 	    hang();
 	    albumsPage.clickDeleteAlbumButton();
+	}
+	
+	@When("I navigate to the tracks page")
+	public void i_navigate_to_the_tracks_page() {
+	    base.waitUntilNavExpand(driver);
+	    base.navTracks();
+	}
+	
+	@When("I click the create track button")
+	public void i_click_the_create_track_button() {
+	    hang();
+	    tracksPage.clickCreateTrackButton();
+	}
+	
+	@When("I enter the create track details:")
+	public void i_enter_the_create_track_details(Map<String, String> dataTable) {
+	    hang();
+	    String
+	    	trackName,
+	    	trackLyrics,
+	    	trackDuration,
+	    	trackAlbumId,
+	    	trackPlaylistId;
+	    
+    	trackName = dataTable.get("track name");
+    	trackLyrics = dataTable.get("track lyrics");
+    	trackDuration = dataTable.get("track duration");
+    	trackAlbumId = dataTable.get("track album id");
+    	trackPlaylistId = dataTable.get("track playlist id");
+    	
+    	tracksPage.inputCreateTrackName(trackName);
+    	tracksPage.inputCreateTrackLyrics(trackLyrics);
+    	tracksPage.inputCreateTrackDuration(trackDuration);
+    	tracksPage.inputCreateTrackAlbumId(trackAlbumId);
+    	tracksPage.inputCreateTrackPlaylistId(trackPlaylistId);
+	}
+	
+	@When("I submit the create track form")
+	public void i_submit_the_create_track_form() {
+	    tracksPage.clickCreateTrackSubmitButton();
+	}
+	
+	@Then("I can read an track with the name {string}")
+	public void i_can_read_an_track_with_the_name(String string) {
+	    hang();
+	    String expected = string;
+	    String result = tracksPage.getTrackNameText();
+	    assertEquals(expected,result);
 	}
 	
 	@Then("I can read read {string} on the album page")
