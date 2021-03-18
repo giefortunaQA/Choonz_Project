@@ -181,6 +181,12 @@ public class StepDefs {
 		hang();
 	    genresPage.clickTextGenreName();
 	}
+	
+	@When("I select a playlist")
+	public void i_select_a_playlist() {
+		hang();
+	    playlistsPage.clickPlaylistName();
+	}
 
 	@When("I click the update artist button")
 	public void i_click_the_update_artist_button() {
@@ -396,6 +402,12 @@ public class StepDefs {
 	public void i_can_read_a_single_genre() {
 		hang();
 		assertNotNull(genresPage.getSingleGenreNameText());
+	}
+	
+	@Then("I can read a single playlist")
+	public void i_can_read_a_single_playlist() {
+		hang();
+		assertNotNull(playlistsPage.getSinglePlaylistText());
 	}
 
 	@Then("I can read an artist with the name {string}")

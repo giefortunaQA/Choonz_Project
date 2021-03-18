@@ -132,7 +132,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
 
-
+	@ignore
   Scenario Outline: As a User I want to read a list of Playlists so that I can choose one to update
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -180,6 +180,24 @@ Feature: Choonz website tests
     And I navigate to the genres page
     And I select a genre
     Then I can read a single genre
+    
+    Examples:
+  		| username | password |
+  		| test_user | test_password |
+  		
+  		
+  Scenario Outline: As a User I want to read a single Playlists so that I can update or delete it
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the playlists page
+    And I select a playlist
+    Then I can read a single playlist
     
     Examples:
   		| username | password |
