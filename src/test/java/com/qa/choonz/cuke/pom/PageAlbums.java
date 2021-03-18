@@ -27,6 +27,9 @@ public class PageAlbums extends PageBase {
 	@FindBy(xpath = "/html/body/div[2]/div[1]/div/button/h3")
 	private WebElement textAlbumName;
 	
+	@FindBy(xpath = "//*[@id=\"albumTitle\"]")
+	private WebElement textAlbumNameSingle;
+	
 	public void clickCreateAlbumButton() {
 		buttonCreateAlbum.click();
 	}
@@ -57,5 +60,9 @@ public class PageAlbums extends PageBase {
 	
 	public void clickAlbumName() {
 		textAlbumName.click();
+	}
+	
+	public String getSingleAlbumName() {
+		return textAlbumNameSingle.getText();
 	}
 }

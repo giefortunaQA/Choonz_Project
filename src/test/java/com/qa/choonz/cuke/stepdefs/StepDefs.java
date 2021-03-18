@@ -393,6 +393,18 @@ public class StepDefs {
 	    albumsPage.clickCreateAlbumSubmitButton();
 	}
 	
+	@When("I select an Ablum")
+	public void i_select_an_ablum() {
+	    hang();
+	    albumsPage.clickAlbumName();
+	}
+	
+	@Then("I can read a single Album")
+	public void i_can_read_a_single_album() {
+	    hang();
+	    assertNotNull(albumsPage.getSingleAlbumName());
+	}
+	
 	@Then("I can read an album with the name {string}")
 	public void i_can_read_an_album_with_the_name(String string) {
 	    hang();
