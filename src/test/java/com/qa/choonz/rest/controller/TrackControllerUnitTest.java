@@ -37,7 +37,7 @@ public class TrackControllerUnitTest {
 	@Autowired
 	private ModelMapper mapper;
 
-	private final Track testTrack = new Track(2L, "Track Name", 600L, "Lyrics");
+	private final Track testTrack = new Track(2L, "Track Name", null, null, 600L, "Lyrics");
 	private final List<Track> listOfTracks = List.of(testTrack);
 
 	private TrackDTO mapToDTO(Track track) {

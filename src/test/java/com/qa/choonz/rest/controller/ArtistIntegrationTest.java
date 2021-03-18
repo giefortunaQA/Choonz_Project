@@ -1,8 +1,6 @@
 package com.qa.choonz.rest.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -23,8 +21,6 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.web.util.NestedServletException;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.rest.dto.ArtistDTO;
@@ -34,7 +30,7 @@ import com.qa.choonz.rest.dto.ArtistDTO;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-//@Sql(scripts= {"classpath:Choonz-schema.sql","classpath:data.sql"},executionPhase=ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts= {"classpath:Choonz-schema.sql","classpath:test-data.sql"},executionPhase=ExecutionPhase.BEFORE_TEST_METHOD)
 public class ArtistIntegrationTest {
 
 	@Autowired

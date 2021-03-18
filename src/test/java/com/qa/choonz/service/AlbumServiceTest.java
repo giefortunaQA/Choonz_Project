@@ -39,14 +39,14 @@ public class AlbumServiceTest {
 	//class resources
 	private final Genre testGenre=new Genre(1L,"Genre","description");
 	private final Artist testArtist=new Artist(1L,"Artist");
-	private final Album testAlbum1=new Album("Album 1",testArtist,testGenre,"cover 1");
-	private final Album testAlbum2=new Album("Album 2",testArtist,testGenre,"cover 2");
+	private final Album testAlbum1=new Album(null, "Album 1",testArtist,testGenre,"cover 1");
+	private final Album testAlbum2=new Album(null, "Album 2",testArtist,testGenre,"cover 2");
 	
 	private final List<Album> testList=List.of(testAlbum1,testAlbum2); 
 	
 	@Test
 	void testCreate() throws Exception{
-		Album toCreate=new Album("Album",testArtist,testGenre,"cover");
+		Album toCreate=new Album(null, "Album",testArtist,testGenre,"cover");
 		Album created=new Album(5L,"Album",testArtist,testGenre,"cover updated");
 		
 		when(this.repo.save(toCreate)).thenReturn(created);

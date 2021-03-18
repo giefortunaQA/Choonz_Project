@@ -43,16 +43,9 @@ public class Album {
 
 	private String cover;
 
-	public Album(Long id, @NotNull @Size(max = 100) String name, Artist artist, Genre genre, String cover) {
+	public Album(Long id, String name, Artist artist, Genre genre, String cover) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.artist = artist;
-		this.genre = genre;
-		this.cover = cover;
-	}
-	public Album(@NotNull @Size(max = 100) String name, Artist artist, Genre genre, String cover) {
-		super();
 		this.name = name;
 		this.artist = artist;
 		this.genre = genre;
