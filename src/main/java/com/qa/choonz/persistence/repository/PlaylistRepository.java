@@ -11,6 +11,5 @@ import com.qa.choonz.persistence.domain.Playlist;
 
 @Repository
 public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
-	
 
 }
