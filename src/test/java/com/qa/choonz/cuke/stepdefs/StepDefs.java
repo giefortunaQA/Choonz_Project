@@ -510,6 +510,12 @@ public class StepDefs {
 	    tracksPage.clickCreateTrackSubmitButton();
 	}
 	
+	@Then("I can read a list of tracks")
+	public void i_can_read_a_list_of_tracks() {
+	    hang();
+	    assertNotNull(tracksPage.getTrackNameText());
+	}
+	
 	@Then("I can read an track with the name {string}")
 	public void i_can_read_an_track_with_the_name(String string) {
 	    hang();

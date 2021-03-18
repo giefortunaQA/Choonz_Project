@@ -122,7 +122,7 @@ Feature: Choonz website tests
   		| username | password | album name | album cover | album artist id | album genre id |
   		| test_user | test_password | test album | https://png.pngtree.com/thumb_back/fw800/back_pic/03/90/51/0657dd16e50ff98.jpg | 1 | 1 |
   
-  
+  @ignore
 	Scenario Outline: As a User I want to create a Track so that I can add it to an Album
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -214,7 +214,24 @@ Feature: Choonz website tests
     Examples:
   		| username | password |
   		| test_user | test_password |
+  		
   
+	Scenario Outline: As a User I want to read a list of Tracks so that I can choose one to update
+    Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the tracks page
+    Then I can read a list of tracks
+    
+    Examples:
+  		| username | password |
+  		| test_user | test_password |
+  	
   @ignore
   Scenario Outline: As a User I want to read my user details so that I can update or delete my account
   	Given that I can navigate to "http://localhost:8082/index.html"
