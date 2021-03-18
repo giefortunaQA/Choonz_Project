@@ -28,6 +28,9 @@ import com.qa.choonz.persistence.domain.Album;
 import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.domain.Genre;
 import com.qa.choonz.rest.dto.AlbumDTO;
+import com.qa.choonz.rest.dto.ArtistDTO;
+import com.qa.choonz.rest.dto.GenreDTO;
+import com.qa.choonz.rest.dto.TrackDTO;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -122,13 +125,11 @@ public class AlbumControllerIntegrationTest {
 	@Test
 	void updateIntegrationTest() throws Exception {
 		// RESOURCES
-		AlbumDTO testSavedDTO = mapToDTO(testAlbum1);     
-		
-		AlbumDTO updatedDTO = testSavedDTO;
-		updatedDTO.setName("I am Error");
-		updatedDTO.setArtist(testArtist3);
-		updatedDTO.setGenre(testGenre3);
-		updatedDTO.setCover("String");
+		ArtistDTO updatedArtist = new ArtistDTO(3L, "Adele");
+		GenreDTO updatedGenre = new GenreDTO(3L, "Country","Country (also called country and western) is a genre of popular music that originated with blues, old-time music, and various types of American folk music.");
+		TrackDTO testTrack = new TrackDTO(1L, "Thank U Next",207L,"Thank U Next lyrics");
+		List<TrackDTO> tracks = List.of(testTrack);
+		AlbumDTO updatedDTO = new AlbumDTO(1L, "I am Error", updatedArtist, updatedGenre, "String", tracks);
 
 		// ACTIONS
 		RequestBuilder request = put(URI + "/update/1")
