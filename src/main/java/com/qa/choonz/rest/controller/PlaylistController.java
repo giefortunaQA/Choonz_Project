@@ -56,9 +56,5 @@ public class PlaylistController {
                 : new ResponseEntity<PlaylistDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
-    @GetMapping("/read/by-genre/{id}")
-	public ResponseEntity<List<PlaylistDTO>> readPlaylistsByGenres(@PathVariable Long id){
-		return ResponseEntity.ok(this.service.findPlaylistsInGenres(id));
-	}
 
 }
