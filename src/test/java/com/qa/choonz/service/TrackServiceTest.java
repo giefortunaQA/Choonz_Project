@@ -36,18 +36,17 @@ public class TrackServiceTest {
 	private TrackDTO mapToDTO(Track track) {
 		return this.mapper.map(track,TrackDTO.class);
 	}
-	private final Album testAlbum = new Album();
-	private final Playlist testPlaylist = new Playlist();
-	private final Track testTrack1=new Track("Track 1",testAlbum,testPlaylist,200L,"lyrics 1");
-	private final Track testTrack2=new Track("Track 2",testAlbum,testPlaylist,200L,"lyrics 2");
+	//class resources
+	private final Track testTrack1=new Track(null, "Track 1",null, null, 200L,"lyrics 1");
+	private final Track testTrack2=new Track(null, "Track 2",null, null, 200L,"lyrics 2");
 
 	
 	private final List<Track> testList=List.of(testTrack1,testTrack2); 
 	
 	@Test
 	void testCreate() throws Exception{
-		Track toCreate=new Track("Track",testAlbum,testPlaylist,200L,"lyrics");
-		Track created=new Track(5L,"Track",testAlbum,testPlaylist,200L,"lyrics");
+		Track toCreate=new Track(null, "Track",null, null, 200L,"lyrics");
+		Track created=new Track(5L,"Track",null, null, 200L,"lyrics");
 
 		
 		when(this.repo.save(toCreate)).thenReturn(created);
@@ -74,7 +73,7 @@ public class TrackServiceTest {
 	@Test
 	void testUpdate() throws Exception{
 		Long id=1L;
-		Track updated=new Track(1L,"Track 1 Updated",testAlbum,testPlaylist,200L,"lyrics updated");
+		Track updated=new Track(1L,"Track 1 Updated",null, null, 200L,"lyrics updated");
 
 		TrackDTO updatedAsDto=this.mapToDTO(updated);
 		when(this.repo.findById(id)).thenReturn(Optional.of(testTrack1));
@@ -101,7 +100,6 @@ public class TrackServiceTest {
 	@Test
 	void testReadTracksByArtists() throws Exception{
 		Long id=1L;
-		List<Track> tracksByArtist=List.of(testTrack1,testTrack2);
 		List<TrackDTO> tracksByArtistAsDtos=tracksByArtist.stream().map(this::mapToDTO).collect(Collectors.toList());
 		when(this.repo.findTracksInArtists(id)).thenReturn(tracksByArtist);
 		assertThat(this.service.findTracksInArtists(id)).isEqualTo(tracksByArtistAsDtos);

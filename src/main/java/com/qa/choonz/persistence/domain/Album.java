@@ -51,14 +51,17 @@ public class Album {
 		this.genre = genre;
 		this.cover = cover;
 	}
+// <<<<<<< CGP-47-Refactoring_
+// =======
 
-	public Album(Long id, @NotNull @Size(max = 100) String name, Artist artist, Genre genre, String cover) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.artist = artist;
-		this.genre = genre;
-		this.cover = cover;
-	}
+// 	public Album(Long id, @NotNull @Size(max = 100) String name, Artist artist, Genre genre, String cover) {
+// 		super();
+// 		this.id = id;
+// 		this.name = name;
+// 		this.artist = artist;
+// 		this.genre = genre;
+// 		this.cover = cover;
+// 	}
+// >>>>>>> dev
 
 }
