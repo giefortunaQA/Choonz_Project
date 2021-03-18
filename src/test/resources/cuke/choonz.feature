@@ -189,8 +189,9 @@ Feature: Choonz website tests
     Examples:
   		| username | password |
   		| test_user | test_password |
-  		
-  Scenario Outline: As a User I want to read my User Page so that I can update or delete it
+  
+  @ignore
+  Scenario Outline: As a User I want to read my user details so that I can update or delete my account
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
     And I click the account button
@@ -277,6 +278,28 @@ Feature: Choonz website tests
     Examples:
   		| username | password |
   		| test_user | test_password |
+  
+  @ignore	
+  Scenario Outline: As a User I want to update my user details so that the information is correct
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the user page
+    And I click the update user button
+    And I enter the update user details:
+    | username updated | <username updated> |
+    | password updated | <password updated> |
+    And I submit the update user form
+    Then the user account is updated
+    
+    Examples:
+  		| username | password | username updated | password updated |
+  		| test_user | test_password | test_user_updated | test_password_updated |
   		
 	@ignore
   Scenario Outline: As a User I want to update an Artist so that the information is correct

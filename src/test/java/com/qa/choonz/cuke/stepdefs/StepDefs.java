@@ -436,6 +436,39 @@ public class StepDefs {
 	    base.navUser();
 	}
 	
+	@When("I click the update user button")
+	public void i_click_the_update_user_button() {
+	    hang();
+	    userPage.clickUpdateUserButton();
+	}
+	
+	@When("I enter the update user details:")
+	public void i_enter_the_update_user_details(Map<String, String> dataTable) {
+	    hang();
+	    String
+	    	userUpdatedUsername,
+	    	userUpdatedPassword;
+	    
+	    userUpdatedUsername = dataTable.get("username updated");
+	    userUpdatedPassword = dataTable.get("password updated");
+	    
+	    userPage.inputUpdateUserUsername(userUpdatedUsername);
+	    userPage.inputUpdateUserPassword(userUpdatedPassword);
+	}
+	
+	@When("I submit the update user form")
+	public void i_submit_the_update_user_form() {
+	    userPage.clickUpdateUserSubmitButton();
+	}
+	
+	@Then("the user account is updated")
+	public void the_user_account_is_updated() {
+		hang();
+		String expected = "User credentials updated.";
+		String result = userPage.getUserUpdateText();
+		assertEquals(expected,result);
+	}
+	
 	@Then("I can read a single user")
 	public void i_can_read_a_single_user() {
 	    hang();

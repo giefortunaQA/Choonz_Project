@@ -32,6 +32,18 @@ public class PageUser extends PageBase {
 	@FindBy(xpath = "//*[@id=\"deleteUserBtn\"]")
 	private WebElement linkDeleteUser;
 	
+	@FindBy(xpath = "//*[@id=\"updateUserOpen\"]")
+	private WebElement buttonUpdateUser;
+	
+	@FindBy(xpath = "//*[@id=\"usernameUpdate\"]")
+	private WebElement inputUpdateUserUsername;
+	
+	@FindBy(xpath = "//*[@id=\"passwordUpdate\"]")
+	private WebElement inputUpdateUserPassword;
+	
+	@FindBy(xpath = "//*[@id=\"updateUserBtn\"]")
+	private WebElement buttonUpdateUserSubmit;
+	
 	@FindBy(xpath = "/html/body")
 	private WebElement textBody;
 	
@@ -80,6 +92,26 @@ public class PageUser extends PageBase {
 	
 	public String getUserDisplayNameText() {
 		return textUserDisplayName.getText();
+	}
+	
+	public void clickUpdateUserButton() {
+		buttonUpdateUser.click();
+	}
+	
+	public void clickUpdateUserSubmitButton() {
+		buttonUpdateUserSubmit.click();
+	}
+	
+	public void inputUpdateUserUsername(String username) {
+		inputUpdateUserUsername.sendKeys(username);
+	}
+	
+	public void inputUpdateUserPassword(String password) {
+		inputUpdateUserPassword.sendKeys(password);
+	}
+	
+	public String getUserUpdateText() {
+		return textBody.getText();
 	}
 	
 }
