@@ -32,7 +32,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-	@ignore 
+	@ignore
 	Scenario Outline: As a User I want to create an Artist so that I can add albums to it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -53,7 +53,7 @@ Feature: Choonz website tests
   		| username | password | artist name |
   		| test_user | test_password | test artist |
   
-  @ignore 
+  @ignore
   Scenario Outline: As a User I want to create a Genre so that I can add it to albums
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -75,7 +75,7 @@ Feature: Choonz website tests
   		| username | password | genre name | genre description | 
   		| test_user | test_password | test genre | test genre description |
   		
-  @ignore 
+  @ignore
   Scenario Outline: As a User I want to create a Playlist so that I can add tracks to it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -141,7 +141,7 @@ Feature: Choonz website tests
     | track album id | <track album id> |
     | track playlist id | <track playlist id> |
     And I submit the create track form
-    Then I can read an track with the name "<album name>"
+    Then I can read an track with the name "<track name>"
     
     Examples:
   		| username | password | track name | track lyrics | track duration | track album id | track playlist id |
@@ -321,7 +321,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-
+	@ignore
 	Scenario Outline: As a User I want to read single Track so that I can update or delete it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -455,6 +455,32 @@ Feature: Choonz website tests
   		| username | password | album updated name | album updated cover | album updated artist id | album updated genre id |
   		| test_user_updated | test_password_updated | test album updated | https://upload.wikimedia.org/wikipedia/commons/1/13/Bleu_phtalo.jpg | 1 | 1 |
   
+  
+	Scenario Outline: As a User I want to update a Track so that the information is correct
+    Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the tracks page
+    And I select a Track
+    And I click the update track button
+    And I enter the update track details:
+    | track updated name | <track updated name> |
+    | track updated lyrics | <track updated lyrics> |
+    | track updated duration | <track updated duration> |
+    | track updated album id | <track updated album id> |
+    | track updated playlist id | <track updated playlist id> |
+    And I submit the update track form
+    Then I can read an updated track with the name "<track updated name>"
+    
+    Examples:
+  		| username | password | track updated name | track updated lyrics | track updated duration | track updated album id | track updated playlist id |
+  		| test_user_updated | test_password_updated | test track | test track lyrics | 100 | 1 | 1 |
+  		
   @ignore
 	Scenario Outline: As a User I want to delete an Album so that it is removed from the database
     Given that I can navigate to "http://localhost:8082/index.html"

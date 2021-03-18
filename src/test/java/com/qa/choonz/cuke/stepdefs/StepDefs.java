@@ -516,10 +516,52 @@ public class StepDefs {
 	    tracksPage.clickTrackNameText();
 	}
 	
+	@When("I click the update track button")
+	public void i_click_the_update_track_button() {
+	    hang();
+	    tracksPage.clickUpdateTrackButton();
+	}
+	
+	@When("I enter the update track details:")
+	public void i_enter_the_update_track_details(Map<String, String> dataTable) {
+	    hang();
+	    String
+	    	trackUpdatedName,
+	    	trackUpdatedLyrics,
+	    	trackUpdatedDuration,
+	    	trackUpdatedAlbumId,
+	    	trackUpdatedPlaylistId;
+	    
+    	trackUpdatedName = dataTable.get("track updated name");
+    	trackUpdatedLyrics = dataTable.get("track updated lyrics");
+    	trackUpdatedDuration = dataTable.get("track updated duration");
+    	trackUpdatedAlbumId = dataTable.get("track updated album id");
+    	trackUpdatedPlaylistId = dataTable.get("track updated playlist id");
+    	
+    	tracksPage.inputUpdateTrackName(trackUpdatedName);
+    	tracksPage.inputUpdateTrackLyrics(trackUpdatedLyrics);
+    	tracksPage.inputUpdateTrackDuration(trackUpdatedDuration);
+    	tracksPage.inputUpdateTrackAlbumId(trackUpdatedAlbumId);
+    	tracksPage.inputUpdateTrackPlaylistId(trackUpdatedPlaylistId);
+	}
+	
+	@When("I submit the update track form")
+	public void i_submit_the_update_track_form() {
+	    tracksPage.clickUpdateTrackSubmitButton();
+	}
+	
+	@Then("I can read an updated track with the name {string}")
+	public void i_can_read_an_updated_track_with_the_name(String string) {
+	    hang();
+	    String expected = string;
+	    String result = tracksPage.getTrackNameSingle();
+	    assertEquals(expected,result);
+	}
+	
 	@Then("I can read a single track")
 	public void i_can_read_a_single_track() {
 	    hang();
-	    
+	    assertNotNull(tracksPage.getTrackNameSingle());
 	}
 	
 	@Then("I can read a list of tracks")
