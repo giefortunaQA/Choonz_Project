@@ -46,7 +46,7 @@ public class AlbumControllerUnitTest {
 	private Genre genre;
 
 	//@MockBean
-	private final Album testAlbum = new Album(1L, "Album Name", artist, genre, "cover");
+	private final Album testAlbum = new Album(1L, "Album Name", null, artist, genre, "cover");
 
 	private AlbumDTO mapToDTO(Album album) {
 		return this.mapper.map(album, AlbumDTO.class);
@@ -110,7 +110,7 @@ public class AlbumControllerUnitTest {
 	public void updateAlbumTest() throws Exception {
 		Long testID = 1L;
 
-		Album newAlbum = new Album(1L, "Album Name", null, null, "cover");
+		Album newAlbum = new Album(1L, "Album Name", null, null, genre, "cover");
 		when(this.service.update(newAlbum, testID)).thenReturn(mapToDTO(testAlbum));
 		ResponseEntity <AlbumDTO> expected = new ResponseEntity<AlbumDTO>(mapToDTO(testAlbum), HttpStatus.ACCEPTED);
 		ResponseEntity <AlbumDTO> result = this.controller.update(newAlbum, testID);
