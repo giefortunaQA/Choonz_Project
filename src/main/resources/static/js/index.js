@@ -807,20 +807,8 @@ function readTrackById(id) {
 					title.style.padding = "20px";
 					let dur = document.createElement("h6");
 					dur.innerHTML = "Duration: " + data.duration;
-					let album = document.createElement("a");
-					album.innerHTML = data.album.name;
-					album.setAttribute("href", `${root}/readAlbum.html?id=${data.album.id}`);
-					album.setAttribute("class", "sub-link")
-					if (data.playlist != null) {
-						let playlist = document.createElement("a");
-						playlist.innerHTML = "&nbsp;&nbsp;&nbsp;" + data.playlist.name;
-						playlist.setAttribute("class", "sub-link")
-						playlist.setAttribute("href", `${root}/readPlaylist.html?id=${data.playlist.id}`);
-						trackNameDisplay.appendChild(playlist);
-					}
 					trackNameDisplay.appendChild(title);
 					trackNameDisplay.appendChild(dur);
-					trackNameDisplay.appendChild(album);
 					trackNameDisplay.appendChild(document.createElement("hr"));
 					let lyrics = document.createElement("p");
 					let text = document.createElement("i");
