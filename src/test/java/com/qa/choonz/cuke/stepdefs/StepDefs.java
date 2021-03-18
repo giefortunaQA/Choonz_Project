@@ -461,6 +461,20 @@ public class StepDefs {
 	    userPage.clickUpdateUserSubmitButton();
 	}
 	
+	@When("I click the delete album button")
+	public void i_click_the_delete_album_button() {
+	    hang();
+	    albumsPage.clickDeleteAlbumButton();
+	}
+	
+	@Then("I can read read {string} on the album page")
+	public void i_can_read_read_on_the_album_page(String string) {
+	    hang();
+	    String expected = string;
+	    String result = albumsPage.getDeleteAlbumText();
+	    assertEquals(expected,result);
+	}
+	
 	@Then("the user account is updated")
 	public void the_user_account_is_updated() {
 		hang();

@@ -98,7 +98,7 @@ Feature: Choonz website tests
   		| username | password | playlist name | playlist artwork | playlist description | 
   		| test_user | test_password | test playlist | https://upload.wikimedia.org/wikipedia/commons/3/34/Art-portrait-collage_2.jpg | test playlist description |
   
-  @ignore
+  
 	Scenario Outline: As a User I want to create an Album so that I can add tracks to it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -394,7 +394,27 @@ Feature: Choonz website tests
     Examples:
   		| username | password | album updated name | album updated cover | album updated artist id | album updated genre id |
   		| test_user | test_password | test album updated | https://upload.wikimedia.org/wikipedia/commons/1/13/Bleu_phtalo.jpg | 1 | 1 |
-  		
+  
+  
+	Scenario Outline: As a User I want to delete an Album so that it is removed from the database
+    Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the albums page
+    And I select an Ablum
+    And I click the delete album button
+    And I accept the alert
+    Then I can read read "Album deleted." on the album page
+    
+    Examples:
+  		| username | password |
+  		| test_user | test_password |
+  
   @ignore
   Scenario Outline: As a User I want to delete a Playlist so that it is removed from the database
   	Given that I can navigate to "http://localhost:8082/index.html"

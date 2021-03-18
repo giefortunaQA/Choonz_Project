@@ -27,8 +27,11 @@ public class PageAlbums extends PageBase {
 	@FindBy(xpath = "/html/body/div[2]/div[1]/div/button/h3")
 	private WebElement textAlbumName;
 	
-	@FindBy(xpath = "//*[@id=\"albumTitle\"]")
+	@FindBy(xpath = "/html/body/div/div[1]/div[2]/div/div/h1")
 	private WebElement textAlbumNameSingle;
+	
+	@FindBy(xpath = "//*[@id=\"albumNameDisplay\"]")
+	private WebElement textAlbumNameDisplay;
 	
 	@FindBy(xpath = "//*[@id=\"updateEachAlbum\"]")
 	private WebElement buttonUpdateAlbum;
@@ -47,6 +50,9 @@ public class PageAlbums extends PageBase {
 	
 	@FindBy(xpath = "//*[@id=\"updateAlbumBtn\"]")
 	private WebElement buttonUpdateAlbumSubmit;
+	
+	@FindBy(xpath = "//*[@id=\"deleteEachAlbum\"]")
+	private WebElement buttonDeleteAlbum;
 	
 	public void clickCreateAlbumButton() {
 		buttonCreateAlbum.click();
@@ -106,5 +112,13 @@ public class PageAlbums extends PageBase {
 	
 	public void clickUpdateAlbumSubmitButton() {
 		buttonUpdateAlbumSubmit.click();
+	}
+	
+	public void clickDeleteAlbumButton() {
+		buttonDeleteAlbum.click();
+	}
+	
+	public String getDeleteAlbumText() {
+		return textAlbumNameDisplay.getText();
 	}
 }
