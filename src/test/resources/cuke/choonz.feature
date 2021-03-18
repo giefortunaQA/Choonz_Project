@@ -1,6 +1,6 @@
 Feature: Choonz website tests
 	
-	@ignore
+	 
   Scenario Outline: As a User I want to create an account on the website so that I can login
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -15,7 +15,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-	@ignore
+	 
 	Scenario Outline: As a User I want to login to an account so that I can CRUD
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -32,7 +32,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-	@ignore
+	 
 	Scenario Outline: As a User I want to create an Artist so that I can add albums to it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -53,7 +53,7 @@ Feature: Choonz website tests
   		| username | password | artist name |
   		| test_user | test_password | test artist |
   
-  @ignore
+   
   Scenario Outline: As a User I want to create a Genre so that I can add it to albums
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -75,7 +75,7 @@ Feature: Choonz website tests
   		| username | password | genre name | genre description | 
   		| test_user | test_password | test genre | test genre description |
   		
-  @ignore
+   
   Scenario Outline: As a User I want to create a Playlist so that I can add tracks to it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -122,7 +122,7 @@ Feature: Choonz website tests
   		| username | password | album name | album cover | album artist id | album genre id |
   		| test_user | test_password | test album | https://png.pngtree.com/thumb_back/fw800/back_pic/03/90/51/0657dd16e50ff98.jpg | 1 | 1 |
   		
-	@ignore
+  
   Scenario Outline: As a User I want to read a list of Artists so that I can choose one to update
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -139,7 +139,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  @ignore
+  
   Scenario Outline: As a User I want to read a list of Genres so that I can choose one to update
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -156,7 +156,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
 
-	@ignore
+	
   Scenario Outline: As a User I want to read a list of Playlists so that I can choose one to update
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -173,7 +173,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  @ignore
+  
   Scenario Outline: As a User I want to read a list of Albums so that I can choose one to update
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -190,7 +190,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  @ignore
+  
   Scenario Outline: As a User I want to read my user details so that I can update or delete my account
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -207,7 +207,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-	@ignore
+	
   Scenario Outline: As a User I want to read a single Artist so that I can update or delete it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -225,7 +225,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  @ignore
+  
   Scenario Outline: As a User I want to read a single Genre so that I can update or delete it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -243,7 +243,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   		
-  @ignore
+  
   Scenario Outline: As a User I want to read a single Playlists so that I can update or delete it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -261,7 +261,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  @ignore
+  
   Scenario Outline: As a User I want to read a single Albums so that I can update or delete it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -279,7 +279,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   
-  @ignore	
+  @ignore
   Scenario Outline: As a User I want to update my user details so that the information is correct
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -321,7 +321,7 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password | artist updated name |
-  		| test_user | test_password | test artist updated |
+  		| test_user_updated | test_password_updated | test artist updated |
   
   @ignore
   Scenario Outline: As a User I want to update a Genre so that the information is correct
@@ -344,7 +344,7 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password | genre updated name | genre updated description |
-  		| test_user | test_password | test genre updated | test genre description updated |
+  		| test_user_updated | test_password_updated | test genre updated | test genre description updated |
 
 	@ignore
   Scenario Outline: As a User I want to update a Playlist so that the information is correct
@@ -368,7 +368,7 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password | playlist updated name | playlist updated artwork | playlist updated description | 
-  		| test_user | test_password | test playlist updated | https://upload.wikimedia.org/wikipedia/commons/b/b3/Leitor_de_cartuchos_JVC.jpg | test playlist description updated |
+  		| test_user_updated | test_password_updated | test playlist updated | https://upload.wikimedia.org/wikipedia/commons/b/b3/Leitor_de_cartuchos_JVC.jpg | test playlist description updated |
   
   @ignore
   Scenario Outline: As a User I want to update an Album so that the information is correct
@@ -393,9 +393,9 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password | album updated name | album updated cover | album updated artist id | album updated genre id |
-  		| test_user | test_password | test album updated | https://upload.wikimedia.org/wikipedia/commons/1/13/Bleu_phtalo.jpg | 1 | 1 |
+  		| test_user_updated | test_password_updated | test album updated | https://upload.wikimedia.org/wikipedia/commons/1/13/Bleu_phtalo.jpg | 1 | 1 |
   
-  
+  @ignore
 	Scenario Outline: As a User I want to delete an Album so that it is removed from the database
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -413,7 +413,7 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password |
-  		| test_user | test_password |
+  		| test_user_updated | test_password_updated |
   
   @ignore
   Scenario Outline: As a User I want to delete a Playlist so that it is removed from the database
@@ -433,7 +433,7 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password |
-  		| test_user | test_password |
+  		| test_user_updated | test_password_updated |
   
   @ignore
  	Scenario Outline: As a User I want to delete a Genre so that it is removed from the database
@@ -453,7 +453,7 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password |
-  		| test_user | test_password |
+  		| test_user_updated | test_password_updated |
   		
 	@ignore
 	Scenario Outline: As a User I want to delete an Artist so that it is removed from the database
@@ -473,7 +473,7 @@ Feature: Choonz website tests
     
     Examples:
   		| username | password |
-  		| test_user | test_password |
+  		| test_user_updated | test_password_updated |
   
   @ignore
 	Scenario Outline: As a User I want to delete my account so that it is removed from the database
@@ -492,5 +492,5 @@ Feature: Choonz website tests
 	    
   	Examples:
 	  		| username | password |
-	  		| test_user | test_password |
+	  		| test_user_updated | test_password_updated |
   	
