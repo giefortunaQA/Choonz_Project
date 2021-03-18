@@ -400,7 +400,12 @@ public class StepDefs {
 	    String result = albumsPage.getCreateAlbumText();
 	    assertEquals(expected,result);
 	}
-
+	
+	@Then("I can read a list of albums")
+	public void i_can_read_a_list_of_albums() {
+	    hang();
+	    assertNotNull(albumsPage.getCreateAlbumText());
+	}
 	
 	@Then("I can read a playlist with the name {string}")
 	public void i_can_read_a_playlist_with_the_name(String string) {

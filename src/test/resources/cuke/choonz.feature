@@ -98,6 +98,7 @@ Feature: Choonz website tests
   		| username | password | playlist name | playlist artwork | playlist description | 
   		| test_user | test_password | test playlist | https://upload.wikimedia.org/wikipedia/commons/3/34/Art-portrait-collage_2.jpg | test playlist description |
   
+  @ignore
 	Scenario Outline: As a User I want to create an Album so that I can add tracks to it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -167,6 +168,22 @@ Feature: Choonz website tests
     And I toggle the navbar
     And I navigate to the playlists page
     Then I can read a list of playlists
+    
+    Examples:
+  		| username | password |
+  		| test_user | test_password |
+  		
+  Scenario Outline: As a User I want to read a list of Albums so that I can choose one to update
+    Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the albums page
+    Then I can read a list of albums
     
     Examples:
   		| username | password |
