@@ -3,53 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="/css/style.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="css/style.css" rel="stylesheet">
     <title>Choonz Music</title>
 </head>
 
-<body>
-<!-- Navbar -->
+<body onload="readIndex()">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">
+            <img src="img/Choonz.png" alt="" width=150px>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="tracks.html">Tracks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="artists.html">Artists</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="albums.html">Albums</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="playlists.html">Playlists</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="genres.html">Genres</a>
+            </li>
+          </ul>
+           <div id="userDisplay" class="pull-right">
+            <button type="button" onclick="userIconActions()" class="btn">
+              <img src="img/person-circle.svg" alt="SignUp/SignIn">
+            </button>
+             <span><a id="greet" href="readUser.html"></a></span>
+          </div>
+        </div>
+      </nav>
 
-<nav class="navbar fixed-top navbar-expand-lg bg-light navbar-light">
-    <a class="navbar-brand" href="./">
-    <img class="logo" src="../img/Choonz.jpg" width="auto" ml-auto height="50"></a>
-    <button class="navbar-toggler collapsed border-0" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
-        <span class="navbar-toggler-icon"></span>
-        <div class="close-icon py-1">✖</div>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsingNavbar">
-        <ul class="nav navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/tracks">Featured Tracks</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/artists">Artists</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/playlists">Top Playlists</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<!-- /Navbar -->
 
 <!-- Search -->
-
+	<div id="loggedOut" style="display:none">
+		<p class="msg"> Successfully Logged out</p>
+	</div>
     <div class="container">
+ 
         <div class="row">
             <div class="col-lg mt-5">
+                <div class="center">
+                    <h1> Welcome to Choonz!</h1>
+                    <h2>Please enjoy our variety of music.</h2>
+                    <br>
+                </div>
                 <form class="form-inline d-flex justify-content-center md-form form-sm">
                     <input class="form-control form-control-sm mr-1 w-75" type="text" placeholder="Search for music..." aria-label="Search">
-                    <button type="submit" id="Search"> Search </button>
+                    <button type="submit" id="Search" class="btn btn-light"> Search </button>
                 </form>
             </div>
         </div>
+        
     </div>
 
 <!-- /Search -->
-
+<script src="js/index.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
