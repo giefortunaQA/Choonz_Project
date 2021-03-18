@@ -65,7 +65,7 @@ public class UserIntegrationTest {
 		RequestBuilder request = post(URI + "/login").header("username", username).header("password", password);
 
 		ResultMatcher confirmStatus = status().isOk();
-		ResultActions result = this.mvc.perform(request);
+		ResultActions result = this.mvc.perform(request).andExpect(confirmStatus);
 		userToken = result.andReturn().getResponse().getContentAsString();
 
 	}
@@ -113,10 +113,12 @@ public class UserIntegrationTest {
 		UserDTO expected = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", playlist1));
 		String toUpdateJson = this.jsonify.writeValueAsString(toUpdate);
 		String expectedJson = this.jsonify.writeValueAsString(expected);
+		String expectedString=expectedJson.substring(0,expectedJson.length()-5);
+		expectedString+=playlistsJson;
 		RequestBuilder request = put(URI + "/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdateJson)
 				.header("token", userToken);
 		ResultMatcher confirmStatus = status().isAccepted();
-		ResultMatcher confirmBody = content().json(expectedJson);
+		ResultMatcher confirmBody = content().json(expectedString);
 		mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
 	}
 

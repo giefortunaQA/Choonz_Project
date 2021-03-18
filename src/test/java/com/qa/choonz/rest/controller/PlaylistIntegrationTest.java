@@ -70,6 +70,7 @@ public class PlaylistIntegrationTest {
 	
 		ResultMatcher confirmStatus=status().isCreated();
 		ResultMatcher confirmBody=content().json(expectedJson);
+		
 		this.mvc.perform(request).andExpect(confirmStatus).andExpect(confirmBody);
 	}
 	
