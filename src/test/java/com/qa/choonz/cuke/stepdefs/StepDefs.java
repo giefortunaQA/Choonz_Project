@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
+import com.qa.choonz.cuke.pom.PageAlbums;
 import com.qa.choonz.cuke.pom.PageArtists;
 import com.qa.choonz.cuke.pom.PageBase;
 import com.qa.choonz.cuke.pom.PageGenres;
@@ -40,6 +41,7 @@ public class StepDefs {
 	private static PageArtists artistsPage;
 	private static PageGenres genresPage;
 	private static PagePlaylists playlistsPage;
+	private static PageAlbums albumsPage;
 
 	@Before
 	public void setup() {
@@ -56,6 +58,7 @@ public class StepDefs {
 		artistsPage = PageFactory.initElements(driver, PageArtists.class);
 		genresPage = PageFactory.initElements(driver, PageGenres.class);
 		playlistsPage = PageFactory.initElements(driver, PagePlaylists.class);
+		albumsPage = PageFactory.initElements(driver, PageAlbums.class);
 	}
 	
 	@Given("that I can genre {string}")
@@ -352,6 +355,52 @@ public class StepDefs {
 	public void i_submit_the_update_playlist_form() {
 	    playlistsPage.clickUpdatePlaylistSubmitButton();;
 	}
+	
+	@When("I navigate to the albums page")
+	public void i_navigate_to_the_albums_page() {
+	    base.waitUntilNavExpand(driver);
+	    base.navAlbums();
+	}
+	
+	@When("I click the create album button")
+	public void i_click_the_create_album_button() {
+		hang();
+		albumsPage.clickCreateAlbumButton();
+	}
+	
+	@When("I enter the create album details:")
+	public void i_enter_the_create_album_details(Map<String, String> dataTable) {
+	    hang();
+		String
+			albumName,
+			albumCover,
+			albumArtistId,
+			albumGenreId;
+			
+		albumName = dataTable.get("album name");
+		albumCover = dataTable.get("album cover");
+		albumArtistId = dataTable.get("album artist id");
+		albumGenreId = dataTable.get("album genre id");
+		
+		albumsPage.inputCreateAlbumName(albumName);
+		albumsPage.inputCreateAlbumCover(albumCover);
+		albumsPage.inputCreateAlbumArtistId(albumArtistId);
+		albumsPage.inputCreateAlbumGenreId(albumGenreId);
+	}
+	
+	@When("I submit the create album form")
+	public void i_submit_the_create_album_form() {
+	    albumsPage.clickCreateAlbumSubmitButton();
+	}
+	
+	@Then("I can read an album with the name {string}")
+	public void i_can_read_an_album_with_the_name(String string) {
+	    hang();
+	    String expected = string;
+	    String result = albumsPage.getCreateAlbumText();
+	    assertEquals(expected,result);
+	}
+
 	
 	@Then("I can read a playlist with the name {string}")
 	public void i_can_read_a_playlist_with_the_name(String string) {

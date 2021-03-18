@@ -97,6 +97,29 @@ Feature: Choonz website tests
     Examples:
   		| username | password | playlist name | playlist artwork | playlist description | 
   		| test_user | test_password | test playlist | https://upload.wikimedia.org/wikipedia/commons/3/34/Art-portrait-collage_2.jpg | test playlist description |
+  
+	Scenario Outline: As a User I want to create an Album so that I can add tracks to it
+    Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the albums page
+    And I click the create album button
+    And I enter the create album details:
+    | album name | <album name> |
+    | album cover | <album cover> |
+    | album artist id | <album artist id> |
+    | album genre id | <album genre id> |
+    And I submit the create album form
+    Then I can read an album with the name "<album name>"
+    
+    Examples:
+  		| username | password | album name | album cover | album artist id | album genre id |
+  		| test_user | test_password | test album | https://png.pngtree.com/thumb_back/fw800/back_pic/03/90/51/0657dd16e50ff98.jpg | 1 | 1 |
   		
 	@ignore
   Scenario Outline: As a User I want to read a list of Artists so that I can choose one to update
@@ -272,6 +295,7 @@ Feature: Choonz website tests
   		| username | password | playlist updated name | playlist updated artwork | playlist updated description | 
   		| test_user | test_password | test playlist updated | https://upload.wikimedia.org/wikipedia/commons/b/b3/Leitor_de_cartuchos_JVC.jpg | test playlist description updated |
   
+  @ignore
   Scenario Outline: As a User I want to delete a Playlist so that it is removed from the database
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
