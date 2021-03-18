@@ -189,6 +189,22 @@ Feature: Choonz website tests
     Examples:
   		| username | password |
   		| test_user | test_password |
+  		
+  Scenario Outline: As a User I want to read my User Page so that I can update or delete it
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the user page
+    Then I can read a single user
+    
+    Examples:
+  		| username | password |
+  		| test_user | test_password |
   
 	@ignore
   Scenario Outline: As a User I want to read a single Artist so that I can update or delete it
@@ -331,6 +347,7 @@ Feature: Choonz website tests
   		| username | password | playlist updated name | playlist updated artwork | playlist updated description | 
   		| test_user | test_password | test playlist updated | https://upload.wikimedia.org/wikipedia/commons/b/b3/Leitor_de_cartuchos_JVC.jpg | test playlist description updated |
   
+  @ignore
   Scenario Outline: As a User I want to update an Album so that the information is correct
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar

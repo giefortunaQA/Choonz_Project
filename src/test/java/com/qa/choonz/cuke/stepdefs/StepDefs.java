@@ -430,6 +430,18 @@ public class StepDefs {
 	    albumsPage.clickUpdateAlbumSubmitButton();
 	}
 	
+	@When("I navigate to the user page")
+	public void i_navigate_to_the_user_page() {
+	    base.waitUntilNavExpand(driver);
+	    base.navUser();
+	}
+	
+	@Then("I can read a single user")
+	public void i_can_read_a_single_user() {
+	    hang();
+	    assertNotNull(userPage.getUserDisplayNameText());
+	}
+	
 	@Then("I can read an updated album with the name {string}")
 	public void i_can_read_an_updated_album_with_the_name(String string) {
 	    hang();

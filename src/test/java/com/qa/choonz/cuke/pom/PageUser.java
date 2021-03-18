@@ -35,6 +35,9 @@ public class PageUser extends PageBase {
 	@FindBy(xpath = "/html/body")
 	private WebElement textBody;
 	
+	@FindBy(xpath = "/html/body/div/div[2]/div[1]/h1")
+	private WebElement textUserDisplayName;
+	
 	public void inputSignUpUsername(String username) {
 		inputSignUpUsername.sendKeys(username);
 	}
@@ -74,4 +77,9 @@ public class PageUser extends PageBase {
 	public String getUserDeleteText() {
 		return textBody.getText().substring(0,13);
 	}
+	
+	public String getUserDisplayNameText() {
+		return textUserDisplayName.getText();
+	}
+	
 }

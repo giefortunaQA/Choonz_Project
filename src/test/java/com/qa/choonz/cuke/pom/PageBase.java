@@ -31,10 +31,13 @@ public class PageBase {
 	private WebElement linkGenres;
 	
 	@FindBy(xpath = "//*[@id=\"userDisplay\"]/button")
-	private WebElement linkUser;
+	private WebElement linkLogin;
 	
 	@FindBy(xpath = "//*[@id=\"userDisplay\"]/button[2]")
 	private WebElement linkLogout;
+	
+	@FindBy(xpath = "//*[@id=\"greet\"]")
+	private WebElement linkUser;
 	
 	public void navHome() {
 		linkHome.click();
@@ -65,11 +68,15 @@ public class PageBase {
 	}
 	
 	public void navLogin() {
-		linkUser.click();
+		linkLogin.click();
 	}
 	
 	public void navLogout() {
 		linkLogout.click();
+	}
+	
+	public void navUser() {
+		linkUser.click();
 	}
 	
 	public String getLogoutText() {
