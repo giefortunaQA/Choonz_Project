@@ -399,6 +399,45 @@ public class StepDefs {
 	    albumsPage.clickAlbumName();
 	}
 	
+	@When("I click the update album button")
+	public void i_click_the_update_album_button() {
+	    hang();
+	    albumsPage.clickUpdateAlbumButton();
+	}
+	
+	@When("I enter the update album details:")
+	public void i_enter_the_update_album_details(Map<String, String> dataTable) {
+	    hang();
+		String
+			albumUpdatedName,
+			albumUpdatedCover,
+			albumUpdatedArtistId,
+			albumUpdatedGenreId;
+			
+		albumUpdatedName = dataTable.get("album updated name");
+		albumUpdatedCover = dataTable.get("album updated cover");
+		albumUpdatedArtistId = dataTable.get("album updated artist id");
+		albumUpdatedGenreId = dataTable.get("album updated genre id");
+		
+		albumsPage.inputUpdateAlbumName(albumUpdatedName);
+		albumsPage.inputUpdateAlbumCover(albumUpdatedCover);
+		albumsPage.inputUpdateAlbumArtistId(albumUpdatedArtistId);
+		albumsPage.inputUpdateAlbumGenreId(albumUpdatedGenreId);
+	}
+	
+	@When("I submit the update album form")
+	public void i_submit_the_update_album_form() {
+	    albumsPage.clickUpdateAlbumSubmitButton();
+	}
+	
+	@Then("I can read an updated album with the name {string}")
+	public void i_can_read_an_updated_album_with_the_name(String string) {
+	    hang();
+	    String expected = string;
+	    String result = albumsPage.getSingleAlbumName();
+	    assertEquals(expected,result);
+	}
+	
 	@Then("I can read a single Album")
 	public void i_can_read_a_single_album() {
 	    hang();

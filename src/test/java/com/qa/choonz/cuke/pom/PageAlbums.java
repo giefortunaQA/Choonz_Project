@@ -30,6 +30,24 @@ public class PageAlbums extends PageBase {
 	@FindBy(xpath = "//*[@id=\"albumTitle\"]")
 	private WebElement textAlbumNameSingle;
 	
+	@FindBy(xpath = "//*[@id=\"updateEachAlbum\"]")
+	private WebElement buttonUpdateAlbum;
+	
+	@FindBy(xpath = "//*[@id=\"albumNameUpdate\"]")
+	private WebElement inputUpdateAlbumName;
+	
+	@FindBy(xpath = "//*[@id=\"albumCoverUpdate\"]")
+	private WebElement inputUpdateAlbumCover;
+	
+	@FindBy(xpath = "//*[@id=\"albumArtistUpdate\"]")
+	private WebElement inputUpdateAlbumArtistId;
+	
+	@FindBy(xpath = "//*[@id=\"albumGenreUpdate\"]")
+	private WebElement inputUpdateAlbumGenreId;
+	
+	@FindBy(xpath = "//*[@id=\"updateAlbumBtn\"]")
+	private WebElement buttonUpdateAlbumSubmit;
+	
 	public void clickCreateAlbumButton() {
 		buttonCreateAlbum.click();
 	}
@@ -64,5 +82,29 @@ public class PageAlbums extends PageBase {
 	
 	public String getSingleAlbumName() {
 		return textAlbumNameSingle.getText();
+	}
+	
+	public void clickUpdateAlbumButton() {
+		buttonUpdateAlbum.click();
+	}
+	
+	public void inputUpdateAlbumName(String name) {
+		inputUpdateAlbumName.sendKeys(name);
+	}
+	
+	public void inputUpdateAlbumCover(String url) {
+		inputUpdateAlbumCover.sendKeys(url);
+	}
+	
+	public void inputUpdateAlbumArtistId(String id) {
+		inputUpdateAlbumArtistId.sendKeys(id);
+	}
+	
+	public void inputUpdateAlbumGenreId(String id) {
+		inputUpdateAlbumGenreId.sendKeys(id);
+	}
+	
+	public void clickUpdateAlbumSubmitButton() {
+		buttonUpdateAlbumSubmit.click();
 	}
 }

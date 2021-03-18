@@ -243,7 +243,8 @@ Feature: Choonz website tests
     Examples:
   		| username | password |
   		| test_user | test_password |
-  		
+  
+  @ignore
   Scenario Outline: As a User I want to read a single Albums so that I can update or delete it
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -307,7 +308,7 @@ Feature: Choonz website tests
   		| test_user | test_password | test genre updated | test genre description updated |
 
 	@ignore
-  Scenario Outline: As a User I want to update a Playlist so that I the information is correct
+  Scenario Outline: As a User I want to update a Playlist so that the information is correct
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
     And I click the account button
@@ -330,6 +331,30 @@ Feature: Choonz website tests
   		| username | password | playlist updated name | playlist updated artwork | playlist updated description | 
   		| test_user | test_password | test playlist updated | https://upload.wikimedia.org/wikipedia/commons/b/b3/Leitor_de_cartuchos_JVC.jpg | test playlist description updated |
   
+  Scenario Outline: As a User I want to update an Album so that the information is correct
+    Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the albums page
+    And I select an Ablum
+    And I click the update album button
+    And I enter the update album details:
+    | album updated name | <album updated name> |
+    | album updated cover | <album updated cover> |
+    | album updated artist id | <album updated artist id> |
+    | album updated genre id | <album updated genre id> |
+    And I submit the update album form
+    Then I can read an updated album with the name "<album updated name>"
+    
+    Examples:
+  		| username | password | album updated name | album updated cover | album updated artist id | album updated genre id |
+  		| test_user | test_password | test album updated | https://upload.wikimedia.org/wikipedia/commons/1/13/Bleu_phtalo.jpg | 1 | 1 |
+  		
   @ignore
   Scenario Outline: As a User I want to delete a Playlist so that it is removed from the database
   	Given that I can navigate to "http://localhost:8082/index.html"
