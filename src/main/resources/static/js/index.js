@@ -417,10 +417,15 @@ function readGenrePageLoad() {
 }
 
 function updateGenre(id) {
-	let formData = {
-		"name": genreNameUpdate.value,
-		"description": genreDescUpdate.value
+	let formData = {}
+	if (genreNameUpdate.value!=""){
+		formData.name=genreNameUpdate.value;
 	}
+	console.log(formData);
+	if (genreDescUpdate.value!=""){
+		formData.description=genreDescUpdate.value;
+	}
+	console.log(formData);
 	fetch(`http://localhost:8082/genres/update/${id}`, {
 		method: 'put',
 		headers: {
@@ -535,29 +540,20 @@ function readAlbumById(id) {
 					albumNameDisplay.appendChild(artistLink);
 					albumNameDisplay.appendChild(document.createElement("br"));
 					albumNameDisplay.appendChild(genreLink);
-
 					updateAlbumBtn.setAttribute("onclick", `updateAlbum(${data.id})`);
 					deleteEachAlbum.setAttribute("onclick", `confirmDeleteAlbum(${data.id})`);
 					pageTitle.innerHTML = data.name;
-					readTracksInAlbum(data.id);
-				}).catch((err) => console.log(err))
-		})
-}
-function readTracksInAlbum(id) {
-	fetch(`http://localhost:8082/tracks/read/by-album/${id}`)
-		.then((res) => {
-			if (res.ok != true) {
-				console.log("Status is not OK!");
-			}
-			res.json()
-				.then((data) => {
-					for (let track of data) {
-						createTrackCard(tracksInAlbumDiv, track);
-						console.log(track);
+					if (data.tracks.length == 0) {
+						tracksInAlbumDiv.innerHTML="This album does not contain any tracks.";
+					} else {
+						for (let each of data.tracks) {
+							createTrackCard(tracksInAlbumDiv, each);
+						}
 					}
 				}).catch((err) => console.log(err))
 		})
 }
+
 
 function readAlbumPageLoad() {
 	readAlbumById(params.get('id'));
@@ -565,15 +561,18 @@ function readAlbumPageLoad() {
 }
 
 function updateAlbum(id) {
-	let formData = {
-		"name": albumNameUpdate.value,
-		"cover": albumCoverUpdate.value,
-		"artist": {
-			"id": albumArtistUpdate.value
-		},
-		"genre": {
-			"id": albumGenreUpdate.value
-		}
+	let formData = {};
+	if (albumNameUpdate.value!=""){
+		formData.name=albumNameUpdate.value;
+	}
+	if (albumCoverUpdate.value!=""){
+		formData.cover=albumCoverUpdate.value;
+	}
+	if(albumArtistUpdate.value!=""){
+		formData.artist.id=albumArtistUpdate.value;
+	}
+	if( albumGenreUpdate.value!=""){
+		formData.genre.id= albumGenreUpdate.value;
 	}
 	fetch(`http://localhost:8082/albums/update/${id}`, {
 		method: 'put',
@@ -698,13 +697,18 @@ function readPlaylistPageLoad() {
 }
 
 function updatePlaylist(id) {
-	let formData = {
-		"name": playlistNameUpdate.value,
-		"artwork": playlistArtworkUpdate.value,
-		"description": playlistDescUpdate.value,
-		"user": {
-			"id": userId
-		}
+	let formData = {};
+	if (playlistNameUpdate.value!=""){
+		formData.name=playlistNameUpdate.value
+	}
+	if (playlistArtworkUpdate.value!=""){
+		formData.artwork=playlistArtworkUpdate.value
+	}
+	if (playlistDescUpdate.value!=""){
+		formData.description=playlistDescUpdate.value
+	}
+	if (userId!=""){
+		formData.user.id=userId
 	}
 	fetch(`http://localhost:8082/playlists/update/${id}`, {
 		method: 'put',
@@ -746,10 +750,10 @@ function createTrackCard(display, track) {
 	let trackCard = createCardDiv(tracksPath, track);
 	let trackTitle = createCardTitle(track.name);
 	let trackDur = createCardSubtitle(`Duration: ${track.duration}s`)
-	let trackAlbum = createCardLink(`${root}/readAlbum.html?id=${track.album.id}`, track.album.name);
+	//let trackAlbum = createCardLink(`${root}/readAlbum.html?id=${track.album.id}`, track.album.name);
 	trackCard.appendChild(trackTitle);
 	trackCard.appendChild(trackDur);
-	trackCard.appendChild(trackAlbum);
+	//trackCard.appendChild(trackAlbum);
 	trackCard.setAttribute("onclick", `goTo(tracksPath,${track.id})`);
 	display.appendChild(trackCard);
 	console.log(trackCard);
@@ -803,20 +807,8 @@ function readTrackById(id) {
 					title.style.padding = "20px";
 					let dur = document.createElement("h6");
 					dur.innerHTML = "Duration: " + data.duration;
-					let album = document.createElement("a");
-					album.innerHTML = data.album.name;
-					album.setAttribute("href", `${root}/readAlbum.html?id=${data.album.id}`);
-					album.setAttribute("class", "sub-link")
-					if (data.playlist != null) {
-						let playlist = document.createElement("a");
-						playlist.innerHTML = "&nbsp;&nbsp;&nbsp;" + data.playlist.name;
-						playlist.setAttribute("class", "sub-link")
-						playlist.setAttribute("href", `${root}/readPlaylist.html?id=${data.playlist.id}`);
-						trackNameDisplay.appendChild(playlist);
-					}
 					trackNameDisplay.appendChild(title);
 					trackNameDisplay.appendChild(dur);
-					trackNameDisplay.appendChild(album);
 					trackNameDisplay.appendChild(document.createElement("hr"));
 					let lyrics = document.createElement("p");
 					let text = document.createElement("i");
@@ -836,16 +828,21 @@ function readTrackPageLoad() {
 }
 
 function updateTrack(id) {
-	let formData = {
-		"name": trackNameUpdate.value,
-		"duration": trackDurationUpdate.value,
-		"lyrics": trackLyricsUpdate.value,
-		"album": {
-			"id": trackAlbumUpdate.value
-		},
-		"playlist": {
-			"id": trackPlaylistUpdate.value
-		}
+	let formData = {};
+	if (trackNameUpdate.value!=""){
+		formData.name=trackNameUpdate.value
+	}
+	if (trackDurationUpdate.value!=""){
+		formData.duration=trackDurationUpdate.value
+	}
+	if (trackLyricsUpdate.value!=""){
+		formData.lyrics=trackLyricsUpdate.value
+	}
+	if (trackAlbumUpdate.value!=""){
+		formData.album.id=trackAlbumUpdate.value
+	}
+	if (trackPlaylistUpdate.value!=""){
+		formData.playlist.id=trackPlaylistUpdate.value
 	}
 	fetch(`http://localhost:8082/tracks/update/${id}`, {
 		method: 'put',
@@ -967,7 +964,6 @@ function login() {
 
 function greetUser() {
 	if (status==1) {
-		console.log(greet);
 			greet.innerHTML = " Hi, " + currentUser;
 			let logoutLink = document.createElement("button");
 			logoutLink.setAttribute("class", "btn btn-link");
@@ -1052,16 +1048,20 @@ function readUserByUsername(username) {
 }
 
 function updateUser(id) {
+	let formData={};
+	if (usernameUpdate.value!=""){
+		formData.username=usernameUpdate.value;
+	}
+	if (passwordUpdate.value!=""){
+		formData.password=passwordUpdate.value;
+	}
 	fetch(`http://localhost:8082/users/update/${id}`, {
 		method: 'put',
 		headers: {
 			"token": sessionToken,
 			"Content-Type":"application/json"
 		},
-		body: JSON.stringify({
-			"username": usernameUpdate.value,
-			"password": passwordUpdate.value,
-		}),
+		body: JSON.stringify(formData),
 	}).then(res => res.json())
 		.then(data=>{
 			hide(notNav);
@@ -1102,12 +1102,17 @@ function hideChildren(childGrp){
 			hide(child);
 		}
 }
+function leaveAppCheck(){
+	if (window.close()){
+		resetCred();
+	}
+}
+
 function resetCred() {
 	window.localStorage.clear();
 	for (let form of forms){
 		form.value="";
 	}
-	
 }
 
 function goTo(path, id) {
@@ -1142,6 +1147,7 @@ const readPage = (path) => {
 						}
 						else {
 							for (let track of data) {
+								console.log(track);
 								createTrackCard(tracksContainer, track)
 							}
 						}
