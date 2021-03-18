@@ -215,7 +215,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   		
-  
+  @ignore
 	Scenario Outline: As a User I want to read a list of Tracks so that I can choose one to update
     Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -316,6 +316,24 @@ Feature: Choonz website tests
     And I navigate to the albums page
     And I select an Ablum
     Then I can read a single Album
+    
+    Examples:
+  		| username | password |
+  		| test_user | test_password |
+  
+
+	Scenario Outline: As a User I want to read single Track so that I can update or delete it
+    Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the tracks page
+    And I select a Track
+    Then I can read a single track
     
     Examples:
   		| username | password |

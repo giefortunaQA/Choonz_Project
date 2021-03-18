@@ -510,6 +510,18 @@ public class StepDefs {
 	    tracksPage.clickCreateTrackSubmitButton();
 	}
 	
+	@When("I select a Track")
+	public void i_select_a_track() {
+	    hang();
+	    tracksPage.clickTrackNameText();
+	}
+	
+	@Then("I can read a single track")
+	public void i_can_read_a_single_track() {
+	    hang();
+	    
+	}
+	
 	@Then("I can read a list of tracks")
 	public void i_can_read_a_list_of_tracks() {
 	    hang();
