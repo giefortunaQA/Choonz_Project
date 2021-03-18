@@ -248,7 +248,7 @@ Feature: Choonz website tests
   		| username | password | genre updated name | genre updated description |
   		| test_user | test_password | test genre updated | test genre description updated |
 
-
+	@ignore
   Scenario Outline: As a User I want to update a Playlist so that I the information is correct
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -271,6 +271,25 @@ Feature: Choonz website tests
     Examples:
   		| username | password | playlist updated name | playlist updated artwork | playlist updated description | 
   		| test_user | test_password | test playlist updated | https://upload.wikimedia.org/wikipedia/commons/b/b3/Leitor_de_cartuchos_JVC.jpg | test playlist description updated |
+  
+  Scenario Outline: As a User I want to delete a Playlist so that it is removed from the database
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the playlists page
+    And I select a playlist
+    And I click the delete playlist button
+    And I accept the alert
+    Then I can read "Playlist deleted." on the playlist page
+    
+    Examples:
+  		| username | password |
+  		| test_user | test_password |
   
   @ignore
  	Scenario Outline: As a User I want to delete a Genre so that it is removed from the database

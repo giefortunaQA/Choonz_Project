@@ -302,6 +302,13 @@ public class StepDefs {
 	    playlistsPage.clickUpdatePlaylistButton();
 	}
 	
+
+	@When("I click the delete playlist button")
+	public void i_click_the_delete_playlist_button() {
+	    hang();
+	    playlistsPage.clickDeletePlaylistButton();
+	}
+	
 	@When("I enter the create playlist details:")
 	public void i_enter_the_create_playlist_details(Map<String, String> dataTable) {
 	    hang();
@@ -367,6 +374,14 @@ public class StepDefs {
 	    hang();
 	    String expected = string;
 	    String result = genresPage.getSingleGenreNameText();
+	    assertEquals(expected,result);
+	}
+	
+	@Then("I can read {string} on the playlist page")
+	public void i_can_read_on_the_playlist_page(String string) {
+	    hang();
+	    String expected = string;
+	    String result = playlistsPage.getDeletePlaylistText();
 	    assertEquals(expected,result);
 	}
 	

@@ -28,6 +28,9 @@ public class PagePlaylists extends PageBase {
 	@FindBy(xpath = "/html/body/div/div[1]/div[2]/div/div/h1")
 	private WebElement textPlaylistNameSingle;
 	
+	@FindBy(xpath = "//*[@id=\"playlistNameDisplay\"]")
+	private WebElement textPlaylistNameDisplay;
+	
 	@FindBy(xpath = "//*[@id=\"updateEachPlaylist\"]")
 	private WebElement buttonUpdatePlaylist;
 	
@@ -100,5 +103,9 @@ public class PagePlaylists extends PageBase {
 	
 	public void inputUpdatePlaylistDescription(String description) {
 		inputUpdatePlaylistDescription.sendKeys(description);
+	}
+	
+	public String getDeletePlaylistText() {
+		return textPlaylistNameDisplay.getText();
 	}
 }
