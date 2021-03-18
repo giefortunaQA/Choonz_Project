@@ -53,11 +53,15 @@ public class TrackIntegrationTest {
 	
 	private String URI="/tracks";
 	private final User testUser=new User(1L,"admin","admin");
-	private Artist Ariana;
-	private final Album testAlbum=new Album(1L,"Thank U, Next",Ariana,pop,"https://upload.wikimedia.org/wikipedia/en/d/dd/Thank_U%2C_Next_album_cover.png");
+	private Artist ariana;
+	private final Album testAlbum1=new Album(1L,"Thank U, Next",ariana,pop,"https://upload.wikimedia.org/wikipedia/en/d/dd/Thank_U%2C_Next_album_cover.png");
 	private final Playlist testPlaylist= new Playlist(1L,"Favourites","This is a track by admin consisting of public favourites.","https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png",testUser);
-	private final TrackDTO trackAsDto=this.mapToDTO(new Track(2L, "needy", null, null, 212L, "needy lyrics"));
-	private final List<TrackDTO> tracks=List.of(trackAsDto);
+	private final TrackDTO track1AsDto=this.mapToDTO(new Track(1L, "Thank U Next", testAlbum1, testPlaylist,207L,"Thank U Next lyrics"));
+	private final TrackDTO track2AsDto=this.mapToDTO(new Track(2L, "needy", testAlbum1, testPlaylist, 212L,"needy lyrics"));
+	private final TrackDTO track3AsDto=this.mapToDTO(new Track(3L, "24K Magic", testAlbum1, testPlaylist,240L,"24K Magic Lyrics"));
+	private final TrackDTO track4AsDto=this.mapToDTO(new Track(4L, "Hello", testAlbum1, testPlaylist,220L,"Hello lyrics"));
+	private final TrackDTO track5AsDto=this.mapToDTO(new Track(5L, "What Do You Mean", testAlbum1, testPlaylist,210L,"What Do You Mean lyrics"));
+	private final List<TrackDTO> tracks=List.of(track1AsDto, track2AsDto, track3AsDto, track4AsDto, track5AsDto);
 	
 	@Test
 	void testCreate() throws Exception{
@@ -75,16 +79,16 @@ public class TrackIntegrationTest {
 	
 	@Test
 	void testReadAll() throws Exception{
-		String artistsJson=this.jsonify.writeValueAsString(tracks);
+		String tracksJson=this.jsonify.writeValueAsString(tracks);
 		RequestBuilder request=get(URI+"/read");
 		ResultMatcher confirmStatus=status().isOk();
-		ResultMatcher confirmBody=content().json(artistsJson);
+		ResultMatcher confirmBody=content().json(tracksJson);
 		this.mvc.perform(request).andExpect(confirmBody).andExpect(confirmBody).andExpect(confirmBody).andExpect(confirmStatus);
 	}
 	
 	@Test
 	void testReadById() throws Exception{
-		String ArianaJson=this.jsonify.writeValueAsString(trackAsDto);
+		String ArianaJson=this.jsonify.writeValueAsString(track2AsDto);
 		RequestBuilder request=get(URI+"/read/2");
 		ResultMatcher confirmStatus=status().isOk();
 		ResultMatcher confirmBody=content().json(ArianaJson);

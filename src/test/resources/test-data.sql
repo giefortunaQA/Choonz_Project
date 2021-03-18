@@ -13,7 +13,6 @@ INSERT INTO ALBUM (name,cover,artist_id,genre_id) VALUES ('Purpose','https://upl
 INSERT INTO ALBUM (name,cover,artist_id,genre_id) VALUES ('Test','Test',2,3);
 INSERT INTO USER (username,password) VALUES ('admin','admin');
 INSERT INTO PLAYLIST (name,description,artwork,user_id) VALUES ('Favourites','This is a playlist by admin consisting of public favourites.','https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png',1);
-INSERT INTO PLAYLIST (name,description,artwork,user_id) VALUES ('Test','Test','Test',1);
 INSERT INTO TRACK (name,lyrics,duration,album_id,playlist_id) VALUES ('Thank U Next','Thank U Next lyrics',207,1,1);
 INSERT INTO TRACK (name,lyrics,duration,album_id,playlist_id) VALUES ('needy','needy lyrics',212,1,1);
 INSERT INTO TRACK (name,lyrics,duration,album_id,playlist_id) VALUES ('24K Magic','24K Magic Lyrics',240,2,1);
