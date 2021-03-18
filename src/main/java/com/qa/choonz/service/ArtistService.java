@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.ArtistNotFoundException;
@@ -12,17 +13,15 @@ import com.qa.choonz.persistence.repository.ArtistRepository;
 import com.qa.choonz.rest.dto.ArtistDTO;
 import com.qa.choonz.utils.BeanUtils;
 
+import lombok.RequiredArgsConstructor;
+
+
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ArtistService {
 
-	private ArtistRepository repo;
-	private ModelMapper mapper;
-
-	public ArtistService(ArtistRepository repo, ModelMapper mapper) {
-		super();
-		this.repo = repo;
-		this.mapper = mapper;
-	}
+	private final ArtistRepository repo;
+	private final ModelMapper mapper;
 
 	private ArtistDTO mapToDTO(Artist artist) {
 		return this.mapper.map(artist, ArtistDTO.class);
