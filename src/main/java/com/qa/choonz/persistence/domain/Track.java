@@ -39,16 +39,6 @@ public class Track {
     
     @Size(max = 5000)
     private String lyrics;
-
-	public Track(@NotNull @Size(max = 100) String name, Album album, Playlist playlist, Long duration,
-			@Size(max = 5000) String lyrics) {
-		super();
-		this.name = name;
-		this.album = album;
-		this.playlist = playlist;
-		this.duration = duration;
-		this.lyrics = lyrics;
-	}
     
 
 }

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.AlbumNotFoundException;
@@ -50,8 +51,13 @@ public class AlbumService {
 	}
 
 	public boolean delete(long id) {
-		this.repo.deleteById(id);
-		return !this.repo.existsById(id);
+		try{
+			this.repo.deleteById(id);
+			return !this.repo.existsById(id);
+		} catch(EmptyResultDataAccessException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	public List<AlbumDTO> findAlbumsInArtist(long id){
