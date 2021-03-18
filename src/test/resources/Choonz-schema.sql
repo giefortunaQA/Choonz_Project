@@ -4,7 +4,7 @@ drop table if exists genre CASCADE ;
 drop table if exists playlist CASCADE ;
 drop table if exists track CASCADE ;
 drop table if exists user CASCADE ;
-create table album (id bigint, cover varchar(255), name varchar(100) not null, artist_id bigint, genre_id bigint, primary key (id));
+create table album (id bigint PRIMARY KEY AUTO_INCREMENT, cover varchar(255), name varchar(100) not null, artist_id bigint, genre_id bigint);
 create table artist (id bigint PRIMARY KEY AUTO_INCREMENT, name varchar(100) not null);
 create table genre (id bigint PRIMARY KEY AUTO_INCREMENT, description varchar(250) not null, name varchar(100) not null);
 create table playlist (id bigint PRIMARY KEY AUTO_INCREMENT, artwork varchar(1000) not null, description varchar(500) not null, name varchar(100) not null, user_id bigint);
