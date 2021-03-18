@@ -59,7 +59,7 @@ public class PlaylistControllerIntegrationTest {
 	
 	Album testAlbum1 = new Album(1L, "Thank U, Next",testArtist1,testGenre1, "https://upload.wikimedia.org/wikipedia/en/d/dd/Thank_U%2C_Next_Playlist_cover.png");
 	
-	Track testTrack = new Track(1L, "Thank U Next", testAlbum1, null, 207, "Thank U Next lyrics");
+	Track testTrack = new Track("Thank U Next", testAlbum1, null, 207L, "Thank U Next lyrics");
 	
 	List<Track> tracks = List.of(testTrack);
 	

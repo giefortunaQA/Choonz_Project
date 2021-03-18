@@ -73,15 +73,46 @@
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.codehaus.sonar-plugins.java/sonar-jacoco-plugin -->
+  <dependency>
+     <groupId>org.jacoco</groupId>
+     <artifactId>jacoco-maven-plugin</artifactId>
+     <version>0.8.5</version>
+ </dependency>
+		
 	</dependencies>
 
 	<build>
 		<plugins>
+		<plugin>
+     <groupId>org.jacoco</groupId>
+     <artifactId>jacoco-maven-plugin</artifactId>
+     <version>0.8.5</version>
+     <executions>
+         <execution>
+             <goals>
+                 <goal>prepare-agent</goal>
+             </goals>
+         </execution>
+         <execution>
+             <id>jacoco-report</id>
+             <phase>test</phase>
+             <goals>
+                 <goal>report</goal>
+             </goals>
+             <!-- default target/jscoco/site/* -->
+             <configuration>
+                 <outputDirectory>
+                     target/jacoco-report
+                 </outputDirectory>
+             </configuration>
+         </execution>
+     </executions>
+ </plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
