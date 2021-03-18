@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.qa.choonz.persistence.domain.Album;
+import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.persistence.repository.TrackRepository;
 import com.qa.choonz.rest.dto.TrackDTO;
@@ -37,6 +39,7 @@ public class TrackServiceTest {
 	//class resources
 	private final Track testTrack1=new Track(null, "Track 1",null, null, 200L,"lyrics 1");
 	private final Track testTrack2=new Track(null, "Track 2",null, null, 200L,"lyrics 2");
+
 	
 	private final List<Track> testList=List.of(testTrack1,testTrack2); 
 	
@@ -44,6 +47,7 @@ public class TrackServiceTest {
 	void testCreate() throws Exception{
 		Track toCreate=new Track(null, "Track",null, null, 200L,"lyrics");
 		Track created=new Track(5L,"Track",null, null, 200L,"lyrics");
+
 		
 		when(this.repo.save(toCreate)).thenReturn(created);
 		
@@ -70,6 +74,7 @@ public class TrackServiceTest {
 	void testUpdate() throws Exception{
 		Long id=1L;
 		Track updated=new Track(1L,"Track 1 Updated",null, null, 200L,"lyrics updated");
+
 		TrackDTO updatedAsDto=this.mapToDTO(updated);
 		when(this.repo.findById(id)).thenReturn(Optional.of(testTrack1));
 		when(this.repo.save(updated)).thenReturn(updated);
@@ -95,7 +100,6 @@ public class TrackServiceTest {
 	@Test
 	void testReadTracksByArtists() throws Exception{
 		Long id=1L;
-		List<Track> tracksByArtist=List.of(testTrack1,testTrack2);
 		List<TrackDTO> tracksByArtistAsDtos=tracksByArtist.stream().map(this::mapToDTO).collect(Collectors.toList());
 		when(this.repo.findTracksInArtists(id)).thenReturn(tracksByArtist);
 		assertThat(this.service.findTracksInArtists(id)).isEqualTo(tracksByArtistAsDtos);

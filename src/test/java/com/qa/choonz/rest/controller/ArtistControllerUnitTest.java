@@ -130,7 +130,7 @@ public class ArtistControllerUnitTest {
 	}
 	
 	@Test
-	public void deleteArtistIdFailureTest() {
+	public void deleteArtistErrorTest() {
 		// RESOURCES
 		Long testID = 999L;
 

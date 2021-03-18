@@ -39,12 +39,6 @@ public class Track {
     
     @Size(max = 5000)
     private String lyrics;
-
-	
-	
-
- 
-
-
     
+
 }
