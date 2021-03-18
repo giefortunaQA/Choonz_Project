@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +51,13 @@ public class AlbumService {
 	}
 
 	public boolean delete(long id) {
+		try {
 		this.repo.deleteById(id);
 		return !this.repo.existsById(id);
+		} catch(EmptyResultDataAccessException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	public List<AlbumDTO> findAlbumsInArtist(long id){

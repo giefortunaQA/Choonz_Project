@@ -1,5 +1,6 @@
 package com.qa.choonz.rest.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -79,7 +80,8 @@ public class TrackIntegrationTest {
 		RequestBuilder request=get(URI+"/read");
 		ResultMatcher confirmStatus=status().isOk();
 		ResultMatcher confirmBody=content().json(artistsJson);
-		this.mvc.perform(request).andExpect(confirmBody).andExpect(confirmBody).andExpect(confirmBody).andExpect(confirmStatus);
+		this.mvc.perform(request).andExpect(confirmStatus);
+		assertThat("artist").isIn();
 	}
 	
 	@Test
