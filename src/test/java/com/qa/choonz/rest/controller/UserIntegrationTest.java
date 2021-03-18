@@ -25,7 +25,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.User;
+import com.qa.choonz.rest.dto.PlaylistDTO;
+import com.qa.choonz.rest.dto.TrackDTO;
 import com.qa.choonz.rest.dto.UserDTO;
 
 @SpringBootTest
@@ -47,10 +50,14 @@ public class UserIntegrationTest {
 
 	private static String userToken = "";
 	private static String URI = "/users";
-	private final UserDTO userAsDto = this.mapToDTO(new User(1L, "admin", "admin"));
+	private final User user = new User(1L, "admin", "admin");
+	private final UserDTO userAsDto = this.mapToDTO(user);
 	private final List<UserDTO> users = List.of(userAsDto);
+	private final Playlist playlist = new Playlist("Favourites","This is a playlist by admin consisting of public favourites.","https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png", user);
 	private final String playlistsJson = "[{\"id\":1,\"name\":\"Favourites\",\"description\":\"This is a playlist by admin consisting of public favourites.\",\"artwork\":\"https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png\",\"tracks\":[{\"id\":1,\"name\":\"Thank U Next\",\"duration\":207,\"lyrics\":\"Thank U Next lyrics\"},{\"id\":2,\"name\":\"needy\",\"duration\":212,\"lyrics\":\"needy lyrics\"},{\"id\":3,\"name\":\"24K Magic\",\"duration\":240,\"lyrics\":\"24K Magic Lyrics\"},{\"id\":4,\"name\":\"Hello\",\"duration\":220,\"lyrics\":\"Hello lyrics\"},{\"id\":5,\"name\":\"What Do You Mean\",\"duration\":210,\"lyrics\":\"What Do You Mean lyrics\"}]}]}";
+	private final List<Playlist> playlist1 = List.of(playlist);
 
+	
 	@BeforeEach
 	public void init() throws Exception {
 		String username = "admin";
@@ -102,8 +109,8 @@ public class UserIntegrationTest {
 	@Test
 	public void testUpdate() throws Exception {
 
-		UserDTO toUpdate = this.mapToDTO(new User("Admin Update", "UpdatedPassword"));
-		UserDTO expected = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword"));
+		UserDTO toUpdate = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", playlist1));
+		UserDTO expected = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", playlist1));
 		String toUpdateJson = this.jsonify.writeValueAsString(toUpdate);
 		String expectedJson = this.jsonify.writeValueAsString(expected);
 		RequestBuilder request = put(URI + "/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdateJson)
