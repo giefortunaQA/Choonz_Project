@@ -59,10 +59,5 @@ public class PlaylistService {
 			return false;
 		}
 	}
-	
-	public List<PlaylistDTO> findPlaylistsInGenres(long id){
-		return this.repo.findPlaylistsInGenres(id).stream().map(this::mapToDTO).collect(Collectors.toList());
-		
-	}
 
 }
