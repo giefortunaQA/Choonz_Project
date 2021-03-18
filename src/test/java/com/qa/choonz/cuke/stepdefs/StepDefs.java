@@ -379,6 +379,12 @@ public class StepDefs {
 		hang();
 		assertNotNull(genresPage.getTextGenreName());
 	}
+
+	@Then("I can read a list of playlists")
+	public void i_can_read_a_list_of_playlists() {
+		hang();
+		assertNotNull(playlistsPage.getCreatePlaylistText());
+	}
 	
 	@Then("I can read a single artist")
 	public void i_can_read_a_single_artist() {
