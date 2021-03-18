@@ -48,7 +48,7 @@ public class StepDefs {
 	@Before
 	public void setup() {
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chrome/chromedriver.exe");
-		driver = new ChromeDriver();//chromeCfg());
+		driver = new ChromeDriver();
 	}
 	
 	@Given("that I can navigate to {string}")
@@ -550,6 +550,20 @@ public class StepDefs {
 	    tracksPage.clickUpdateTrackSubmitButton();
 	}
 	
+	@When("I click the delete track button")
+	public void i_click_the_delete_track_button() {
+	    hang();
+	    tracksPage.clickDeleteTrackButton();
+	}
+	
+	@Then("I can read {string} on the track page")
+	public void i_can_read_on_the_track_page(String string) {
+	    hang();
+	    String expected = string;
+	    String result = tracksPage.getDeleteTrackText();
+	    assertEquals(expected,result);
+	}
+	
 	@Then("I can read an updated track with the name {string}")
 	public void i_can_read_an_updated_track_with_the_name(String string) {
 	    hang();
@@ -769,26 +783,11 @@ public class StepDefs {
 	public static void hang() {
 		base.waitUntilPageLoad(driver);
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-//	public static ChromeOptions chromeCfg() {
-//	     Map<String, Object> prefs = new HashMap<String, Object>();
-//	     ChromeOptions cOptions = new ChromeOptions();
-//	      
-//	     // Settings
-//	     prefs.put("profile.default_content_setting_values.cookies", 2);
-//	     prefs.put("network.cookie.cookieBehavior", 2);
-//	     prefs.put("profile.block_third_party_cookies", true);
-//	
-//	     // Create ChromeOptions to disable Cookies pop-up
-//	     cOptions.setExperimentalOption("prefs", prefs);
-//	
-//	     return cOptions;
-//    }
    
 }
