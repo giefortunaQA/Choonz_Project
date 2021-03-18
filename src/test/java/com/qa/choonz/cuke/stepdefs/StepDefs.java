@@ -296,6 +296,12 @@ public class StepDefs {
 	    playlistsPage.clickCreatePlaylistButton();
 	}
 	
+	@When("I click the update playlist button")
+	public void i_click_the_update_playlist_button() {
+	    hang();
+	    playlistsPage.clickUpdatePlaylistButton();
+	}
+	
 	@When("I enter the create playlist details:")
 	public void i_enter_the_create_playlist_details(Map<String, String> dataTable) {
 	    hang();
@@ -313,9 +319,31 @@ public class StepDefs {
 		playlistsPage.inputCreatePlaylistDescription(playlistDescription);
 	}
 	
+	@When("I enter the update playlist details:")
+	public void i_enter_the_update_playlist_details(Map<String, String> dataTable) {
+	    hang();
+		String
+			playlistUpdatedName,
+			playlistUpdatedArtwork,
+			playlistUpdatedDescription;
+			
+		playlistUpdatedName = dataTable.get("playlist updated name");
+		playlistUpdatedArtwork = dataTable.get("playlist updated artwork");
+		playlistUpdatedDescription = dataTable.get("playlist updated description");
+		
+		playlistsPage.inputUpdatePlaylistName(playlistUpdatedName);
+		playlistsPage.inputUpdatePlaylistArtwork(playlistUpdatedArtwork);
+		playlistsPage.inputUpdatePlaylistDescription(playlistUpdatedDescription);
+	}
+	
 	@When("I submit the create playlist form")
 	public void i_submit_the_create_playlist_form() {
 	    playlistsPage.clickCreatePlaylistSubmitButton();
+	}
+
+	@When("I submit the update playlist form")
+	public void i_submit_the_update_playlist_form() {
+	    playlistsPage.clickUpdatePlaylistSubmitButton();;
 	}
 	
 	@Then("I can read a playlist with the name {string}")
@@ -323,6 +351,14 @@ public class StepDefs {
 	    hang();
 	    String expected = string;
 	    String result = playlistsPage.getCreatePlaylistText();
+	    assertEquals(expected,result);
+	}
+	
+	@Then("I can read an updated playlist with the name {string}")
+	public void i_can_read_an_updated_playlist_with_the_name(String string) {
+	    hang();
+	    String expected = string;
+	    String result = playlistsPage.getSinglePlaylistText();
 	    assertEquals(expected,result);
 	}
 

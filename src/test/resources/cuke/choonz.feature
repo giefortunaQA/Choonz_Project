@@ -185,7 +185,7 @@ Feature: Choonz website tests
   		| username | password |
   		| test_user | test_password |
   		
-  		
+  @ignore
   Scenario Outline: As a User I want to read a single Playlists so that I can update or delete it
   	Given that I can navigate to "http://localhost:8082/index.html"
     When I toggle the navbar
@@ -240,13 +240,37 @@ Feature: Choonz website tests
     And I click the update genre button
     And I enter the update genre details:
     | genre updated name | <genre updated name> |
-    | genre updated description | <genre update description> |
+    | genre updated description | <genre updated description> |
     And I submit the update genre form
     Then I can read an updated genre with the name "<genre updated name>"
     
     Examples:
-  		| username | password | genre updated name | genre updated name |
+  		| username | password | genre updated name | genre updated description |
   		| test_user | test_password | test genre updated | test genre description updated |
+
+
+  Scenario Outline: As a User I want to update a Playlist so that I the information is correct
+  	Given that I can navigate to "http://localhost:8082/index.html"
+    When I toggle the navbar
+    And I click the account button
+    And I accept the alert
+    And I enter a username of "<username>" in the login form
+    And I enter a password of "<password>" in the login form
+    And I submit the login form
+    And I toggle the navbar
+    And I navigate to the playlists page
+    And I select a playlist
+    And I click the update playlist button
+    And I enter the update playlist details:
+    | playlist updated name | <playlist updated name> |
+    | playlist updated artwork | <playlist updated artwork> |
+    | playlist updated description | <playlist updated description> |
+    And I submit the update playlist form
+    Then I can read an updated playlist with the name "<playlist updated name>"
+    
+    Examples:
+  		| username | password | playlist updated name | playlist updated artwork | playlist updated description | 
+  		| test_user | test_password | test playlist updated | https://upload.wikimedia.org/wikipedia/commons/b/b3/Leitor_de_cartuchos_JVC.jpg | test playlist description updated |
   
   @ignore
  	Scenario Outline: As a User I want to delete a Genre so that it is removed from the database
