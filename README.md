@@ -45,10 +45,10 @@ Users should be able to make an account and log in. On the home page users can C
 
 ## Acknowledgements
 
-- https://stackoverflow.com/questions/52077711/spring-boot-test-execute-different-sql-scripts-in-tests-depending-on-the-active
-- https://www.baeldung.com/oauth-api-testing-with-spring-mvc
-- https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/
-- https://www.telerik.com/blogs/what-is-json-how-to-handle-unexpected-token-error#:~:text=%E2%80%9CUnexpected%20token%20%3C%20in%20JSON%20at,it%20is%20parsed%20to%20JSON
-- https://www.baeldung.com/spring-data-rest-relationships
-- https://stackoverflow.com/questions/13027214/what-is-the-meaning-of-the-cascadetype-all-for-a-manytoone-jpa-association
-- https://www.logicbig.com/tutorials/misc/jackson/json-managed-reference.html
+- [Testing with different profiles in Springboot]: https://stackoverflow.com/questions/52077711/spring-boot-test-execute-different-sql-scripts-in-tests-depending-on-the-active
+- [API testing with Spring mvc]: https://www.baeldung.com/oauth-api-testing-with-spring-mvc
+- [Help making user authentification]: https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/
+- [Error handling with session tokens]: https://www.telerik.com/blogs/what-is-json-how-to-handle-unexpected-token-error#:~:text=%E2%80%9CUnexpected%20token%20%3C%20in%20JSON%20at,it%20is%20parsed%20to%20JSON
+- [Spring data test relationships]: https://www.baeldung.com/spring-data-rest-relationships
+- [Help with cascading]: https://stackoverflow.com/questions/13027214/what-is-the-meaning-of-the-cascadetype-all-for-a-manytoone-jpa-association
+- [Json managed reference]: https://www.logicbig.com/tutorials/misc/jackson/json-managed-reference.html
