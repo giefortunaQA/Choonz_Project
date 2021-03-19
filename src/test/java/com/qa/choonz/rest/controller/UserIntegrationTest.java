@@ -3,9 +3,11 @@ package com.qa.choonz.rest.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +54,7 @@ public class UserIntegrationTest {
 	private final List<UserDTO> users = List.of(userAsDto);
 	private final Playlist playlist = new Playlist("Favourites","This is a playlist by admin consisting of public favourites.","https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png", user);
 	private final String playlistsJson = "[{\"id\":1,\"name\":\"Favourites\",\"description\":\"This is a playlist by admin consisting of public favourites.\",\"artwork\":\"https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png\",\"tracks\":[{\"id\":1,\"name\":\"Thank U Next\",\"duration\":207,\"lyrics\":\"Thank U Next lyrics\"},{\"id\":2,\"name\":\"needy\",\"duration\":212,\"lyrics\":\"needy lyrics\"},{\"id\":3,\"name\":\"24K Magic\",\"duration\":240,\"lyrics\":\"24K Magic Lyrics\"},{\"id\":4,\"name\":\"Hello\",\"duration\":220,\"lyrics\":\"Hello lyrics\"},{\"id\":5,\"name\":\"What Do You Mean\",\"duration\":210,\"lyrics\":\"What Do You Mean lyrics\"}]}]}";
-	private final List<Playlist> playlist1 = List.of(playlist);
+
 
 	
 	@BeforeEach
@@ -103,28 +105,24 @@ public class UserIntegrationTest {
 		mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
 	}
 
-//	@Test
-//	public void testUpdate() throws Exception {
-//		Playlist playlist = new Playlist(1L,"Favourites","This is a playlist by admin consisting of public", "https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png", tracks);
-//		Track testTrack = new Track(1L, "Thank U Next",null, playlist, 207L,"Thank U Next lyrics");
-//		Track testTrack2 = new TrackDTO(2L, "needy",212L,"needy lyrics");
-//		TrackDTO testTrack3 = new TrackDTO(3L, "24K Magic",240L,"24K Magic Lyrics");
-//		TrackDTO testTrack4 = new TrackDTO(3L, "Hello",220L,"Hello lyrics");
-//		TrackDTO testTrack5 = new TrackDTO(4L, "What Do You Mean",210L,"What Do You Mean lyrics");
-//		List<TrackDTO> tracks = List.of(testTrack, testTrack2,testTrack3,testTrack4,testTrack5);
-//	
-//		
-//		UserDTO toUpdate = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", playlist1));
-//		UserDTO expected = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", tracks));
-//		GenreDTO updatedGenre = new GenreDTO(3L, "Country","Country (also called country and western) is a genre of popular music that originated with blues, old-time music, and various types of American folk music.");
-//		
-//		
-//		RequestBuilder request = put(URI + "/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdateJson)
-//				.header("token", userToken);
-//		ResultMatcher confirmStatus = status().isAccepted();
-//		ResultMatcher confirmBody = content().json(expectedString);
-//		mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
-//	}
+	@Test
+	public void testUpdate() throws Exception {
+		User user = new User(1L,"Admin Update", "UpdatedPassword");
+		Playlist playlist = new Playlist(1L,"Favourites","This is a playlist by admin consisting of public", "https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png", user);
+		
+	  List<Playlist> listPlaylist = new ArrayList<>();
+	  listPlaylist.add(playlist);
+		UserDTO toUpdate = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword",listPlaylist));
+		UserDTO expected = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", listPlaylist));
+	
+		String toUpdateJSON = this.jsonify.writeValueAsString(toUpdate);
+		String expectedJSON = this.jsonify.writeValueAsString(expected);
+		RequestBuilder request = put(URI + "/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdateJSON)
+				.header("token", userToken);
+		ResultMatcher confirmStatus = status().isAccepted();
+		ResultMatcher confirmBody = content().json(expectedJSON);
+		mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
+	}
 
 	@Test
 	void testLogin() throws Exception {
