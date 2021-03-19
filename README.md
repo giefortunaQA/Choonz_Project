@@ -4,29 +4,42 @@ Starter code for SDET final project specification - music website "Choonz"
 
 ## Concept
 
-This code is designed as a starting point for the final project specification for SDET.
+Final project for the 20SDET2 cohort. Using an OOP-based premade code, refactor it into a functional webapp to meet a hypothetical clients requirements within two weeks along with documentation and testing. The webapp is a music database which stores tracks which are then organised by albums, genres, and artists. Users could also make playlists of their tracks but are required to be logged in to access any create, update, or delete functionality.
 
 This should be scaleable from 3 to 5+ entities:
 
-- **MUST HAVE** - Track, Artist, Album
-- **COULD HAVE** - Genre, Playlist
-- Others TBD
+- **MUST HAVE** - Track, Artist, Album, Genre, Playlist, Users
+- **SHOULD HAVE** - Ability to search by album/artist/track, Load/Soak/Stess/Spike testing, Static Analysis, 80% Code Coverage
+- **COULD HAVE** - Links to Kanban board to repo, Ultilisation of versioning
+- **WON'T HAVE** - External Links, Audio Files
 
 ## Specifications
 
-The current idea as of 23-Sep-2020 is to release iterative specifications for this project, with varying degrees of functionality which the client/PO will want.
+Users should be able to make an account and log in. On the home page users can CRUd albums, artists, tracks, and genres as well as see their playlists. Each album etc would have their own page with links to related entries (e.g. an album would have links to its tracks, artist, and the genre it belongs to). Pages would also have relevant text such as a description or lyrics.
 
-These are TBD for now, but will be included here within a `_documentation` folder in due course.
+* Version Control System: Git 
+* Source Code Management: GitHub 
+* Kanban Board: Jira 
+* Back-End Programming Language: Java 
+* API Development Platform: Spring  
+* Front-End Web Technologies: HTML, CSS, ‘vanilla’ JavaScript 
+* Build Tool: Maven 
+* Static Analysis: SonarQube 
+* Testing Frameworks:  
+ * JUnit 
+ * Mockito 
+ * Selenium 
+ * Cucumber 
+ * Gherkin 
+ * JMeter 
 
 ## ERD
 
-TBD
+![](https://cdn.discordapp.com/attachments/761214563660070922/822268595219464192/CGP_ERD_FINAL.png)
 
 ## UML
 
-TBD
-
-## Authors
+![](https://cdn.discordapp.com/attachments/761214563660070922/822268579692281937/CGP_UML_FINAL.png)
 
 ### Training Team
 
@@ -34,15 +47,24 @@ TBD
 - **Product Owner** - [**Nick Johnson**](https://github.com/nickrstewarttds) - **Initial work (backend & frontend development, specification)**
 - **Product Owner** - [**Edward Reynolds**](https://github.com/Edrz-96) - **Initial work (testing, specification)**
 - [**Jordan Harrison**](https://github.com/JHarry444) - **General Java wizardry**
-- [**Alan Davies**](https://github.com/MorickClive)
+- [**Alan Davies**](https://github.com/MorickClive) - **Technical Support**
 - [**Savannah Vaithilingham**](https://github.com/savannahvaith)
 - [**Vinesh Ghela**](https://github.com/vineshghela)
 - [**Piers Barber**](https://github.com/PCMBarber)
 
 ### Development Team
 
-- Team names and roles here, e.g. **Scrum Master**
+- [**Cameron Guthrie**](https://github.com/CGuthrieQA) - **User Acceptance Testing, Planning documentation**
+- [**Gie-Anne Fortuna**](https://github.com/giefortunaQA) -**Service Unit Testing, Integration Testing, Front End Dev**
+- [**Emmy Kidd**](https://github.com/ekiddqa) - **Domain Unit Testing, Controller Unit Testing, Integration Testing, README**
+- [**Sehun Babatunde**](https://github.com/SehunB-QA) - **Controller Unit Testing, Integration Testing, Static analysis**
 
 ## Acknowledgements
 
-- Probably not needed currently, but teams may wish to credit those outside the academy/stackoverflow users/reddit posts/whatever else they've used here
+- [Testing with different profiles in Springboot](https://stackoverflow.com/questions/52077711/spring-boot-test-execute-different-sql-scripts-in-tests-depending-on-the-active)
+- [API testing with Spring mvc](https://www.baeldung.com/oauth-api-testing-with-spring-mvc)
+- [Help making user authentification](https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/)
+- [Error handling with session tokens](https://www.telerik.com/blogs/what-is-json-how-to-handle-unexpected-token-error#:~:text=%E2%80%9CUnexpected%20token%20%3C%20in%20JSON%20at,it%20is%20parsed%20to%20JSON)
+- [Spring data test relationships](https://www.baeldung.com/spring-data-rest-relationships)
+- [Help with cascading](https://stackoverflow.com/questions/13027214/what-is-the-meaning-of-the-cascadetype-all-for-a-manytoone-jpa-association)
+- [Json managed reference](https://www.logicbig.com/tutorials/misc/jackson/json-managed-reference.html)
