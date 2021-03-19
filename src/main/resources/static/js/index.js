@@ -697,7 +697,11 @@ function readPlaylistPageLoad() {
 }
 
 function updatePlaylist(id) {
-	let formData = {};
+	let formData = {
+		"user": {
+			"id":userId
+		}
+	};
 	if (playlistNameUpdate.value!=""){
 		formData.name=playlistNameUpdate.value
 	}
@@ -706,9 +710,6 @@ function updatePlaylist(id) {
 	}
 	if (playlistDescUpdate.value!=""){
 		formData.description=playlistDescUpdate.value
-	}
-	if (userId!=""){
-		formData.user.id=userId
 	}
 	fetch(`http://localhost:8082/playlists/update/${id}`, {
 		method: 'put',
