@@ -17,21 +17,21 @@ This should be scaleable from 3 to 5+ entities:
 
 Users should be able to make an account and log in. On the home page users can CRUd albums, artists, tracks, and genres as well as see their playlists. Each album etc would have their own page with links to related entries (e.g. an album would have links to its tracks, artist, and the genre it belongs to). Pages would also have relevant text such as a description or lyrics.
 
-*Version Control System: Git 
-*Source Code Management: GitHub 
-*Kanban Board: Jira 
-*Back-End Programming Language: Java 
-*API Development Platform: Spring  
-*Front-End Web Technologies: HTML, CSS, ‘vanilla’ JavaScript 
-*Build Tool: Maven 
-*Static Analysis: SonarQube 
-*Testing Frameworks:  
- *JUnit 
- *Mockito 
- *Selenium 
- *Cucumber 
- *Gherkin 
- *JMeter 
+* Version Control System: Git 
+* Source Code Management: GitHub 
+* Kanban Board: Jira 
+* Back-End Programming Language: Java 
+* API Development Platform: Spring  
+* Front-End Web Technologies: HTML, CSS, ‘vanilla’ JavaScript 
+* Build Tool: Maven 
+* Static Analysis: SonarQube 
+* Testing Frameworks:  
+ * JUnit 
+ * Mockito 
+ * Selenium 
+ * Cucumber 
+ * Gherkin 
+ * JMeter 
 
 ## ERD
 
