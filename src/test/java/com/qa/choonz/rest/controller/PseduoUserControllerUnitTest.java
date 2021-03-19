@@ -35,5 +35,11 @@ public class PseduoUserControllerUnitTest {
 		
 	}
 	
+	public void pseudoReadAllUsersTest()
+	{
+		
+	}
+	
+	
 
 }

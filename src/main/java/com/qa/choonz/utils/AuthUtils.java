@@ -21,9 +21,6 @@ public class AuthUtils {
 				.toString();
 	}
 
-//	public static void start() {
-//		userTokens = new HashMap<>();
-//	}
 
 	public static String createUserToken(Long userId) {
 		String newToken = genToken();

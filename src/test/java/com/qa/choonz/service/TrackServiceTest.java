@@ -5,6 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,8 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.qa.choonz.persistence.domain.Album;
-import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.persistence.repository.TrackRepository;
 import com.qa.choonz.rest.dto.TrackDTO;
@@ -97,15 +96,18 @@ public class TrackServiceTest {
 		assertThat(this.service.delete(id)).isTrue();
 		verify(this.repo,times(1)).existsById(id);
 	}
-	@Test
+  
+@Test
 	void testReadTracksByArtists() throws Exception{
 		Long id=1L;
-		List<TrackDTO> tracksByArtistAsDtos=testList.stream().map(this::mapToDTO).collect(Collectors.toList());
-		when(this.repo.findTracksInArtists(id)).thenReturn(testList);
+		List<Track> tracksByArtist = new ArrayList<Track>();
+		tracksByArtist.add(testTrack1);
+		List<TrackDTO> tracksByArtistAsDtos=tracksByArtist.stream().map(this::mapToDTO).collect(Collectors.toList());
+		when(this.repo.findTracksInArtists(id)).thenReturn(tracksByArtist);
 		assertThat(this.service.findTracksInArtists(id)).isEqualTo(tracksByArtistAsDtos);
 		verify(this.repo,times(1)).findTracksInArtists(id);
 	}
-	@Test
+  
 	void testReadTracksByGenre() throws Exception{
 		Long id=1L;
 		List<Track> tracksByGenre=List.of(testTrack1,testTrack2);

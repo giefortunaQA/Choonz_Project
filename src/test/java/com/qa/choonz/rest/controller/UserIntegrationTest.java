@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +28,6 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.User;
-import com.qa.choonz.rest.dto.PlaylistDTO;
-import com.qa.choonz.rest.dto.TrackDTO;
 import com.qa.choonz.rest.dto.UserDTO;
 
 @SpringBootTest
@@ -54,8 +53,10 @@ public class UserIntegrationTest {
 	private final UserDTO userAsDto = this.mapToDTO(user);
 	private final List<UserDTO> users = List.of(userAsDto);
 	private final Playlist playlist = new Playlist("Favourites","This is a playlist by admin consisting of public favourites.","https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png", user);
+
 	private final String playlistsJson = "[{\"id\":2,\"name\":\"Favourites\",\"description\":\"This is a playlist by admin consisting of public favourites.\",\"artwork\":\"https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png\",\"tracks\":null}]}}";
 	private final List<Playlist> playlist1 = List.of(playlist);
+
 
 	
 	@BeforeEach
@@ -104,23 +105,24 @@ public class UserIntegrationTest {
 
 	@Test
 	public void testUpdate() throws Exception {
-
-		UserDTO toUpdate = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", playlist1));
-		UserDTO expected = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", playlist1));
-		String toUpdateJson = this.jsonify.writeValueAsString(toUpdate);
-		String expectedJson = this.jsonify.writeValueAsString(expected);
-		String expectedString=expectedJson.substring(0,expectedJson.length()-216);
-		System.out.println(expectedJson);
-		expectedString+=playlistsJson;
-		System.out.println(expectedString);
-		RequestBuilder request = put(URI + "/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdateJson)
+		User user = new User(1L,"Admin Update", "UpdatedPassword");
+		Playlist playlist = new Playlist(1L,"Favourites","This is a playlist by admin consisting of public", "https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png", user);
+		
+	  List<Playlist> listPlaylist = new ArrayList<>();
+	  listPlaylist.add(playlist);
+		UserDTO toUpdate = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword",listPlaylist));
+		UserDTO expected = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", listPlaylist));
+	
+		String toUpdateJSON = this.jsonify.writeValueAsString(toUpdate);
+		String expectedJSON = this.jsonify.writeValueAsString(expected);
+		RequestBuilder request = put(URI + "/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdateJSON)
 				.header("token", userToken);
 		ResultMatcher confirmStatus = status().isAccepted();
-		
-		ResultMatcher confirmBody = content().json(expectedString);
-		mvc.perform(request).andExpect(confirmStatus).andExpect(confirmBody);
+		ResultMatcher confirmBody = content().json(expectedJSON);
+		mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
 	}
-//
+
+
 	@Test
 	void testLogin() throws Exception {
 
@@ -134,13 +136,7 @@ public class UserIntegrationTest {
 		userToken = result.andReturn().getResponse().getContentAsString();
 
 	}
-//	
-//	@AfterEach
-//	public void initEach(){
-//		//setUserToken(userToken);
-//		System.out.println("Hello" + getUserToken());
-//	}
-//	
+
 
 	@Test
 	void testDeletePass() throws Exception {
@@ -153,7 +149,11 @@ public class UserIntegrationTest {
 
 	@Test
 	void testLogout() throws Exception {
-
+		RequestBuilder request = post(URI + "/logout").header("token", userToken);
+		ResultMatcher confirmStatus = status().isOk();
+		ResultMatcher confirmBody = content().string("TOKEN HAS BEEN DELETED");
+		mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
+		
 	}
 
 }

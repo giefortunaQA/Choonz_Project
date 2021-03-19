@@ -15,9 +15,6 @@ import com.qa.choonz.utils.BeanUtils;
 
 import lombok.RequiredArgsConstructor;
 
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GenreService {
