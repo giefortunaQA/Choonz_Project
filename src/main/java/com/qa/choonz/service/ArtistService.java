@@ -11,8 +11,10 @@ import com.qa.choonz.exception.ArtistNotFoundException;
 import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.repository.ArtistRepository;
 import com.qa.choonz.rest.dto.ArtistDTO;
+import com.qa.choonz.utils.BeanUtils;
 
 import lombok.RequiredArgsConstructor;
+
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -41,7 +43,7 @@ public class ArtistService {
 
 	public ArtistDTO update(Artist artist, long id) {
 		Artist toUpdate = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
-		toUpdate.setName(artist.getName());
+		BeanUtils.mergeNotNull(artist,toUpdate);
 		Artist updated = this.repo.save(toUpdate);
 		return this.mapToDTO(updated);
 	}

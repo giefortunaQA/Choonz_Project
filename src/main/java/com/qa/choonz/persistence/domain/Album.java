@@ -13,12 +13,13 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Album {
 
@@ -43,13 +44,24 @@ public class Album {
 
 	private String cover;
 
-	public Album(Long id, @NotNull @Size(max = 100) String name, Artist artist, Genre genre, String cover) {
+	public Album(@NotNull @Size(max = 100) String name, Artist artist, Genre genre, String cover) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.artist = artist;
 		this.genre = genre;
 		this.cover = cover;
 	}
+// <<<<<<< CGP-47-Refactoring_
+// =======
+
+ 	public Album(Long id, @NotNull @Size(max = 100) String name, Artist artist, Genre genre, String cover) {
+ 		super();
+ 		this.id = id;
+ 		this.name = name;
+ 		this.artist = artist;
+ 		this.genre = genre;
+ 		this.cover = cover;
+ 	}
+// >>>>>>> dev
 
 }

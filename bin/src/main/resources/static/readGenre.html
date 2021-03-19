@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body onload="readGenrePageLoad()">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">
+            <img src="img/Choonz.png" alt="" width=150px>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="tracks.html">Tracks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="artists.html">Artists</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="albums.html">Albums</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="playlists.html">Playlists</a>
+                </li>
+                <li class="nav-item active ">
+                    <a class="nav-link" href="genres.html">Genres</a>
+                </li>
+            </ul>
+            <div id="userDisplay" class="pull-right">
+            <button type="button" onclick="userIconActions()" class="btn">
+              <img src="img/person-circle.svg" alt="SignUp/SignIn">
+            </button>
+             <span><a id="greet" href="readUser.html"></a></span>
+          </div>
+        </div>
+    </nav>
+
+    <div class="myContainer">
+        <a href="genres.html" class="btn btn-light">
+            <img src="img/arrow-left.svg" alt="Go back to Artists"><span> Go Back to Genres
+            </span>
+        </a>
+        <div class="card">
+            <div id="options">
+                <ul class="list-group list-group-horizontal pull-right list-unstyled">
+                    <li>
+                        <button type="button" class="btn crud-btn" id="updateEachGenre" onclick="show(updateGenreForm)">Update</button>
+
+                        <!-- UPDATE GENRE -->
+                        <div id="updateGenreForm" style="display:none">
+                            <input type="text" placeholder="Enter genre name" id="genreNameUpdate">
+                            <input type="text" placeholder="Enter genre description" id="genreDescUpdate">
+                            <span><button type="button" class="btn btn-success" id="updateGenreBtn">Update</button></span>
+                        </div>
+
+                    </li>
+                    <li>
+                        <button type="button" class="btn crud-btn" id="deleteEachGenre">Delete</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body">
+                <div class="card-title" id="genreNameDisplay">
+                </div>
+                <div class="card-text" id="genreDescDisplay">
+                </div>
+            </div>
+        </div>
+      
+        <!-- ALBUMS IN GENRE -->
+        <div class="card genre-child">
+            <div class="card-body">
+                <div class=card-title>
+                    <h2 id="albumsInGenreTitle">Albums</h2>
+                </div>
+                <div class="row" id="albumsInGenreDiv">
+                </div>
+            </div>
+        </div>
+         <!-- SONGS IN GENRE -->
+        <div class="card genre-child">
+            <div class="card-body">
+                <div class=card-title>
+                    <h2 id="tracksInGenreTitle">Songs</h2>
+                </div>
+                <div class="row" id="tracksInGenreDiv">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
