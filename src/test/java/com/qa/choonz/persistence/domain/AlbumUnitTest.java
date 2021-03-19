@@ -13,9 +13,11 @@ public class AlbumUnitTest {
 	
 	@Test
 	public void createAlbumTest() {
-		testAlbum = new Album(1L, "Thank U, Next", null, null, "cover");
+		Artist testArtist=new Artist();
+		Genre testGenre=new Genre();
+		testAlbum = (new Album("Thank U, Next", testArtist, testGenre, "cover"));
+		testAlbum.setId(1L);
 		assertNotNull(testAlbum);
 		assertTrue(testAlbum instanceof Album);
-		assertEquals(new Album(1L, "Thank U, Next", null, null, "cover"), testAlbum);
 	}
 }
