@@ -60,11 +60,11 @@ public class AlbumControllerIntegrationTest {
 	Genre testGenre2 = new Genre(2L, "Rock","Rock music is a broad genre of popular music that originated as rock and roll in the United States in the late 1940s and early 1950s.");
 	Genre testGenre3 = new Genre(3L, "Country","Country (also called country and western) is a genre of popular music that originated with blues, old-time music, and various types of American folk music.");
 
-	Album testAlbum1 = new Album(1L, "Thank U, Next",testArtist1,testGenre1, "https://upload.wikimedia.org/wikipedia/en/d/dd/Thank_U%2C_Next_album_cover.png");
-	Album testAlbum2 = new Album(2L, "24K Magic",testArtist4,testGenre1,"https://upload.wikimedia.org/wikipedia/en/2/2b/Bruno_Mars_-_24K_Magic_%28Official_Album_Cover%29.png");
-	Album testAlbum3 = new Album(3L, "25 Album",testArtist3,testGenre1,"https://upload.wikimedia.org/wikipedia/en/9/96/Adele_-_25_%28Official_Album_Cover%29.png");
-	Album testAlbum4 = new Album(4L, "Purpose",testArtist2,testGenre1,"https://upload.wikimedia.org/wikipedia/en/2/27/Justin_Bieber_-_Purpose_%28Official_Album_Cover%29.png");
-	Album testAlbum5 = new Album(5L, "Test",testArtist2,testGenre3,"Test");
+	Album testAlbum1 = new Album(1L, "Thank U, Next",null, testArtist1,testGenre1, "https://upload.wikimedia.org/wikipedia/en/d/dd/Thank_U%2C_Next_album_cover.png");
+	Album testAlbum2 = new Album(2L, "24K Magic",null, testArtist4,testGenre1,"https://upload.wikimedia.org/wikipedia/en/2/2b/Bruno_Mars_-_24K_Magic_%28Official_Album_Cover%29.png");
+	Album testAlbum3 = new Album(3L, "25 Album",null, testArtist3,testGenre1,"https://upload.wikimedia.org/wikipedia/en/9/96/Adele_-_25_%28Official_Album_Cover%29.png");
+	Album testAlbum4 = new Album(4L, "Purpose",null, testArtist2,testGenre1,"https://upload.wikimedia.org/wikipedia/en/2/27/Justin_Bieber_-_Purpose_%28Official_Album_Cover%29.png");
+	Album testAlbum5 = new Album(5L, "Test",null, testArtist2,testGenre3,"Test");
 
 	private final String URI = "/albums";
 	

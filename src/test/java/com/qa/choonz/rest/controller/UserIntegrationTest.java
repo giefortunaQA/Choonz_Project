@@ -3,7 +3,6 @@ package com.qa.choonz.rest.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,8 +26,6 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.User;
-import com.qa.choonz.rest.dto.PlaylistDTO;
-import com.qa.choonz.rest.dto.TrackDTO;
 import com.qa.choonz.rest.dto.UserDTO;
 
 @SpringBootTest
@@ -106,21 +103,28 @@ public class UserIntegrationTest {
 		mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
 	}
 
-	@Test
-	public void testUpdate() throws Exception {
-
-		UserDTO toUpdate = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", playlist1));
-		UserDTO expected = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", playlist1));
-		String toUpdateJson = this.jsonify.writeValueAsString(toUpdate);
-		String expectedJson = this.jsonify.writeValueAsString(expected);
-		String expectedString=expectedJson.substring(0,expectedJson.length()-5);
-		expectedString+=playlistsJson;
-		RequestBuilder request = put(URI + "/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdateJson)
-				.header("token", userToken);
-		ResultMatcher confirmStatus = status().isAccepted();
-		ResultMatcher confirmBody = content().json(expectedString);
-		mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
-	}
+//	@Test
+//	public void testUpdate() throws Exception {
+//		Playlist playlist = new Playlist(1L,"Favourites","This is a playlist by admin consisting of public", "https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png", tracks);
+//		Track testTrack = new Track(1L, "Thank U Next",null, playlist, 207L,"Thank U Next lyrics");
+//		Track testTrack2 = new TrackDTO(2L, "needy",212L,"needy lyrics");
+//		TrackDTO testTrack3 = new TrackDTO(3L, "24K Magic",240L,"24K Magic Lyrics");
+//		TrackDTO testTrack4 = new TrackDTO(3L, "Hello",220L,"Hello lyrics");
+//		TrackDTO testTrack5 = new TrackDTO(4L, "What Do You Mean",210L,"What Do You Mean lyrics");
+//		List<TrackDTO> tracks = List.of(testTrack, testTrack2,testTrack3,testTrack4,testTrack5);
+//	
+//		
+//		UserDTO toUpdate = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", playlist1));
+//		UserDTO expected = this.mapToDTO(new User(1L, "Admin Update", "UpdatedPassword", tracks));
+//		GenreDTO updatedGenre = new GenreDTO(3L, "Country","Country (also called country and western) is a genre of popular music that originated with blues, old-time music, and various types of American folk music.");
+//		
+//		
+//		RequestBuilder request = put(URI + "/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdateJson)
+//				.header("token", userToken);
+//		ResultMatcher confirmStatus = status().isAccepted();
+//		ResultMatcher confirmBody = content().json(expectedString);
+//		mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
+//	}
 
 	@Test
 	void testLogin() throws Exception {
@@ -135,13 +139,7 @@ public class UserIntegrationTest {
 		userToken = result.andReturn().getResponse().getContentAsString();
 
 	}
-//	
-//	@AfterEach
-//	public void initEach(){
-//		//setUserToken(userToken);
-//		System.out.println("Hello" + getUserToken());
-//	}
-//	
+
 
 	@Test
 	void testDeletePass() throws Exception {
@@ -154,7 +152,11 @@ public class UserIntegrationTest {
 
 	@Test
 	void testLogout() throws Exception {
-
+		RequestBuilder request = post(URI + "/logout").header("token", userToken);
+		ResultMatcher confirmStatus = status().isOk();
+		ResultMatcher confirmBody = content().string("TOKEN HAS BEEN DELETED");
+		mvc.perform(request).andExpect(confirmBody).andExpect(confirmStatus);
+		
 	}
 
 }

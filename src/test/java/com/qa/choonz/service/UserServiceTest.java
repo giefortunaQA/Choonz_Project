@@ -110,7 +110,7 @@ public class UserServiceTest {
 		User target=new User(3L,"Non User","password");
 		List<User> targetUsers=List.of(user1,user2);
 		when(this.repo.findAll()).thenReturn(targetUsers);
-		assertThat(this.service.login(target.getUsername(),target.getPassword())).isEqualTo(null);
+		assertThat(this.service.login(target.getUsername(),target.getPassword())).isNull();
 		
 	}
 

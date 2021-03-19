@@ -54,7 +54,7 @@ public class TrackIntegrationTest {
 	private String URI="/tracks";
 	private final User testUser=new User(1L,"admin","admin");
 	private Artist ariana;
-	private final Album testAlbum1=new Album(1L,"Thank U, Next",ariana,pop,"https://upload.wikimedia.org/wikipedia/en/d/dd/Thank_U%2C_Next_album_cover.png");
+	private final Album testAlbum1=new Album(1L,"Thank U, Next",null, ariana,pop,"https://upload.wikimedia.org/wikipedia/en/d/dd/Thank_U%2C_Next_album_cover.png");
 	private final Playlist testPlaylist= new Playlist(1L,"Favourites","This is a track by admin consisting of public favourites.","https://icons.iconarchive.com/icons/aha-soft/3d-social/512/Favourites-icon.png",testUser);
 	private final TrackDTO track1AsDto=this.mapToDTO(new Track(1L, "Thank U Next", testAlbum1, testPlaylist,207L,"Thank U Next lyrics"));
 	private final TrackDTO track2AsDto=this.mapToDTO(new Track(2L, "needy", testAlbum1, testPlaylist, 212L,"needy lyrics"));

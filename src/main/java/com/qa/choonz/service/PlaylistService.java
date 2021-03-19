@@ -16,8 +16,6 @@ import com.qa.choonz.utils.BeanUtils;
 
 import lombok.RequiredArgsConstructor;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PlaylistService {

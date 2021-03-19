@@ -39,15 +39,15 @@ public class AlbumServiceTest {
 	//class resources
 	private final Genre testGenre=new Genre(1L,"Genre","description");
 	private final Artist testArtist=new Artist(1L,"Artist");
-	private final Album testAlbum1=new Album(null, "Album 1",testArtist,testGenre,"cover 1");
-	private final Album testAlbum2=new Album(null, "Album 2",testArtist,testGenre,"cover 2");
+	private final Album testAlbum1=new Album(null, "Album 1",null, testArtist,testGenre,"cover 1");
+	private final Album testAlbum2=new Album(null, "Album 2",null, testArtist,testGenre,"cover 2");
 	
 	private final List<Album> testList=List.of(testAlbum1,testAlbum2); 
 	
 	@Test
 	void testCreate() throws Exception{
-		Album toCreate=new Album(null, "Album",testArtist,testGenre,"cover");
-		Album created=new Album(5L,"Album",testArtist,testGenre,"cover updated");
+		Album toCreate=new Album(null, "Album",null, testArtist,testGenre,"cover");
+		Album created=new Album(5L,"Album",null, testArtist,testGenre,"cover updated");
 		
 		when(this.repo.save(toCreate)).thenReturn(created);
 		
@@ -73,7 +73,7 @@ public class AlbumServiceTest {
 	@Test
 	void testUpdate() throws Exception{
 		Long id=1L;
-		Album updated=new Album(1L,"Album 1 Updated",testArtist,testGenre,"cover updated");
+		Album updated=new Album(1L,"Album 1 Updated",null, testArtist,testGenre,"cover updated");
 		AlbumDTO updatedAsDto=this.mapToDTO(updated);
 		when(this.repo.findById(id)).thenReturn(Optional.of(testAlbum1));
 		when(this.repo.save(updated)).thenReturn(updated);
