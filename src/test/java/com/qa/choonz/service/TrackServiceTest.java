@@ -96,7 +96,8 @@ public class TrackServiceTest {
 		assertThat(this.service.delete(id)).isTrue();
 		verify(this.repo,times(1)).existsById(id);
 	}
-	@Test
+  
+@Test
 	void testReadTracksByArtists() throws Exception{
 		Long id=1L;
 		List<Track> tracksByArtist = new ArrayList<Track>();
@@ -106,7 +107,7 @@ public class TrackServiceTest {
 		assertThat(this.service.findTracksInArtists(id)).isEqualTo(tracksByArtistAsDtos);
 		verify(this.repo,times(1)).findTracksInArtists(id);
 	}
-	@Test
+  
 	void testReadTracksByGenre() throws Exception{
 		Long id=1L;
 		List<Track> tracksByGenre=List.of(testTrack1,testTrack2);
